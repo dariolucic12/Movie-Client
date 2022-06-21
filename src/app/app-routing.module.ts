@@ -1,20 +1,33 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegistrationComponent } from './auth/registration/registration.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { PosComponent } from './pages/pos/pos.component';
-import { ProductsComponent } from './pages/products/products.component';
-import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { NbAuthComponent } from '@nebular/auth';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
-  { path: 'home', component: TransactionsComponent },
-  { path: 'pos', component: PosComponent },
-  { path: 'products', component: ProductsComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent },
+  { 
+    path: 'auth', 
+    component: NbAuthComponent,
+    canActivateChild: [AuthGuard],
+    loadChildren: () => import('./auth/auth.module') //import routing from AuthRoutingModule
+    .then(m => m.AuthModule),
+  },
+  {
+    path: 'pages',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    loadChildren: () => import('./pages/pages.module') //import routing from PagesRoutingModule
+    .then(m => m.PagesModule),
+  },
+  { 
+    path: '', 
+    redirectTo: 'pages', 
+    pathMatch: 'full' //in this case: http://localhost:4200/
+  },
+  { 
+    path: '**', 
+    component: PageNotFoundComponent 
+  },
 ];
 
 @NgModule({
