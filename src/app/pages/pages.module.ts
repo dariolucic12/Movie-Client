@@ -7,7 +7,6 @@ import { PosComponent } from './pos/pos.component';
 import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-
 @NgModule({
   declarations: [
     TransactionsComponent,
