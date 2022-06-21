@@ -8,7 +8,7 @@ export class BaseApiService {
   protected apiRoute = '';
 
   constructor(
-    protected httpClient: HttpClient,
+    protected http: HttpClient,
     @Inject(String) apiRoute: string
   ) { 
     this.apiRoute = apiRoute;

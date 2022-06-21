@@ -9,27 +9,27 @@ import { BaseApiService } from './base-api.service';
 })
 export class ProductsService extends BaseApiService {
 
-  constructor(httpClient: HttpClient) {
-    super(httpClient, 'api/product/');
+  constructor(http: HttpClient) {
+    super(http, 'api/product/');
   }
 
   getAllProducts(): Observable<Object> {
-    return this.httpClient.get(this.apiRoute);
+    return this.http.get(this.apiRoute);
   }
 
   getProductByID(id: number): Observable<Object> {
-    return this.httpClient.get(this.apiRoute + id);
+    return this.http.get(this.apiRoute + id);
   }
 
   addNewProduct(product: Product): Observable<Object> {
-    return this.httpClient.post(this.apiRoute, product);
+    return this.http.post(this.apiRoute, product);
   }
 
   updateProduct(product: Product): Observable<Object> {
-    return this.httpClient.put(this.apiRoute, product);
+    return this.http.put(this.apiRoute, product);
   }
 
   deleteProduct(id: number): Observable<Object> {
-    return this.httpClient.delete(this.apiRoute + id);
+    return this.http.delete(this.apiRoute + id);
   }
 }
