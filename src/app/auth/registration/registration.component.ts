@@ -33,8 +33,12 @@ export class RegistrationComponent implements OnInit {
     this.http.post("https://localhost:7288/api/Account/register", RegisterData)
       .subscribe(res => {
         console.log(res);
-        this.router.navigate(['/login']);
+        this.router.navigate(['auth/login']);
       })
+  }
+
+  toLogin() {
+    this.router.navigate(['auth/login'])
   }
 
 }
