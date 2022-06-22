@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { NbAuthComponent } from '@nebular/auth';
 import { AuthGuard } from './auth/auth-guard.service';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   { 
     path: 'auth', 
-    component: NbAuthComponent,
+    component: LoginComponent,
     canActivateChild: [AuthGuard],
     loadChildren: () => import('./auth/auth.module') //import routing from AuthRoutingModule
     .then(m => m.AuthModule),

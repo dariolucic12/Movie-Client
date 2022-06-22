@@ -6,13 +6,15 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { PosComponent } from './pos/pos.component';
 import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PagesComponent } from './pages.component';
 
 @NgModule({
   declarations: [
     TransactionsComponent,
     PosComponent,
     ProductsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PagesComponent
   ],
   imports: [
     CommonModule,
