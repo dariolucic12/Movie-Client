@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PagesModule } from './pages/pages.module';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     HttpClientModule,
     BrowserAnimationsModule,
     PagesModule,
-    MatToolbarModule
+    MatToolbarModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
