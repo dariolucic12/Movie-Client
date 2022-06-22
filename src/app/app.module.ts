@@ -1,17 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { LogoutComponent } from './auth/logout/logout.component';
-import { RegistrationComponent } from './auth/registration/registration.component';
-import { TransactionsComponent } from './pages/transactions/transactions.component';
-import { PosComponent } from './pages/pos/pos.component';
-import { ProductsComponent } from './pages/products/products.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PagesModule } from './pages/pages.module';
+import {MatToolbarModule} from '@angular/material/toolbar'; 
 
 @NgModule({
   declarations: [
@@ -21,7 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PagesModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
