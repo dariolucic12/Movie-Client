@@ -1,1 +1,24 @@
-<p>pages works!</p>
+<ng-container>
+    <mat-sidenav-container class="example-container">
+        <mat-sidenav class="mat-elevation-z8" #sidenav mode="side" opened class="example-sidenav" [fixedInViewport]="options.value.fixed">
+            <button mat-button class="menu-button" [routerLink]="['/transactions']">
+                <mat-icon>assignment</mat-icon>
+                <span>Previous transactions</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-button class="menu-button" [routerLink]="['/pos']">
+                <mat-icon>credit_card</mat-icon>
+                <span>POS</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-button class="menu-button" [routerLink]="['/products']">
+                <mat-icon>info</mat-icon>
+                <span>Products</span>
+            </button>
+        </mat-sidenav>
+        <mat-sidenav-content [formGroup]="options">
+            <div class="content mat-elevation-z8">One thing</div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</ng-container>
+<router-outlet></router-outlet>

@@ -7,6 +7,15 @@ import { PosComponent } from './pos/pos.component';
 import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PagesComponent } from './pages.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -14,11 +23,20 @@ import { PagesComponent } from './pages.component';
     PosComponent,
     ProductsComponent,
     PageNotFoundComponent,
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     CommonModule,
     PagesRoutingModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
   ]
 })
 export class PagesModule { }
