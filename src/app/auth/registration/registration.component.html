@@ -10,30 +10,6 @@
       
          <mat-card-content>
             
-            
-          <mat-form-field appearance="outline" >
-            <mat-label>Enter Firstname</mat-label>
-            <input 
-              formControlName="firstName" 
-              type="text" 
-              matInput 
-              placeholder="Enter Firstname"
-            />
-            <mat-hint *ngIf="form.touched && form.controls['firstName'].hasError('firstName')">Firstname is required</mat-hint>
-          </mat-form-field>
-
-          
-          <mat-form-field appearance="outline" >
-            <mat-label>Enter LastName</mat-label>
-            <input 
-              formControlName="lastName" 
-              type="text" 
-              matInput 
-              placeholder="Enter Lastname"
-            />
-            <mat-hint *ngIf="form.touched && form.controls['lastName'].hasError('Lastname')">Lastname is required</mat-hint>
-          </mat-form-field>
-
           <mat-form-field appearance="outline" >
             <mat-label>Enter Email</mat-label>
             <input 
@@ -54,6 +30,39 @@
               placeholder="Enter password"
             />
             <mat-hint *ngIf="form.controls['password'].hasError('password')">Password is required (beetwen 6 and 16 charachters)</mat-hint>
+          </mat-form-field>
+            
+          <mat-form-field appearance="outline" >
+            <mat-label>Enter Firstname</mat-label>
+            <input 
+              formControlName="firstName" 
+              type="text" 
+              matInput 
+              placeholder="Enter Firstname"
+            />
+            <mat-hint *ngIf="form.touched && form.controls['firstName'].hasError('firstName')">Firstname is required</mat-hint>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" >
+            <mat-label>Enter LastName</mat-label>
+            <input 
+              formControlName="lastName" 
+              type="text" 
+              matInput 
+              placeholder="Enter Lastname"
+            />
+            <mat-hint *ngIf="form.touched && form.controls['lastName'].hasError('Lastname')">Lastname is required</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" >
+            <mat-label>Enter Phone number</mat-label>
+            <input 
+              formControlName="phoneNumber" 
+              type="tel" 
+              matInput 
+              placeholder="Enter Phone number"
+            />
+            <mat-hint *ngIf="form.touched && form.controls['phoneNumber'].hasError('phoneNumber')">Phone number is required</mat-hint>
           </mat-form-field>
           
         </mat-card-content>
