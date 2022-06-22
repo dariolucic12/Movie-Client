@@ -1,17 +1,17 @@
 <ng-container>
     <mat-sidenav-container class="example-container">
         <mat-sidenav class="mat-elevation-z8" #sidenav mode="side" opened class="example-sidenav" [fixedInViewport]="options.value.fixed">
-            <button mat-button class="menu-button" [routerLink]="['/transactions']">
+            <button mat-button class="menu-button" [routerLink]="['/pages/home']">
                 <mat-icon>assignment</mat-icon>
                 <span>Previous transactions</span>
             </button>
             <mat-divider></mat-divider>
-            <button mat-button class="menu-button" [routerLink]="['/pos']">
+            <button mat-button class="menu-button" [routerLink]="['/pages/pos']">
                 <mat-icon>credit_card</mat-icon>
                 <span>POS</span>
             </button>
             <mat-divider></mat-divider>
-            <button mat-button class="menu-button" [routerLink]="['/products']">
+            <button mat-button class="menu-button" [routerLink]="['/pages/products']">
                 <mat-icon>info</mat-icon>
                 <span>Products</span>
             </button>
@@ -21,4 +21,3 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </ng-container>
-<router-outlet></router-outlet>
