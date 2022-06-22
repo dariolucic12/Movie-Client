@@ -9,9 +9,8 @@ import { BaseApiService } from './base-api.service';
   providedIn: 'root'
 })
 export class BillsService extends BaseApiService {
-
   constructor(http: HttpClient) {
-    super(http, 'api/bill');
+    super(http, 'https://localhost:7288/api/bill');
   }
 
   headerPath: string = 'header/';

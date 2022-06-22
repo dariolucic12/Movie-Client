@@ -10,7 +10,7 @@ import { BaseApiService } from './base-api.service';
 export class BuyersService extends BaseApiService{
 
   constructor(http: HttpClient) {
-    super(http, 'api/buyer/');
+    super(http, 'https://localhost:7288/api/buyer/');
   }
 
   getAllBuyers(): Observable<Object> {
