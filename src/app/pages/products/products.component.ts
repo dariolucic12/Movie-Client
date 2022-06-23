@@ -23,7 +23,7 @@ export class ProductsComponent implements OnInit {
     this.getAllOrders();
   }
 
-  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count'];
+  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options'];
   dataSource: Product[] = [];
 
   getAllOrders() {
@@ -32,5 +32,14 @@ export class ProductsComponent implements OnInit {
       console.log(data);
       return data;
     });
+  }
+
+  clicked(id: number){
+    console.log("Clicked product with id " + id);
+  }
+
+  deleteProduct(id: number){
+    this.productsService.deleteProduct(id);
+    console.log("Deleted product with id " + id);
   }
 }
