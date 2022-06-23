@@ -1,29 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { AuthGuard } from './auth/auth-guard.service';
+
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { 
     path: 'auth', 
     component: LoginComponent,
-    canActivateChild: [AuthGuard],
     loadChildren: () => import('./auth/auth.module') //import routing from AuthRoutingModule
     .then(m => m.AuthModule),
   },
   { 
     path: 'register', 
     component: RegistrationComponent,
-    canActivateChild: [AuthGuard],
     loadChildren: () => import('./auth/auth.module') //import routing from AuthRoutingModule
     .then(m => m.AuthModule),
   },
   {
     path: 'pages',
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     loadChildren: () => import('./pages/pages.module') //import routing from PagesRoutingModule
     .then(m => m.PagesModule),
   },

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PagesModule } from './pages/pages.module';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import { AuthModule } from './auth/auth.module';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { AuthModule } from './auth/auth.module';
     MatToolbarModule,
     AuthModule
   ],
-  providers: [],
+  providers: [JwtHelperService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators'
 import { Token } from '@angular/compiler';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -11,6 +12,9 @@ const httpOptions = {
 })
 };
 
+@Injectable({
+  providedIn: "root"
+})
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,7 +27,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private jwtHelper : JwtHelperService
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +64,16 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", token)
         this.router.navigate(['/pages/home']);
       });
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem("token");
+    if(token){
+      return false;
+    } else if(token) {
+     return !this.jwtHelper.isTokenExpired(token);
+    }
+    return true
   }
 
   toRegister() {
