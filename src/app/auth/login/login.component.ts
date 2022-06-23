@@ -42,14 +42,17 @@ export class LoginComponent implements OnInit {
   }*/
 
   
-  submit(): void {
+  async submit() {
     if(this.form.invalid){
       return;
     }
     console.log(this.form.getRawValue())
-    this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions)
-      .subscribe(res =>{ 
-        console.log(res)
+    const response = this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions)
+      .subscribe(res =>{
+        const token = JSON.stringify(res)
+        console.log(token)
+   
+        localStorage.setItem('Token', res);
       });
   }
   
