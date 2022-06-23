@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { AuthGuard } from './guards/auth.guard';
 
+
 const routes: Routes = [
   { 
     path: 'auth', 
