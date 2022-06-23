@@ -41,6 +41,13 @@ export class ProductsComponent implements OnInit {
     // this.productTable.renderRows();
     this.dataSource = this.dataSource.filter(item => item.id != id);
     //console.log(this.dataSource);
+  }
+
+  addProduct(product: Product){
+    this.productsService.addNewProduct(product).subscribe();
+    //data => this.dataSource.push(data); ovak ne radi zasad
+    //update MatTable mozda data => this.dataSource.push(data)
+    //this.dataSource.push(product);  ?    
 
   }
 }
