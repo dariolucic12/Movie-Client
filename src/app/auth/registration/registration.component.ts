@@ -1,7 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Component({
   selector: 'app-registration',
@@ -30,10 +34,11 @@ export class RegistrationComponent implements OnInit {
 
   submit(): void {
     let RegisterData = this.form.getRawValue();
-    
-    this.http.post("https://localhost:7288/api/Account/register", RegisterData)
+    console.log(RegisterData);
+    this.http.post("https://localhost:7288/api/Account/register", RegisterData, httpOptions)
       .subscribe(res => {
         console.log(res);
+        console.log(RegisterData)
         this.router.navigate(['auth/login']);
       })
   }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Component({
   selector: 'app-login',
@@ -25,9 +29,28 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  submit(): void {
+  /*submit(): void {
+    console.log(this.form.getRawValue())
     this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), {withCredentials: true})
       .subscribe(() => this.router.navigate(['/']));
+  } */
+
+  /*submit(): void {
+    console.log(this.form.getRawValue())
+    this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions)
+      .subscribe(() => this.router.navigate(['/']));
+  }*/
+
+  
+  submit(): void {
+    if(this.form.invalid){
+      return;
+    }
+    console.log(this.form.getRawValue())
+    this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions)
+      .subscribe(res =>{ 
+        console.log(res)
+      });
   }
   
   toRegister() {
