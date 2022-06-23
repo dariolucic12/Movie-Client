@@ -1,5 +1,5 @@
 export interface BillBody {
-    id?:             number;
+    id?:            number;
     price:          number;
     quantity:       number;
     discount:       number;
