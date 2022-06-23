@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _formBuilder: FormBuilder) { }
+
+  options = this._formBuilder.group({
+    bottom: 0,
+    fixed: false,
+    top: 0,
+  });
 
   ngOnInit(): void {
   }
