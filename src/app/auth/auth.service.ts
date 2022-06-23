@@ -7,5 +7,8 @@ export class AuthService {
 
     constructor() {}
 
+    login(username: string, password: string) {
+        
+    }
     
 }
