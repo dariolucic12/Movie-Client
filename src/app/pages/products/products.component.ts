@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -16,6 +16,7 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
+  @ViewChild(MatTable) productTable!: MatTable<any>;
 
   constructor(private productsService: ProductsService) { }
 
@@ -34,12 +35,12 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  clicked(id: number){
-    console.log("Clicked product with id " + id);
-  }
-
   deleteProduct(id: number){
-    this.productsService.deleteProduct(id);
-    console.log("Deleted product with id " + id);
+    this.productsService.deleteProduct(id).subscribe();
+    // console.log("Deleted product with id " + id);
+    // this.productTable.renderRows();
+    this.dataSource = this.dataSource.filter(item => item.id != id);
+    //console.log(this.dataSource);
+
   }
 }
