@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Editing product</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="fill" #field1>
+        <mat-label>Cipher</mat-label>
+        <input matInput [(ngModel)]="data.cipher" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.name" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Measure</mat-label>
+        <input matInput [(ngModel)]="data.measure" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <input type="number" min="0.1" step="0.1" matInput [(ngModel)]="data.price" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Count</mat-label>
+        <input type="number" min="1" step="1" matInput [(ngModel)]="data.count" required>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>

@@ -8,6 +8,7 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product/add
 import { FormsModule } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 // const PRODUCT_DATA: Product[] = [
 //   { cipher: 'dfasdfdsafds', name: 'Chair', measure: 'komad', price: 22.00, count: 80},
@@ -44,7 +45,7 @@ export class ProductsComponent implements OnInit {
   getAllProducts() {
     this.productsService.getAllProducts().subscribe((data: any) => {
       this.dataSource = data;
-      console.log(data.id);
+      console.log(this.dataSource);
       this.changeDetectorRefs.detectChanges();
 
       return data;
@@ -70,6 +71,12 @@ export class ProductsComponent implements OnInit {
 
   }
 
+  updateProduct(product: Product){
+    this.productsService.updateProduct(product).subscribe(res => {
+      this.getAllProducts();
+    });
+  }
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     //dialogConfig.disableClose = true;
@@ -92,24 +99,27 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  openDialogForUpdate(id: number) {
+  openDialogForUpdate(element: Product) {
     const dialogConfig = new MatDialogConfig();
     //dialogConfig.disableClose = true;
 
     dialogConfig.data = {
-      cipher: this.cipher,
-      name: this.name,
-      measure: this.measure,
-      price: this.price,
-      count: this.count,
+      id: element.id,
+      cipher: element.cipher,
+      name: element.name,
+      measure: element.measure,
+      price: element.price,
+      count: element.count,
     };
 
-    const dialogRef = this.dialog.open(AddEditProductComponent, dialogConfig);
+    //console.log("clicked product with id: " + JSON.stringify(element));
+
+    const dialogRef = this.dialog.open(EditProductComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //console.log('The dialog was closed and the data is ' + JSON.stringify(result));
-        this.addProduct(result);
+        this.updateProduct(result);
       }
     });
   }

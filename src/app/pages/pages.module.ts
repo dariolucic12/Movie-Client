@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddEditProductComponent } from './products/add-edit-product/add-edit-product/add-edit-product.component';
 import { FormsModule } from '@angular/forms';
+import { EditProductComponent } from './products/edit-product/edit-product.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     PageNotFoundComponent,
     PagesComponent,
     AddEditProductComponent,
+    EditProductComponent,
   ],
   imports: [
     CommonModule,
