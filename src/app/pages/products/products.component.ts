@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
-// const PRODUCT_DATA: Product[] = [
-//   { cipher: 'dfasdfdsafds', name: 'Chair', measure: 'komad', price: 22.00, count: 80},
-//   { cipher: 'fdsfdsafsdfa', name: 'Desk', measure: 'komad', price: 50.00, count: 100},
-//   { cipher: 'fdsfadsfdsas', name: 'PC', measure: 'komad', price: 200.00, count: 30},
-//   { cipher: 'gfdsggfgdsgf', name: 'Monitor', measure: 'komad', price: 120.00, count: 50}
-// ];
+ const PRODUCT_DATA: Product[] = [
+{ cipher: 'dfasdfdsafds', name: 'Chair', measure: 'komad', price: 22.00, count: 80},
+   { cipher: 'fdsfdsafsdfa', name: 'Desk', measure: 'komad', price: 50.00, count: 100},
+  { cipher: 'fdsfadsfdsas', name: 'PC', measure: 'komad', price: 200.00, count: 30},
+  { cipher: 'gfdsggfgdsgf', name: 'Monitor', measure: 'komad', price: 120.00, count: 50}
+];
 
 @Component({
   selector: 'app-products',

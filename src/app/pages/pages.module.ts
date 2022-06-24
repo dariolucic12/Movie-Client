@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddEditProductComponent } from './products/add-edit-product/add-edit-product/add-edit-product.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { FormsModule } from '@angular/forms';
     MatDividerModule,
     MatTableModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class PagesModule { }

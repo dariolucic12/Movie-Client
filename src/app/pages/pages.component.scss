@@ -62,10 +62,18 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 
   mat-icon {
-      margin-right: 8px;
+      margin-right: .8rem;
+      margin-top: .4rem;
+      width: 3rem;
   }
 
+}
+
+#sidebar{
+  background-color: #6392ca;
 }
