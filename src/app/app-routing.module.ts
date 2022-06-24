@@ -5,17 +5,20 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LogedInGuard } from './guards/loged-in.guard';
 
 
 const routes: Routes = [
   { 
     path: 'auth', 
+    canActivate: [LogedInGuard],
     component: LoginComponent,
     loadChildren: () => import('./auth/auth.module') //import routing from AuthRoutingModule
     .then(m => m.AuthModule),
   },
   { 
     path: 'register', 
+    canActivate: [LogedInGuard],
     component: RegistrationComponent,
     loadChildren: () => import('./auth/auth.module') //import routing from AuthRoutingModule
     .then(m => m.AuthModule),
