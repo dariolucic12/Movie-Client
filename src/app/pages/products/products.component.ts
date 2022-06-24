@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TitleStrategy } from '@angular/router';
@@ -30,43 +30,48 @@ export class ProductsComponent implements OnInit {
   price!: number;
   count!: number;
 
-  constructor(private productsService: ProductsService, private dialog: MatDialog) { }
+  constructor(private productsService: ProductsService, private dialog: MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.getAllOrders();
+    this.getAllProducts();
   }
 
   displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options'];
   dataSource: Product[] = [];
 
-  getAllOrders() {
+
+  getAllProducts() {
     this.productsService.getAllProducts().subscribe((data: any) => {
       this.dataSource = data;
-      console.log(data);
+      console.log(data.id);
+      this.changeDetectorRefs.detectChanges();
+
       return data;
     });
   }
 
   deleteProduct(id: number) {
-    this.productsService.deleteProduct(id).subscribe();
+    this.productsService.deleteProduct(id).subscribe(res => {
+      this.getAllProducts(); //obavezno stavit u subscribe!
+    });
     // console.log("Deleted product with id " + id);
-    // this.productTable.renderRows();
-    this.dataSource = this.dataSource.filter(item => item.id != id);
+    //this.dataSource = this.dataSource.filter(item => item.id != id);
     //console.log(this.dataSource);
   }
 
   addProduct(product: Product) {
-    this.productsService.addNewProduct(product).subscribe();
-    //data => this.dataSource.push(data); ovak ne radi zasad
-    //update MatTable mozda data => this.dataSource.push(data)
-    //this.dataSource.push(product);  ?    
+    this.productsService.addNewProduct(product).subscribe(res => {
+      this.getAllProducts(); //obavezno stavit u subscribe!
+    });
+    //this.changeDetectorRefs.detectChanges();
+    //this.getAllProducts();
+    //this.dataSource = this.dataSource.concat(product);
 
   }
 
   openDialog() {
-
     const dialogConfig = new MatDialogConfig();
-
     //dialogConfig.disableClose = true;
 
     dialogConfig.data = {
@@ -81,10 +86,31 @@ export class ProductsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('The dialog was closed and the data is ' + result);
+        //console.log('The dialog was closed and the data is ' + JSON.stringify(result));
         this.addProduct(result);
       }
     });
   }
 
+  openDialogForUpdate(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    //dialogConfig.disableClose = true;
+
+    dialogConfig.data = {
+      cipher: this.cipher,
+      name: this.name,
+      measure: this.measure,
+      price: this.price,
+      count: this.count,
+    };
+
+    const dialogRef = this.dialog.open(AddEditProductComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        //console.log('The dialog was closed and the data is ' + JSON.stringify(result));
+        this.addProduct(result);
+      }
+    });
+  }
 }
