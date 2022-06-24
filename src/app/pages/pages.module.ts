@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PagesRoutingModule } from './pages-routing.module';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PosComponent } from './pos/pos.component';
@@ -17,6 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddEditProductComponent } from './products/add-edit-product/add-edit-product/add-edit-product.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
     ProductsComponent,
     PageNotFoundComponent,
     PagesComponent,
+    AddEditProductComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +42,9 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    FormsModule
   ]
 })
 export class PagesModule { }
