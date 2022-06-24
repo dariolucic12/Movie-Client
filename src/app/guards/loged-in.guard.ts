@@ -12,8 +12,9 @@ export class LogedInGuard implements CanActivate {
 
   }
   canActivate(){
-    if(!this.loginAuth.isAuthenticated()){
+    if(this.loginAuth.isAuthenticated()){
       this.router.navigate(['/pages/home'])
+      return false;
     }
     return true;
   }

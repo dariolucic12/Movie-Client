@@ -68,12 +68,13 @@ export class LoginComponent implements OnInit {
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem("token");
-    if(token){
+    if(token && this.jwtHelper.isTokenExpired(token)){
       return false;
-    } else if(token) {
-     return !this.jwtHelper.isTokenExpired(token);
+    } else if(!token) {
+      return false;
     }
-    return true
+    return true;
+
   }
 
   toRegister() {
