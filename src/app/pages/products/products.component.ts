@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TitleStrategy } from '@angular/router';
@@ -8,6 +8,7 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product/add
 import { FormsModule } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 // const PRODUCT_DATA: Product[] = [
 //   { cipher: 'dfasdfdsafds', name: 'Chair', measure: 'komad', price: 22.00, count: 80},
@@ -30,43 +31,54 @@ export class ProductsComponent implements OnInit {
   price!: number;
   count!: number;
 
-  constructor(private productsService: ProductsService, private dialog: MatDialog) { }
+  constructor(private productsService: ProductsService, private dialog: MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.getAllOrders();
+    this.getAllProducts();
   }
 
   displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options'];
   dataSource: Product[] = [];
 
-  getAllOrders() {
+
+  getAllProducts() {
     this.productsService.getAllProducts().subscribe((data: any) => {
       this.dataSource = data;
-      console.log(data);
+      console.log(this.dataSource);
+      this.changeDetectorRefs.detectChanges();
+
       return data;
     });
   }
 
   deleteProduct(id: number) {
-    this.productsService.deleteProduct(id).subscribe();
+    this.productsService.deleteProduct(id).subscribe(res => {
+      this.getAllProducts(); //obavezno stavit u subscribe!
+    });
     // console.log("Deleted product with id " + id);
-    // this.productTable.renderRows();
-    this.dataSource = this.dataSource.filter(item => item.id != id);
+    //this.dataSource = this.dataSource.filter(item => item.id != id);
     //console.log(this.dataSource);
   }
 
   addProduct(product: Product) {
-    this.productsService.addNewProduct(product).subscribe();
-    //data => this.dataSource.push(data); ovak ne radi zasad
-    //update MatTable mozda data => this.dataSource.push(data)
-    //this.dataSource.push(product);  ?    
+    this.productsService.addNewProduct(product).subscribe(res => {
+      this.getAllProducts(); //obavezno stavit u subscribe!
+    });
+    //this.changeDetectorRefs.detectChanges();
+    //this.getAllProducts();
+    //this.dataSource = this.dataSource.concat(product);
 
   }
 
+  updateProduct(product: Product){
+    this.productsService.updateProduct(product).subscribe(res => {
+      this.getAllProducts();
+    });
+  }
+
   openDialog() {
-
     const dialogConfig = new MatDialogConfig();
-
     //dialogConfig.disableClose = true;
 
     dialogConfig.data = {
@@ -81,10 +93,34 @@ export class ProductsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('The dialog was closed and the data is ' + result);
+        //console.log('The dialog was closed and the data is ' + JSON.stringify(result));
         this.addProduct(result);
       }
     });
   }
 
+  openDialogForUpdate(element: Product) {
+    const dialogConfig = new MatDialogConfig();
+    //dialogConfig.disableClose = true;
+
+    dialogConfig.data = {
+      id: element.id,
+      cipher: element.cipher,
+      name: element.name,
+      measure: element.measure,
+      price: element.price,
+      count: element.count,
+    };
+
+    //console.log("clicked product with id: " + JSON.stringify(element));
+
+    const dialogRef = this.dialog.open(EditProductComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        //console.log('The dialog was closed and the data is ' + JSON.stringify(result));
+        this.updateProduct(result);
+      }
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
@@ -12,6 +12,11 @@ export class ProductsService extends BaseApiService {
   constructor(http: HttpClient) {
     super(http, 'https://localhost:7288/api/product/');
   }
+
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
 
   getAllProducts(): Observable<Object> {
     return this.http.get(this.apiRoute);
