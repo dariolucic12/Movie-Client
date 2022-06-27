@@ -3,7 +3,8 @@
     <h1>Point of sale</h1>
     {{userMessage}}
     <div class="container">
-          
+      <form [formGroup]="myForm">
+
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
             <!--- Note that these columns can be defined in any order.
@@ -41,15 +42,19 @@
               <th class="opt-header" mat-header-cell *matHeaderCellDef> Options </th>
               <td mat-cell *matCellDef="let element">
                 <button mat-mini-fab color="warn">-</button>
-                <button mat-mini-fab color="primary">+</button>
+                {{productAmount}}
+                <button (click)="addProduct()" mat-mini-fab color="primary">+</button>
               </td>
             </ng-container>
 
+           
+            <td mat-footer-cell *matFooterCellDef> Total </td>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             
           </table>
 
+        </form>
     </div> 
 </div>

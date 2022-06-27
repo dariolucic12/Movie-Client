@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddEditProductComponent } from './products/add-edit-product/add-edit-product/add-edit-product.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProductsComponent,
     PageNotFoundComponent,
     PagesComponent,
-    AddEditProductComponent,
+    AddEditProductComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +47,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatDialogModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }
