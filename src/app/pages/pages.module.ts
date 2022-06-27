@@ -21,6 +21,7 @@ import { AddEditProductComponent } from './products/add-edit-product/add-edit-pr
 import { FormsModule } from '@angular/forms';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductIdPipe } from 'src/app/services/product-id.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { ProductIdPipe } from 'src/app/services/product-id.pipe';
     AddEditProductComponent,
     EditProductComponent,
     ProductIdPipe,
+    AddEditProductComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,9 @@ import { ProductIdPipe } from 'src/app/services/product-id.pipe';
     MatDividerModule,
     MatTableModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }

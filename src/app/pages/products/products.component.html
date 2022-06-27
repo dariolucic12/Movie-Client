@@ -2,7 +2,7 @@
 <div class = "new-class">
     <h1>Products table here!</h1>
     <button class="add-new" mat-raised-button color="primary" (click)="openDialog()">Add product</button>
-    <table #productTable mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">    
+    <table id="table" #productTable mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">    
         <ng-container matColumnDef="code">
           <th mat-header-cell *matHeaderCellDef> Code </th>
           <td mat-cell *matCellDef="let element"> {{element.cipher}} </td>

@@ -22,7 +22,8 @@ const httpOptions = {
 })
 export class LoginComponent implements OnInit {
 
- form!: FormGroup
+  public user = ""
+  form!: FormGroup
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password:['', [Validators.required, Validators.maxLength(16), Validators.minLength(6)]]
+      password:['', [Validators.required, Validators.max(16), Validators.min(6)]]
     })
   }
 
@@ -59,7 +60,7 @@ export class LoginComponent implements OnInit {
     const response = await this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions )
       .subscribe(res  => {
        const token = JSON.stringify(Object.values(res)[0])
-       console.log(token)
+       console.log(token);
 
         localStorage.setItem("token", token)
         this.router.navigate(['/pages/home']);
