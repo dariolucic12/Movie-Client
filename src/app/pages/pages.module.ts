@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddEditProductComponent } from './products/add-edit-product/add-edit-product/add-edit-product.component';
 import { FormsModule } from '@angular/forms';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
+import { ProductIdPipe } from 'src/app/services/product-id.pipe';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { EditProductComponent } from './products/edit-product/edit-product.compo
     PagesComponent,
     AddEditProductComponent,
     EditProductComponent,
+    ProductIdPipe,
   ],
   imports: [
     CommonModule,

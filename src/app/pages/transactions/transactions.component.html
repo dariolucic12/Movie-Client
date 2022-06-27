@@ -1,7 +1,7 @@
 <app-pages></app-pages>
 <div class = "new-class">
     <h1>Previous transactions table here!</h1>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">    
+    <table mat-table [dataSource]="billBodies" class="mat-elevation-z8 demo-table">    
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef> Price </th>
           <td mat-cell *matCellDef="let element"> {{element.price}} </td>
@@ -24,7 +24,7 @@
         </ng-container>
         <ng-container matColumnDef="productId">
             <th mat-header-cell *matHeaderCellDef> Product </th>
-            <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.productId | productId: this.products}} </td>
         </ng-container>
         <ng-container matColumnDef="billHeaderId">
             <th mat-header-cell *matHeaderCellDef> Bill info (header) </th>
