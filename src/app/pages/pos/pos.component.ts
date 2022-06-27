@@ -7,6 +7,7 @@ import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { IProduct } from './product';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-pos',
@@ -17,16 +18,23 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 export class PosComponent implements OnInit {
   userMessage = ""
+  productAmount = 0;
+  myForm!: FormGroup;
+
 
   constructor(
     private productsService: ProductsService,
-    private jwtHelper : JwtHelperService
+    private jwtHelper : JwtHelperService,
+    private fb: FormBuilder
   ) { }
 
 
   ngOnInit(): void {
     this.getAllProducts();
     this.getUserName();
+    this.myForm = this.fb.group({
+      products: this.fb.array([])
+    })
   }
   
 
@@ -40,6 +48,25 @@ export class PosComponent implements OnInit {
       console.log(data);
       return data;
     });
+  }
+
+  
+  get addedProductsForm() {
+    return this.myForm.get('products') as FormArray
+  }
+
+  addProduct() {
+    const product = this.fb.group({
+      name: [],
+      price: [],
+      count: [],
+    })
+
+    this.addedProductsForm.push(product)
+  }
+  
+  removeProduct(i : number) {
+    this.addedProductsForm.removeAt(i);
   }
 
   
