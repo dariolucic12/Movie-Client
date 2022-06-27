@@ -18,3 +18,51 @@
 button {
   margin: 3px;
 }
+
+#grids {
+  height: 100%;
+  position: absolute;
+  margin-left: 330px;
+  margin-top: 10px;
+}
+
+#headerGrid {
+  height: 20%;
+}
+
+#billGrid {
+  height: 60%;
+}
+
+#calculateGrid {
+  height: 20%;
+}
+
+// main {
+//   display: grid;
+//   grid-template-areas: 
+//     "topbar   topbar  topbar"
+//     "ads      content sidebar"
+//     "footer   footer  footer";
+
+//   grid-template-columns: 1fr 3fr 1fr;
+
+//   grid-template-rows: 50px auto 70px;
+// }
+
+.mat-raised-button{
+  height: 48px;
+  width: 120px;
+  font-size: large;
+}
+
+.mat-divider {
+  width: 1000px;
+  color: black;
+}
+
+#dateOfBill {
+  position: absolute;
+  margin-left: 350px;
+  margin-top: -150px;
+}
