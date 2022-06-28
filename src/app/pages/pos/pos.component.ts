@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
+import { ProductToBasket } from 'src/app/models/product-to-basket.model';
 
 @Component({
   selector: 'app-pos',
@@ -24,9 +25,9 @@ export class PosComponent implements OnInit {
   address!: string;
   today = new Date();
 
-  quantity!: number;
-  productsInBasket: Product [] = [];
-  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options'];
+  quantity: number = 1;
+  productsInBasket: ProductToBasket [] = [];
+  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
 
   /** control for the selected product */
   public productCtrl: FormControl = new FormControl();
@@ -119,18 +120,21 @@ export class PosComponent implements OnInit {
     }
     // filter the products
     this.filteredProducts.next(
-      this.products.filter(product => product.name.toLowerCase().indexOf(search) > -1)
+      this.products.filter(product => product.name.toLowerCase().indexOf(search) > -1 || product.cipher.toLowerCase().indexOf(search) > -1)
     );
   }
 
-  addProductToBasket(product: Product){
+  addProductToBasket(product: ProductToBasket){
     const newBasket = this.productsInBasket;
+    product['quantity'] = this.quantity;
+    // console.log(product.quantity);
+    // console.log(product);
     this.productsInBasket.push(product);
     this.productsInBasket = [...newBasket];
   }
 
   deleteProductFromBasket(id: number){
-
+    this.productsInBasket = this.productsInBasket.filter(item => item.id != id);
   }
 
   getTotalCost() {
