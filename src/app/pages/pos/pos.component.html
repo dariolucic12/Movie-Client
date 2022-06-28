@@ -83,8 +83,8 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h1>Without taxes: {{getTotalCost() * 0.83 | currency: "EUR"}}</h1>
-    <h1>Taxes (17%): {{getTotalCost() * 0.17 | currency: "EUR" }}</h1>
+    <h3>Without taxes: {{getTotalCost() * 0.83 | currency: "EUR"}}</h3>
+    <h3>Taxes (17%): {{getTotalCost() * 0.17 | currency: "EUR" }}</h3>
     <h1 id="totalToPay">Total for pay: {{getTotalCost() | currency: "EUR"}}</h1>
     <button mat-raised-button color="primary">Checkout</button>
   </div>
