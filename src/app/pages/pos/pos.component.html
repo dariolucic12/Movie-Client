@@ -37,7 +37,7 @@
       <mat-icon>check circle outline icon</mat-icon>
     </button>
  
-  <table mat-table [dataSource]="productsInBasket" class="mat-elevation-z8">
+  <mat-table mat-table [dataSource]="productsInBasket" class="mat-elevation-z8">
     <!--Item Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -55,7 +55,9 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-  </table>
+  </mat-table>
+
+
 
   </div>
   <mat-divider></mat-divider>

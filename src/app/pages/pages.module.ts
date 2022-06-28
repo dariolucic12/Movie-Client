@@ -56,7 +56,7 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     ReactiveFormsModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
   ]
 })
 export class PagesModule { }

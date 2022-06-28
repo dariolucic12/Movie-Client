@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
 import { BuyersService } from 'src/app/services/buyers.service';
 import { Buyer } from 'src/app/models/buyer.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/models/product.model';
 import { IProductTransaction } from './productTransaction';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-pos',
@@ -12,6 +13,10 @@ import { IProductTransaction } from './productTransaction';
 })
 
 export class PosComponent implements OnInit {
+
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+
+
   constructor(
     private productsService: ProductsService,
     private buyersService: BuyersService,
