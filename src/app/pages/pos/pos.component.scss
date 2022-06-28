@@ -38,6 +38,10 @@ button {
   height: 20%;
 }
 
+#searchBuyer {
+  margin-top: 10px;
+}
+
 // main {
 //   display: grid;
 //   grid-template-areas: 
@@ -65,4 +69,19 @@ button {
   position: absolute;
   margin-left: 350px;
   margin-top: -150px;
+}
+
+#productSearch {
+  width: 300px;
+}
+
+#quantitySearch {
+  margin-left: 20px;
+}
+
+#addButton {
+  margin-left: 20px;
+  height: 40px;
+  width: 80px;
+  font-size: large;
 }

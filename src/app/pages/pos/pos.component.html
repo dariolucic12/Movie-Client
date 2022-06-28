@@ -2,7 +2,7 @@
 <div id="grids">
   <div id="headerGrid">
     <!-- <p>This is grid for buyer information</p> -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" id="searchBuyer">
       <mat-label>Buyer</mat-label>
       <mat-select>
         <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
@@ -12,8 +12,7 @@
     </mat-form-field>
     <h2>From: {{this.city}}</h2>
     <h2>Address: {{this.address}}</h2>
-    <h2 id="dateOfBill">Date: {{this.today | date: 'dd/MM/yyyy'
-    }}
+    <h2 id="dateOfBill">Date: {{this.today | date: 'dd/MM/yyyy'}}
       <span class="material-icons">
         calendar_today
       </span>
@@ -23,6 +22,30 @@
   <mat-divider></mat-divider>
   <div id="billGrid">
     <!-- <p>This is grid for products</p> -->
+    <!-- <input
+        id="productSearch"
+        type="text"
+        [(ngModel)]="searchTerm"
+        class="searchTerm"
+        placeholder="Enter product name"
+      /> -->
+    <mat-form-field>
+      <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="productFilterCtrl" placeholderLabel="Find product"
+            noEntriesFoundLabel="no matching products">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+          {{product.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <input id="quantitySearch" type="text" [(ngModel)]="quantity" class="searchTerm" placeholder="Enter quantity" />
+    <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket()">Add</button>
+    <br>
+    <br>
+    <p>Proizvod je: {{productCtrl.value?.name}}, kod {{productCtrl.value?.cipher}}, mjera: {{productCtrl.value?.measure}}, cijena a unesena kvantiteta: {{this.quantity}}.</p>
   </div>
   <mat-divider></mat-divider>
   <div id="calculateGrid">

@@ -22,8 +22,9 @@ import { FormsModule } from '@angular/forms';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductIdPipe } from 'src/app/services/product-id.pipe';
 import { HttpClientModule } from '@angular/common/http';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     ReactiveFormsModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class PagesModule { }
