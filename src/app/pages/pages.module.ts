@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductIdPipe } from 'src/app/services/product-id.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatDialogModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule
   ]
 })
 export class PagesModule { }
