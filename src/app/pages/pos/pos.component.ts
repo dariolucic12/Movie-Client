@@ -25,7 +25,8 @@ export class PosComponent implements OnInit {
   today = new Date();
 
   quantity!: number;
-  productsInBasket: [] = [];
+  productsInBasket: Product [] = [];
+  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
 
   /** control for the selected product */
   public productCtrl: FormControl = new FormControl();
@@ -123,7 +124,11 @@ export class PosComponent implements OnInit {
   }
 
   addProductToBasket(){
-    
+
+  }
+
+  deleteProductFromBasket(id: number){
+
   }
 
 }
