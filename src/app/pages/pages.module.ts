@@ -24,6 +24,7 @@ import { ProductIdPipe } from 'src/app/services/product-id.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatGridListModule,
     MatSelectModule,
+    MatPaginatorModule
   ]
 })
 export class PagesModule { }

@@ -56,6 +56,9 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </mat-table>
+  <mat-paginator [pageSizeOptions]="[3,5]" showFirstLastButtons>
+
+  </mat-paginator>
 
 
 

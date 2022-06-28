@@ -12,9 +12,9 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./pos.component.scss']
 })
 
-export class PosComponent implements OnInit {
+export class PosComponent implements  OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+
 
 
   constructor(
