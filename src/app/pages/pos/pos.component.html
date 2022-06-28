@@ -22,7 +22,39 @@
   </div>
   <mat-divider></mat-divider>
   <div id="billGrid">
+    
     <!-- <p>This is grid for products</p> -->
+    <mat-form-field>
+      <mat-label>Choose a product</mat-label>
+      <mat-select [(value)]="selectedProduct">
+        <mat-option *ngFor="let product of products" [value]="product">{{product.name}}  {{product.price | currency: "EUR"}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>{{selectedProduct}}</p>
+    <button mat-mini-fab color="primary" (click)="addProductInBasket()">
+      <mat-icon>check circle outline icon</mat-icon>
+    </button>
+ 
+  <table mat-table [dataSource]="productsInBasket" class="mat-elevation-z8">
+    <!--Item Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-footer-cell *matFooterCellDef> Total </td>
+  </ng-container>
+
+  <!-- Cost Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let element"> {{element.price | currency: "EUR"}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: "EUR"}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  </table>
+
   </div>
   <mat-divider></mat-divider>
   <div id="calculateGrid">
