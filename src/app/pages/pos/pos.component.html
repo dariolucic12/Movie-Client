@@ -37,11 +37,11 @@
           </ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
-          {{product.name}}
+          {{product.cipher}} - {{product.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <input id="quantitySearch" type="text" [(ngModel)]="quantity" class="searchTerm" placeholder="Enter quantity" />
+    <input id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Enter quantity" type="number" min="1" step="1"/>
     <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)">Add</button>
     <br>
     <br>
@@ -58,15 +58,15 @@
         <th mat-header-cell *matHeaderCellDef> Measure </th>
         <td mat-cell *matCellDef="let element"> {{element.measure}} </td>
       </ng-container>
-      <ng-container matColumnDef="count">
-        <th mat-header-cell *matHeaderCellDef> Count </th>
-        <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
       </ng-container>
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef> Price </th>
         <td mat-cell *matCellDef="let element"> {{element.price}} </td>
       </ng-container>
-      <ng-container matColumnDef="options">
+      <ng-container matColumnDef="options" mnoziColumns()>
         <th mat-header-cell *matHeaderCellDef id="optionsHeader"> Options </th>
         <td mat-cell *matCellDef="let element" id="matCell">
           <button id="deleteButton" mat-raised-button color="warn"
@@ -83,7 +83,9 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h1>Ukupna cijena: {{getTotalCost() | currency: "EUR"}}</h1>
+    <h3>Without taxes: {{getTotalCost() * 0.83 | currency: "EUR"}}</h3>
+    <h3>Taxes (17%): {{getTotalCost() * 0.17 | currency: "EUR" }}</h3>
+    <h1 id="totalToPay">Total for pay: {{getTotalCost() | currency: "EUR"}}</h1>
     <button mat-raised-button color="primary">Checkout</button>
   </div>
 </div>
