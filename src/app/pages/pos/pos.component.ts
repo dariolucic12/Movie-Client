@@ -26,7 +26,7 @@ export class PosComponent implements OnInit {
 
   quantity!: number;
   productsInBasket: Product [] = [];
-  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
+  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options'];
 
   /** control for the selected product */
   public productCtrl: FormControl = new FormControl();
@@ -123,12 +123,18 @@ export class PosComponent implements OnInit {
     );
   }
 
-  addProductToBasket(){
-
+  addProductToBasket(product: Product){
+    const newBasket = this.productsInBasket;
+    this.productsInBasket.push(product);
+    this.productsInBasket = [...newBasket];
   }
 
   deleteProductFromBasket(id: number){
 
+  }
+
+  getTotalCost() {
+    return this.productsInBasket.map(p => p.price).reduce((acc, value) => acc + value, 0);
   }
 
 }
