@@ -41,11 +41,27 @@
             <ng-container id="options" matColumnDef="options">
               <th class="opt-header" mat-header-cell *matHeaderCellDef> Options </th>
               <td mat-cell *matCellDef="let element">
-                <button mat-mini-fab color="warn">-</button>
-                {{productAmount}}
-                <button (click)="addProduct()" mat-mini-fab color="primary">+</button>
+                
+                  <button (click)="addProduct(element)" mat-mini-fab color="primary">+</button>
+  
               </td>
             </ng-container>
+
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef> total </th>
+              <div ngFor="let product of products">  
+                <td mat-cell *matCellDef=""> {{332 | currency}} </td>
+              </div>
+            </ng-container>
+
+            <div formArrayName="products">
+
+              <div *ngFor="let product of addedProductsForm.controls; let i=index" [formGroupName]="i">
+
+
+              </div>
+
+            </div>
 
            
             <td mat-footer-cell *matFooterCellDef> Total </td>

@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { elementAt, Observable } from 'rxjs';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { IProduct } from './product';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ProductSale } from 'src/app/models/productSale.model';
 
 @Component({
   selector: 'app-pos',
@@ -38,24 +39,34 @@ export class PosComponent implements OnInit {
   }
   
 
-  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options'];
+  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'count', 'options', 'total' ];
   
   dataSource: Product[] = [];
+
+  dataSale: ProductSale[] = [];
+
 
   getAllProducts() {
     this.productsService.getAllProducts().subscribe((data: any) => {
       this.dataSource = data;
+      data.forEach((element: { amount: number; }) => { element.amount = 0})
       console.log(data);
       return data;
     });
   }
 
-  
+  addProduct(element: Product){
+    element.count -=1;
+    this.dataSale.push(element);
+    console.log(element)
+    console.log(this.dataSale)
+  }
+
   get addedProductsForm() {
     return this.myForm.get('products') as FormArray
   }
 
-  addProduct() {
+  addingProduct() {
     const product = this.fb.group({
       name: [],
       price: [],
