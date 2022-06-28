@@ -22,7 +22,7 @@ import { ProductIdPipe } from './services/product-id.pipe';
     BrowserAnimationsModule,
     PagesModule,
     MatToolbarModule,
-    AuthModule
+    AuthModule,
   ],
   providers: [JwtHelperService, 
   { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
