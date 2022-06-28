@@ -24,6 +24,7 @@ export class PosComponent implements OnInit {
   city!: string;
   address!: string;
   today = new Date();
+  totalAmount: number = 0;
 
   quantity: number = 1;
   productsInBasket: ProductToBasket [] = [];
@@ -138,7 +139,8 @@ export class PosComponent implements OnInit {
   }
 
   getTotalCost() {
-    return this.productsInBasket.map(p => p.price).reduce((acc, value) => acc + value, 0);
+    this.totalAmount = this.productsInBasket.map(p => p.price * p.quantity).reduce((acc, value) => acc + value, 0);
+    return this.totalAmount;
   }
 
 }
