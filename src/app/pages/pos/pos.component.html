@@ -30,7 +30,9 @@
         <mat-option *ngFor="let product of products" [value]="product">{{product.name}}  {{product.price | currency: "EUR"}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{selectedProduct}}</p>
+    <p>{{selectedProduct | json}}</p>
+    <p>{{selectedProduct.name}}</p>
+    <p>{{selectedProduct.price | currency:"EUR"}}</p>
     <button mat-mini-fab color="primary" (click)="addProductInBasket()">
       <mat-icon>check circle outline icon</mat-icon>
     </button>
@@ -39,7 +41,7 @@
     <!--Item Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell *matCellDef="let product"> {{product.name}} </td>
     <td mat-footer-cell *matFooterCellDef> Total </td>
   </ng-container>
 
@@ -59,7 +61,7 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h1>Ukupna cijena: </h1>
+    <h1>Ukupna cijena: {{getTotalCost() | currency:"EUR"}}</h1>
     <button mat-raised-button color="primary">Checkout</button>
   </div>
 </div>

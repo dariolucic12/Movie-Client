@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { BuyersService } from 'src/app/services/buyers.service';
 import { Buyer } from 'src/app/models/buyer.model';
 import { ProductsService } from 'src/app/services/products.service';
@@ -14,8 +14,9 @@ import { IProductTransaction } from './productTransaction';
 export class PosComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
-    private buyersService: BuyersService
-    ) { }
+    private buyersService: BuyersService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   buyers: Buyer[] = [];
 
@@ -51,10 +52,12 @@ export class PosComponent implements OnInit {
   }
 
   addProductInBasket() {
+    const newBasket = this.productsInBasket;
     this.productsInBasket.push(this.selectedProduct);
-    console.log(this.productsInBasket)
-    console.log(this.selectedProduct)
+    this.productsInBasket = [...newBasket];
   }
+  
+
 
   getTotalCost() {
     return this.productsInBasket.map(p => p.price).reduce((acc, value) => acc + value, 0);
