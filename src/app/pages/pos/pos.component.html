@@ -2,7 +2,7 @@
 <div id="grids">
   <div id="headerGrid">
     <!-- <p>This is grid for buyer information</p> -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" id="searchBuyer">
       <mat-label>Buyer</mat-label>
       <mat-select>
         <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
@@ -12,8 +12,7 @@
     </mat-form-field>
     <h2>From: {{this.city}}</h2>
     <h2>Address: {{this.address}}</h2>
-    <h2 id="dateOfBill">Date: {{this.today | date: 'dd/MM/yyyy'
-    }}
+    <h2 id="dateOfBill">Date: {{this.today | date: 'dd/MM/yyyy'}}
       <span class="material-icons">
         calendar_today
       </span>
@@ -22,51 +21,85 @@
   </div>
   <mat-divider></mat-divider>
   <div id="billGrid">
-    
     <!-- <p>This is grid for products</p> -->
+    <!-- <input
+        id="productSearch"
+        type="text"
+        [(ngModel)]="searchTerm"
+        class="searchTerm"
+        placeholder="Enter product name"
+      /> -->
     <mat-form-field>
-      <mat-label>Choose a product</mat-label>
-      <mat-select [(value)]="selectedProduct">
-        <mat-option *ngFor="let product of products" [value]="product">{{product.name}}  {{product.price | currency: "EUR"}}</mat-option>
+      <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="productFilterCtrl" placeholderLabel="Find product"
+            noEntriesFoundLabel="no matching products">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+          {{product.cipher}} - {{product.name}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{selectedProduct | json}}</p>
-    <p>{{selectedProduct.name}}</p>
-    <p>{{selectedProduct.price | currency:"EUR"}}</p>
-    <button mat-mini-fab color="primary" (click)="addProductInBasket()">
-      <mat-icon>check circle outline icon</mat-icon>
-    </button>
- 
-  <mat-table mat-table [dataSource]="productsInBasket" class="mat-elevation-z8">
-    <!--Item Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let product"> {{product.name}} </td>
-    <td mat-footer-cell *matFooterCellDef> Total </td>
-  </ng-container>
+    <input id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Enter quantity" type="number" min="1" step="1"/>
+    <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)">Add</button>
+    <br>
+    <br>
+    <table id="table" mat-table [dataSource]="productsInBasket" class="mat-elevation-z8 demo-table">
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let element"> {{element.cipher}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="measure">
+        <th mat-header-cell *matHeaderCellDef> Measure </th>
+        <td mat-cell *matCellDef="let element"> {{element.measure}} </td>
+      </ng-container>
+      <ng-container matColumnDef="quantity">
 
-  <!-- Cost Column -->
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef> Price </th>
-    <td mat-cell *matCellDef="let element"> {{element.price | currency: "EUR"}} </td>
-    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: "EUR"}} </td>
-  </ng-container>
+        <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+          <mat-icon>plus_one</mat-icon>
+        </button>
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+       
+        <td mat-cell *matCellDef="let element"> 
+          <button (click)="decreaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus">
+            -
+          </button>
+          {{element.quantity}} 
+          <button (click)="increaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus">
+            +
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price | currency: "EUR"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="options" mnoziColumns()>
+        <th mat-header-cell *matHeaderCellDef id="optionsHeader"> Options </th>
+        <td mat-cell *matCellDef="let element" id="matCell">
+          <button id="deleteButton" mat-raised-button color="warn"
+            (click)="deleteProductFromBasket(element.id)"><mat-icon>delete</mat-icon>
+            </button>
+        </td>
+      </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[3,5]" showFirstLastButtons>
-
-  </mat-paginator>
-
-
-
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <!-- <p>Proizvod je: {{productCtrl.value?.name}}, kod {{productCtrl.value?.cipher}}, mjera: {{productCtrl.value?.measure}}, cijena a unesena kvantiteta: {{this.quantity}}.</p> -->
   </div>
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h1>Ukupna cijena: {{getTotalCost() | currency:"EUR"}}</h1>
+    <h3>Without taxes: {{getTotalCost() * 0.83 | currency: "EUR"}}</h3>
+    <h3>Taxes (17%): {{getTotalCost() * 0.17 | currency: "EUR" }}</h3>
+    <h1 id="totalToPay">Total for pay: {{getTotalCost() | currency: "EUR"}}</h1>
     <button mat-raised-button color="primary">Checkout</button>
   </div>
 </div>

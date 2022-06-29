@@ -11,9 +11,6 @@
   width: 40rem;
 
 }
-#table {
-  width:10rem;
-}
 
 button {
   margin: 3px;
@@ -32,12 +29,14 @@ button {
 
 #billGrid {
   height: 60%;
-  
-
 }
 
 #calculateGrid {
   height: 20%;
+}
+
+#searchBuyer {
+  margin-top: 10px;
 }
 
 // main {
@@ -69,3 +68,39 @@ button {
   margin-top: -150px;
 }
 
+#productSearch {
+  width: 300px;
+}
+
+#quantitySearch {
+  margin-left: 20px;
+}
+
+#addButton {
+  margin-left: 20px;
+  height: 40px;
+  width: 80px;
+  font-size: large;
+}
+
+#table {
+  width: 80%;
+  height: 300px;
+  overflow-y: scroll;
+  display: block;
+
+  th, td{
+    width: 190px;
+  }
+}
+
+#deleteButton {
+  width: 30px;
+  border-radius: 50%;
+}
+
+#totalToPay {
+  position: absolute;
+  margin-left: 300px;
+  margin-top: -70px;
+}

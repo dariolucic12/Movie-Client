@@ -22,9 +22,10 @@ import { FormsModule } from '@angular/forms';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductIdPipe } from 'src/app/services/product-id.pipe';
 import { HttpClientModule } from '@angular/common/http';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReactiveFormsModule,
     MatGridListModule,
     MatSelectModule,
-    MatPaginatorModule
+    NgxMatSelectSearchModule,
+
   ]
 })
 export class PagesModule { }
