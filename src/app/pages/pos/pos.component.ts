@@ -27,8 +27,8 @@ export class PosComponent implements OnInit {
   withoutDiscount: number = 0;
   discount!: number;
 
-  quantity: number = 1;
-  productsInBasket: ProductToBasket [] = [];
+  quantity!: number;
+  productsInBasket: ProductToBasket[] = [];
   displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
 
   /** control for the selected product */
@@ -126,7 +126,7 @@ export class PosComponent implements OnInit {
     );
   }
 
-  addProductToBasket(product: ProductToBasket){
+  addProductToBasket(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
     product['quantity'] = this.quantity;
     // console.log(product.quantity);
@@ -135,7 +135,7 @@ export class PosComponent implements OnInit {
     this.productsInBasket = [...newBasket];
   }
 
-  deleteProductFromBasket(id: number){
+  deleteProductFromBasket(id: number) {
     this.productsInBasket = this.productsInBasket.filter(item => item.id != id);
   }
 
@@ -144,12 +144,14 @@ export class PosComponent implements OnInit {
     return this.withoutDiscount;
   }
 
-  getDiscountInPrice(){
-    return this.getWithoutDiscount() * (this.discount/100);
+  getDiscountInPrice() {
+    return this.getWithoutDiscount() * (this.discount / 100);
   }
 
-  getTotalToPay(){
-    return this.getWithoutDiscount() - (this.getWithoutDiscount() * (this.discount/100));
+  getTotalToPay() {
+    if (this.discount) {
+      return this.getWithoutDiscount() - (this.getWithoutDiscount() * (this.discount / 100));
+    }
+    return this.getWithoutDiscount();
   }
-
 }
