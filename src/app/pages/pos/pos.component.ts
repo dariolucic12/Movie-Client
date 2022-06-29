@@ -157,7 +157,9 @@ export class PosComponent implements OnInit {
 
   decreaseAmount (product: ProductToBasket) {
     const newBasket = this.productsInBasket;
-    product.quantity--;
+    if(product.quantity !== 1){
+      product.quantity--;
+    }
     this.productsInBasket = [...newBasket];
   }
 
