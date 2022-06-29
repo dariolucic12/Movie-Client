@@ -84,7 +84,8 @@
       <ng-container matColumnDef="options" mnoziColumns()>
         <th mat-header-cell *matHeaderCellDef id="optionsHeader"> Options </th>
         <td mat-cell *matCellDef="let element" id="matCell">
-          <button id="deleteButton" mat-raised-button color="warn" (click)="deleteProductFromBasket(element.id)">
+
+          <button (click)="deleteProductFromBasket(element.id)" mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
