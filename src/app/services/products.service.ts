@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { BaseApiService } from './base-api.service';
 
@@ -18,23 +18,33 @@ export class ProductsService extends BaseApiService {
   });
 
 
-  getAllProducts(): Observable<Object> {
-    return this.http.get(this.apiRoute);
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get(this.apiRoute).pipe(
+      map(response => response as Product[])
+    );;
   }
 
-  getProductByID(id: number): Observable<Object> {
-    return this.http.get(this.apiRoute + id);
+  getProductByID(id: number): Observable<Product> {
+    return this.http.get(this.apiRoute + id).pipe(
+      map(response => response as Product)
+    );
   }
 
-  addNewProduct(product: Product): Observable<Object> {
-    return this.http.post(this.apiRoute, product);
+  addNewProduct(product: Product): Observable<Product> {
+    return this.http.post(this.apiRoute, product).pipe(
+      map(response => response as Product)
+    );
   }
 
-  updateProduct(product: Product): Observable<Object> {
-    return this.http.put(this.apiRoute, product);
+  updateProduct(product: Product): Observable<Product> {
+    return this.http.put(this.apiRoute, product).pipe(
+      map(response => response as Product)
+    );
   }
 
-  deleteProduct(id: number): Observable<Object> {
-    return this.http.delete(this.apiRoute + id);
+  deleteProduct(id: number): Observable<Product> {
+    return this.http.delete(this.apiRoute + id).pipe(
+      map(response => response as Product)
+    );
   }
 }
