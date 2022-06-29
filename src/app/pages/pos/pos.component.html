@@ -3,6 +3,7 @@
   <div id="headerGrid">
     <!-- <p>This is grid for buyer information</p> -->
     <mat-form-field appearance="fill" id="searchBuyer">
+   
       <mat-label>Buyer</mat-label>
       <mat-select>
         <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
@@ -16,6 +17,7 @@
       <span class="material-icons">
         calendar_today
       </span>
+      {{userMessage}}
     </h2>
 
   </div>
@@ -94,6 +96,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
 
     <!-- <p>Proizvod je: {{productCtrl.value?.name}}, kod {{productCtrl.value?.cipher}}, mjera: {{productCtrl.value?.measure}}, cijena a unesena kvantiteta: {{this.quantity}}.</p> -->
   </div>

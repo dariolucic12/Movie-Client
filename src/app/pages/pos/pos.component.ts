@@ -8,6 +8,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 import { ProductToBasket } from 'src/app/models/product-to-basket.model';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-pos',
@@ -16,10 +17,13 @@ import { ProductToBasket } from 'src/app/models/product-to-basket.model';
 })
 
 export class PosComponent implements OnInit {
-  constructor(private buyersService: BuyersService, private productsService: ProductsService) { }
+  userMessage= "";
+  constructor(private buyersService: BuyersService, private productsService: ProductsService, private jwtHelper : JwtHelperService) { }
 
   buyers: Buyer[] = [];
   products: Product[] = [];
+
+
 
   city!: string;
   address!: string;
@@ -48,6 +52,7 @@ export class PosComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBuyers();
     this.getAllProducts();
+    this.getUserName();
 
 
     // set initial selection
@@ -174,5 +179,19 @@ export class PosComponent implements OnInit {
       return this.getWithoutDiscount() - (this.getWithoutDiscount() * (this.discount / 100));
     }
     return this.getWithoutDiscount();
+  }
+
+  getUserName() {
+    const token = localStorage.getItem("token");
+    if(token == null){
+      console.log("Token incorrect")
+    } else{
+
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      var key = Object.values(decodedToken);
+      console.log(key[1]);
+      this.userMessage = `Welcome ${key[1]}`
+    }
+
   }
 }
