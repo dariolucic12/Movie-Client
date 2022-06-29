@@ -88,6 +88,10 @@ button {
   height: 300px;
   overflow-y: scroll;
   display: block;
+
+  th, td{
+    width: 500px;
+  }
 }
 
 #deleteButton {
