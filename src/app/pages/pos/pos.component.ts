@@ -23,17 +23,24 @@ export class PosComponent implements OnInit {
   buyers: Buyer[] = [];
   products: Product[] = [];
 
-
-
+  //////////////INFORMACIJE ZA HEADER////////////// 
+  //trebat ce se hvatat id od kupca kod dodavanja u header
   city!: string;
   address!: string;
   today = new Date();
+
+  //////////////INFORMACIJE ZA BODY//////////////
+  //id ce se automatski dodjelit u bazi
+  //productsInBasket varijabla sadrzi info o dodanim productima u kasu, cijena svakog, kolicina, ukupna cijena svakog, proizvod id svakog
+  //te naknadno zaglavlje id kojeg cemo dobiti odmah nakon spremanja headera u bazu
+  productsInBasket: ProductToBasket[] = [];
+  discount!: number; //isti za sve producte - discount/100
+  discountAmount!: number; //bit ce cijena*kolicina - discount(%)
+
   withoutDiscount: number = 0;
-  discount!: number;
 
   quantity!: number;
-  productsInBasket: ProductToBasket[] = [];
-  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
+  displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options', 'discount', 'discountAmount', 'totalPrice'];
 
   /** control for the selected product */
   public productCtrl: FormControl = new FormControl();
@@ -134,7 +141,9 @@ export class PosComponent implements OnInit {
   addProductToBasket(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
     product['quantity'] = this.quantity;
-    
+    product['discount'] = this.discount;
+    product['discountAmount'] = (product.price * product.quantity) * (this.discount / 100); 
+    product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (this.discount / 100));
     
     // console.log(product.quantity);
     // console.log(product);
