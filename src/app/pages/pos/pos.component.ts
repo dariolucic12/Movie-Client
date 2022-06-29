@@ -24,10 +24,11 @@ export class PosComponent implements OnInit {
   city!: string;
   address!: string;
   today = new Date();
-  totalAmount: number = 0;
+  withoutDiscount: number = 0;
+  discount!: number;
 
-  quantity: number = 1;
-  productsInBasket: ProductToBasket [] = [];
+  quantity!: number;
+  productsInBasket: ProductToBasket[] = [];
   displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
 
   /** control for the selected product */
@@ -125,7 +126,7 @@ export class PosComponent implements OnInit {
     );
   }
 
-  addProductToBasket(product: ProductToBasket){
+  addProductToBasket(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
     product['quantity'] = this.quantity;
     
@@ -155,13 +156,23 @@ export class PosComponent implements OnInit {
     this.productsInBasket = [...newBasket];
   }
 
-  deleteProductFromBasket(id: number){
+  deleteProductFromBasket(id: number) {
     this.productsInBasket = this.productsInBasket.filter(item => item.id != id);
   }
 
-  getTotalCost() {
-    this.totalAmount = this.productsInBasket.map(p => p.price * p.quantity).reduce((acc, value) => acc + value, 0);
-    return this.totalAmount;
+  getWithoutDiscount() {
+    this.withoutDiscount = this.productsInBasket.map(p => p.price * p.quantity).reduce((acc, value) => acc + value, 0);
+    return this.withoutDiscount;
   }
 
+  getDiscountInPrice() {
+    return this.getWithoutDiscount() * (this.discount / 100);
+  }
+
+  getTotalToPay() {
+    if (this.discount) {
+      return this.getWithoutDiscount() - (this.getWithoutDiscount() * (this.discount / 100));
+    }
+    return this.getWithoutDiscount();
+  }
 }
