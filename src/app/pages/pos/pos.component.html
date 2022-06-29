@@ -41,7 +41,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <input id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Enter quantity" type="number" min="1" step="1"/>
+    <input id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Qty" type="number" min="1" step="1"/>
     <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)">Add</button>
     <br>
     <br>
@@ -84,9 +84,10 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h3>Without taxes: {{getTotalCost() * 0.83 | currency: "EUR"}}</h3>
-    <h3>Taxes (17%): {{getTotalCost() * 0.17 | currency: "EUR" }}</h3>
-    <h1 id="totalToPay">Total for pay: {{getTotalCost() | currency: "EUR"}}</h1>
-    <button mat-raised-button color="primary">Checkout</button>
+    <h3>Without discount: {{getWithoutDiscount() | currency: "EUR"}}</h3>
+    <h3>Discount ({{this.discount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
+    <h1 id="totalToPay">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
+    <input id="discount" [(ngModel)]="discount" placeholder="Discount %" type="number" min="1" step="1"/>
+    <button mat-raised-button color="primary" id="checkout">Checkout</button>
   </div>
 </div>

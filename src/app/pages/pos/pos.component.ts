@@ -24,7 +24,8 @@ export class PosComponent implements OnInit {
   city!: string;
   address!: string;
   today = new Date();
-  totalAmount: number = 0;
+  withoutDiscount: number = 0;
+  discount!: number;
 
   quantity: number = 1;
   productsInBasket: ProductToBasket [] = [];
@@ -138,9 +139,17 @@ export class PosComponent implements OnInit {
     this.productsInBasket = this.productsInBasket.filter(item => item.id != id);
   }
 
-  getTotalCost() {
-    this.totalAmount = this.productsInBasket.map(p => p.price * p.quantity).reduce((acc, value) => acc + value, 0);
-    return this.totalAmount;
+  getWithoutDiscount() {
+    this.withoutDiscount = this.productsInBasket.map(p => p.price * p.quantity).reduce((acc, value) => acc + value, 0);
+    return this.withoutDiscount;
+  }
+
+  getDiscountInPrice(){
+    return this.getWithoutDiscount() * (this.discount/100);
+  }
+
+  getTotalToPay(){
+    return this.getWithoutDiscount() - (this.getWithoutDiscount() * (this.discount/100));
   }
 
 }
