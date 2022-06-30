@@ -34,13 +34,11 @@ export class PosComponent implements OnInit {
     }
   }
 
-
-
   buyers: Buyer[] = [];
   products: Product[] = [];
   billHeader: BillHeader = {
-    number: 0,
-    date: '',
+    number: 22,
+    date: 'fdsfsdfdffsdds',
     buyerId: 0
   }
   billBody: BillBody = {
@@ -125,6 +123,7 @@ export class PosComponent implements OnInit {
   selectedBuyer(buyer: Buyer) {
     this.city = buyer.city;
     this.address = buyer.adress;
+    this.billHeader.buyerId = buyer.id;
   }
 
   getAllProducts() {
@@ -271,6 +270,7 @@ export class PosComponent implements OnInit {
     //salji billHeader
     //get billHeader id
     //salji billbody s product id-em i header id-em
+    console.log(this.billHeader);
     for (const product of this.productsInBasket) {
       this.billBody.price = product.price;
       this.billBody.quantity = product.quantity;
