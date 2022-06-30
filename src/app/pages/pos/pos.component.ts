@@ -12,6 +12,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { BillsService } from 'src/app/services/bills.service';
 import { BillBody } from 'src/app/models/bill-body.model';
 import { TileStyler } from '@angular/material/grid-list/tile-styler';
+import { BillHeader } from 'src/app/models/bill-header.model';
 
 @Component({
   selector: 'app-pos',
@@ -20,12 +21,17 @@ import { TileStyler } from '@angular/material/grid-list/tile-styler';
 })
 
 export class PosComponent implements OnInit {
-  userMessage= "";
-  constructor(private buyersService: BuyersService, private productsService: ProductsService, private jwtHelper : JwtHelperService,
+  userMessage = "";
+  constructor(private buyersService: BuyersService, private productsService: ProductsService, private jwtHelper: JwtHelperService,
     private billsService: BillsService) { }
 
   buyers: Buyer[] = [];
   products: Product[] = [];
+  billHeader: BillHeader = {
+    number: 0,
+    date: '',
+    buyerId: 0
+  }
   billBody: BillBody = {
     price: 0,
     quantity: 0,
@@ -48,8 +54,8 @@ export class PosComponent implements OnInit {
   //te naknadno zaglavlje id kojeg cemo dobiti odmah nakon spremanja headera u bazu
   productsInBasket: ProductToBasket[] = [];
   discount!: number; //poseban za svaki product - discount/100
-  discountAmount!: number; 
-  totalDiscount! :number; //isti za cijeli racun - discount/100
+  discountAmount!: number;
+  totalDiscount!: number; //isti za cijeli racun - discount/100
   withoutTotalDiscount: number = 0;
 
   quantity!: number;
@@ -155,18 +161,18 @@ export class PosComponent implements OnInit {
     const newBasket = this.productsInBasket;
 
     const isAdded = this.productsInBasket.some(p => p.name === product.name)
-    if(isAdded){
+    if (isAdded) {
       console.log("product already added");
       return;
-    } else { 
+    } else {
       this.productsInBasket.push(product);
       this.productsInBasket = [...newBasket];
     }
 
     product['quantity'] = this.quantity;
     product['discount'] = this.discount;
-    product['discountAmount'] = (product.price * product.quantity) * (product.discount / 100); 
-    if(product.discount){
+    product['discountAmount'] = (product.price * product.quantity) * (product.discount / 100);
+    if (product.discount) {
       product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product.discount / 100));
     } else {
       product['totalPrice'] = (product.price * product.quantity);
@@ -179,39 +185,39 @@ export class PosComponent implements OnInit {
 
   // isProductAlreadyInBasket(product: ProductToBasket, newBasket: ProductToBasket[]){}
 
-  increaseAmount (product: ProductToBasket) {
+  increaseAmount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
     product.quantity++;
-    product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100); 
+    product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100);
     product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product['discount'] / 100));
     this.productsInBasket = [...newBasket];
     console.log(this.productsInBasket)
   }
 
-  decreaseAmount (product: ProductToBasket) {
+  decreaseAmount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
-    if(product.quantity !== 1){
+    if (product.quantity !== 1) {
       product.quantity--;
-      product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100); 
+      product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100);
       product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product['discount'] / 100));
     }
     this.productsInBasket = [...newBasket];
   }
 
-  decreaseDiscount (product: ProductToBasket){
+  decreaseDiscount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
-    if(product.discount !== 1){
+    if (product.discount !== 1) {
       product.discount--;
-      product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100); 
+      product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100);
       product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product['discount'] / 100));
     }
     this.productsInBasket = [...newBasket];
   }
 
-  increaseDiscount (product: ProductToBasket) {
+  increaseDiscount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
     product.discount++;
-    product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100); 
+    product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100);
     product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product['discount'] / 100));
     this.productsInBasket = [...newBasket];
     console.log(this.productsInBasket);
@@ -239,9 +245,9 @@ export class PosComponent implements OnInit {
 
   getUserName() {
     const token = localStorage.getItem("token");
-    if(token == null){
+    if (token == null) {
       console.log("Token incorrect")
-    } else{
+    } else {
 
       const decodedToken = this.jwtHelper.decodeToken(token);
       var key = Object.values(decodedToken);
@@ -250,34 +256,23 @@ export class PosComponent implements OnInit {
     }
   }
 
-  onCheckout(){
-    //  this.productsInBasket.forEach((element) => {
-    //   this.billBody.price = element.price,
-    //   this.billBody.quantity = element.quantity,
-    //   this.billBody.discount = element.discount,
-    //   this.billBody.discountAmount = element.discountAmount,
-    //   this.billBody.totalPrice = element.totalPrice,
-    //   this.billBody.productId = element.id,
-    //   this.billBody.billHeaderId = 0
-    //   }, 
-    //   console.log(this.billBody))
-      //this.billsService.addNewBody(this.billBody)
-      for(const product of this.productsInBasket){
-        this.billBody.price = product.price;
-        this.billBody.quantity = product.quantity;
-        this.billBody.discount = product.discount;
-        this.billBody.discountAmount = product.discountAmount;
-        this.billBody.totalPrice = product.totalPrice;
-        this.billBody.productId = product.id;
-        this.billBody.billHeaderId = 8;
-
-        this.billsService.addNewBody(this.billBody).subscribe();
-        console.log("Racun dodan u prethodne transakcije!");
-        console.log(this.billBody);
-      }
-    //console.log(this.productsInBasket);
+  onCheckout() {
     //salji billHeader
     //get billHeader id
     //salji billbody s product id-em i header id-em
+    for (const product of this.productsInBasket) {
+      this.billBody.price = product.price;
+      this.billBody.quantity = product.quantity;
+      this.billBody.discount = product.discount;
+      this.billBody.discountAmount = product.discountAmount;
+      this.billBody.totalPrice = product.totalPrice;
+      this.billBody.productId = product.id;
+      this.billBody.billHeaderId = 8;
+
+      this.billsService.addNewBody(this.billBody).subscribe();
+      console.log("Racun dodan u prethodne transakcije!");
+      console.log(this.billBody);
+    }
+    //console.log(this.productsInBasket);
   }
 }
