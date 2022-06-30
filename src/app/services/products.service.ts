@@ -21,7 +21,7 @@ export class ProductsService extends BaseApiService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get(this.apiRoute).pipe(
       map(response => response as Product[])
-    );;
+    );
   }
 
   getProductByID(id: number): Observable<Product> {

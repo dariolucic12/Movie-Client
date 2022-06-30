@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BillBody } from '../models/bill-body.model';
 import { BillHeader } from '../models/bill-header.model';
 import { BaseApiService } from './base-api.service';
@@ -16,43 +16,63 @@ export class BillsService extends BaseApiService {
   headerPath: string = 'header/';
   bodyPath: string = 'body/'
 
-  getAllBillHeaders(): Observable<Object> {
-    return this.http.get(this.apiRoute + this.headerPath);
+  getAllBillHeaders(): Observable<BillHeader[]> {
+    return this.http.get(this.apiRoute + this.headerPath).pipe(
+      map(response => response as BillHeader[])
+    );
   }
 
-  getBillHeaderByID(id: number): Observable<Object> {
-    return this.http.get(this.apiRoute + this.headerPath + id);
+  getBillHeaderByID(id: number): Observable<BillHeader> {
+    return this.http.get(this.apiRoute + this.headerPath + id).pipe(
+      map(response => response as BillHeader)
+    );
   }
 
-  addNewHeader(header: BillHeader): Observable<Object> {
-    return this.http.post(this.apiRoute + this.headerPath, header);
+  addNewHeader(header: BillHeader): Observable<BillHeader> {
+    return this.http.post(this.apiRoute + this.headerPath, header).pipe(
+      map(response => response as BillHeader)
+    );
   }
 
-  updateHeader(header: BillHeader): Observable<Object> {
-    return this.http.put(this.apiRoute, header);
+  updateHeader(header: BillHeader): Observable<BillHeader> {
+    return this.http.put(this.apiRoute, header).pipe(
+      map(response => response as BillHeader)
+    );
   }
 
-  deleteHeader(id: number): Observable<Object> {
-    return this.http.delete(this.apiRoute + this.headerPath + id);
+  deleteHeader(id: number): Observable<BillHeader> {
+    return this.http.delete(this.apiRoute + this.headerPath + id).pipe(
+      map(response => response as BillHeader)
+    );
   }
 
-  getAllBillBodies(): Observable<Object> {
-    return this.http.get(this.apiRoute + this.bodyPath);
+  getAllBillBodies(): Observable<BillBody[]> {
+    return this.http.get(this.apiRoute + this.bodyPath).pipe(
+      map(response => response as BillBody[])
+    );
   }
 
-  getBillBodyByID(id: number): Observable<Object> {
-    return this.http.get(this.apiRoute + this.bodyPath + id);
+  getBillBodyByID(id: number): Observable<BillBody> {
+    return this.http.get(this.apiRoute + this.bodyPath + id).pipe(
+      map(response => response as BillBody)
+    );
   }
 
-  addNewBody(body: BillBody): Observable<Object> {
-    return this.http.post(this.apiRoute + this.bodyPath, body);
+  addNewBody(body: BillBody): Observable<BillBody> {
+    return this.http.post(this.apiRoute + this.bodyPath, body).pipe(
+      map(response => response as BillBody)
+    );
   }
 
-  updateBody(body: BillBody): Observable<Object> {
-    return this.http.put(this.apiRoute, body);
+  updateBody(body: BillBody): Observable<BillBody> {
+    return this.http.put(this.apiRoute, body).pipe(
+      map(response => response as BillBody)
+    );
   }
 
-  deleteBody(id: number): Observable<Object> {
-    return this.http.delete(this.apiRoute + this.bodyPath + id);
+  deleteBody(id: number): Observable<BillBody> {
+    return this.http.delete(this.apiRoute + this.bodyPath + id).pipe(
+      map(response => response as BillBody)
+    );
   }
 }

@@ -19,7 +19,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddEditProductComponent } from './products/add-edit-product/add-edit-product/add-edit-product.component';
 import { FormsModule } from '@angular/forms';
-import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductIdPipe } from 'src/app/services/product-id.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -36,7 +35,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     PageNotFoundComponent,
     PagesComponent,
     AddEditProductComponent,
-    EditProductComponent,
     ProductIdPipe,
     AddEditProductComponent
   ],

@@ -85,7 +85,7 @@ button {
 }
 
 #table {
-  width: 80%;
+  width: 1200px;
   height: 300px;
   overflow-y: scroll;
   display: block;
@@ -113,4 +113,19 @@ button {
 
 #checkout {
   margin-left: 200px;
+}
+
+// #quantityInTable{    komponente se ne pomijeraju provjerit kasnije!!!!!!!!!!
+//   th, td{
+//     width: 200px;
+//   }
+// }
+
+#discountInput {
+  margin-left: 20px;
+  width: 50px;
+}
+
+#changingColumn {
+  text-align: center;
 }
