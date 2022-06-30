@@ -34,12 +34,19 @@ export class PosComponent implements OnInit {
     }
   }
 
+  //////////////INFORMACIJE ZA HEADER////////////// 
+  //trebat ce se hvatat id od kupca kod dodavanja u header
+  city!: string;
+  address!: string;
+  today = new Date();
+
   buyers: Buyer[] = [];
   products: Product[] = [];
   billHeader: BillHeader = {
     number: 22,
-    date: 'fdsfsdfdffsdds',
-    buyerId: 0
+    date: this.today.toISOString(),
+    buyerId: 0,
+    id: 0
   }
   billBody: BillBody = {
     price: 0,
@@ -51,11 +58,6 @@ export class PosComponent implements OnInit {
     billHeaderId: 0
   };
 
-  //////////////INFORMACIJE ZA HEADER////////////// 
-  //trebat ce se hvatat id od kupca kod dodavanja u header
-  city!: string;
-  address!: string;
-  today = new Date();
 
   //////////////INFORMACIJE ZA BODY//////////////
   //id ce se automatski dodjelit u bazi
@@ -268,24 +270,29 @@ export class PosComponent implements OnInit {
 
   onCheckout() {
     //salji billHeader
-    //get billHeader id
+    this.billsService.addNewHeader(this.billHeader).subscribe((data)=>{
+      //get billHeader id
+      //this.billBody.billHeaderId = data.id;
+      for (const product of this.productsInBasket) {
+        this.billBody.price = product.price;
+        this.billBody.quantity = product.quantity;
+        this.billBody.discount = product.discount;
+        this.billBody.discountAmount = product.discountAmount;
+        this.billBody.totalPrice = product.totalPrice;
+        this.billBody.productId = product.id;
+        this.billBody.billHeaderId = data.id;
+  
+        this.billsService.addNewBody(this.billBody).subscribe();
+        console.log("Racun dodan u prethodne transakcije!");
+        console.log(this.billBody);
+      }
+      //console.log(data.id);
+    });
+    //this.billsService.getAllBillHeaders().subscribe();
+
     //salji billbody s product id-em i header id-em
     console.log(this.billHeader);
-    for (const product of this.productsInBasket) {
-      this.billBody.price = product.price;
-      this.billBody.quantity = product.quantity;
-      this.billBody.discount = product.discount;
-      this.billBody.discountAmount = product.discountAmount;
-      this.billBody.totalPrice = product.totalPrice;
-      this.billBody.productId = product.id;
-      this.billBody.billHeaderId = 8;
-
-      this.billsService.addNewBody(this.billBody).subscribe();
-      console.log("Racun dodan u prethodne transakcije!");
-      console.log(this.billBody);
-    }
+    
     //console.log(this.productsInBasket);
   }
-
- 
 }

@@ -1,5 +1,5 @@
 export interface BillHeader {
-    id?:      number;
+    id:      number;
     number:  number;
     date:    string;
     buyerId: number;
