@@ -60,7 +60,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatGridListModule,
     MatSelectModule,
     NgxMatSelectSearchModule,
-
+    
   ]
 })
 export class PagesModule { }

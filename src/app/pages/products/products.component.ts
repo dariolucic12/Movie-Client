@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { DialogService } from 'src/app/services/dialog.service';
+import { Title } from '@angular/platform-browser';
 
  const PRODUCT_DATA: Product[] = [
 { cipher: 'dfasdfdsafds', name: 'Chair', measure: 'komad', price: 22.00, count: 80},
@@ -31,8 +33,12 @@ export class ProductsComponent implements OnInit {
   price!: number;
   count!: number;
 
-  constructor(private productsService: ProductsService, private dialog: MatDialog,
-    private changeDetectorRefs: ChangeDetectorRef) { }
+  constructor(
+    private productsService: ProductsService,
+    private dialog: MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef,
+    private dialogService: DialogService  
+  ) { }
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -52,10 +58,26 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  
+
   deleteProduct(id: number) {
-    this.productsService.deleteProduct(id).subscribe(res => {
-      this.getAllProducts(); //obavezno stavit u subscribe!
-    });
+    const deleting = this.dialogService.confirmDialog({
+      title: "Deleting Product",
+      message: "Are you sure you want to delete this product?",
+      confirmText: "Yes",
+      cancelText:"No"
+    }).subscribe(data =>{
+      if(data){
+        console.log(deleting)
+        this.productsService.deleteProduct(id).subscribe(res => {
+          this.getAllProducts(); //obavezno stavit u subscribe!
+        });
+      }
+      return;
+    })
+
+    //obavezno stavit u subscribe!
+
     // console.log("Deleted product with id " + id);
     //this.dataSource = this.dataSource.filter(item => item.id != id);
     //console.log(this.dataSource);
@@ -77,6 +99,8 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     //dialogConfig.disableClose = true;
@@ -88,6 +112,7 @@ export class ProductsComponent implements OnInit {
       price: this.price,
       count: this.count,
     };
+
 
     const dialogRef = this.dialog.open(AddEditProductComponent, dialogConfig);
 

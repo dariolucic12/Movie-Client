@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LogedInGuard } from './guards/loged-in.guard';
+import { PosGuard } from './guards/pos.guard';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   {
     path: 'pages',
     canActivate: [AuthGuard],
+    canDeactivate: [PosGuard],
     loadChildren: () => import('./pages/pages.module') //import routing from PagesRoutingModule
     .then(m => m.PagesModule),
   },

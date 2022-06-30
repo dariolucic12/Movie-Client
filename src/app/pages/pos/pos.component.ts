@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { BuyersService } from 'src/app/services/buyers.service';
 import { Buyer } from 'src/app/models/buyer.model';
 import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { FormControl } from '@angular/forms';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 import { ProductToBasket } from 'src/app/models/product-to-basket.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { ComponentCanDeactivate } from 'src/app/models/ComponentCanDeactivate';
 
 @Component({
   selector: 'app-pos',
@@ -16,9 +17,21 @@ import { JwtHelperService } from "@auth0/angular-jwt";
   styleUrls: ['./pos.component.scss']
 })
 
-export class PosComponent implements OnInit {
+
+  export class PosComponent implements OnInit, ComponentCanDeactivate {
   userMessage= "";
+  
   constructor(private buyersService: BuyersService, private productsService: ProductsService, private jwtHelper : JwtHelperService) { }
+
+  canDeactivate(): boolean {
+    if(this.productsInBasket.length > 0){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
 
   buyers: Buyer[] = [];
   products: Product[] = [];
@@ -31,8 +44,8 @@ export class PosComponent implements OnInit {
   withoutDiscount: number = 0;
   discount!: number;
 
-  quantity!: number;
-  productsInBasket: ProductToBasket[] = [];
+  quantity: number = 1;
+  public productsInBasket: ProductToBasket [] = [];
   displayedColumns: string[] = ['code', 'name', 'measure', 'price', 'quantity', 'options'];
 
   /** control for the selected product */
