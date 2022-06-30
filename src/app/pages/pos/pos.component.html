@@ -128,6 +128,6 @@
     <h1 id="totalToPay">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
     <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" />
     <button mat-raised-button color="primary" id="checkout"
-      [disabled]="this.productsInBasket.length==0 || !this.city">Checkout</button>
+      [disabled]="this.productsInBasket.length==0 || !this.city" (click)="onCheckout()">Checkout</button>
   </div>
 </div>
