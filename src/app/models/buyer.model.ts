@@ -1,5 +1,5 @@
 export interface Buyer {
-    id?:     number;
+    id:     number;
     cipher: string;
     name:   string;
     city:   string;
