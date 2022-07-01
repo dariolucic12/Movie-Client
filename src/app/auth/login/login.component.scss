@@ -1,3 +1,6 @@
+// regular style toast
+@import '~ngx-toastr/toastr';
+
 body{
     background-color: rgb(216, 211, 211);
 }
@@ -42,4 +45,17 @@ mat-card-content{
     text-decoration: none;
     color: rgb(83, 75, 75);
     margin-left: 1.7rem;
+ }
+
+ #loginResponse{
+    text-decoration: none;
+    color: rgb(238, 18, 18);
+    margin-left: 1.7rem;
+    margin-top: 1rem;
+ }
+
+ #loginBtn{
+    position: absolute;
+    top: 260px;
+    right: 5;
  }

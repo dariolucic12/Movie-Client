@@ -16,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot()
   ],
   entryComponents: [ConfirmComponent],
   providers: [JwtHelperService, 
