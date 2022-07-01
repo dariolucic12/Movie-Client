@@ -9,6 +9,7 @@ import { Product } from 'src/app/models/product.model';
 })
 export class AddEditProductComponent implements OnInit {
 
+
   constructor(private dialogRef: MatDialogRef<AddEditProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product) { 
     }
@@ -18,6 +19,10 @@ export class AddEditProductComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+
+  onSubmit(x:any){
+    console.log(x)
   }
 
 }

@@ -14,6 +14,7 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -32,8 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
     AuthModule,
     MatDialogModule,
     MatButtonModule,
-    MatIconModule
-
+    MatIconModule,
+    FormsModule
   ],
   entryComponents: [ConfirmComponent],
   providers: [JwtHelperService, 
