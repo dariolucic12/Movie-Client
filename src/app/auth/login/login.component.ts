@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
       .subscribe(res  => {
        const token = JSON.stringify(Object.values(res)[0])
        localStorage.setItem("token", token);
-       this.toastr.success('Uspjesno ste se prijavili!', 'Success!')
        this.router.navigate(['/pages/home']);
       }, err => {
         this.isValidLogin = false;
