@@ -2,8 +2,7 @@
 <div id="grids">
   <div id="headerGrid">
     <!-- <p>This is grid for buyer information</p> -->
-    <mat-form-field appearance="fill" id="searchBuyer">
-   
+    <mat-form-field *ngIf="billViewMode === false" appearance="fill" id="searchBuyer">
       <mat-label>Buyer</mat-label>
       <mat-select>
         <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
@@ -11,9 +10,20 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <h2>From: {{this.city}}</h2>
-    <h2>Address: {{this.address}}</h2>
-    <h2 id="dateOfBill">Date: {{this.today | date: 'dd/MM/yyyy'}}
+    
+    <h2 *ngIf="billViewMode">Buyer: {{this.buyer.name}} </h2>
+    <h2 *ngIf="billViewMode === false">From: {{this.city}}</h2>
+    <h2 *ngIf="billViewMode === false">Address: {{this.address}}</h2>
+    <h2 *ngIf="billViewMode">From: {{this.buyer.city}}</h2>
+    <h2 *ngIf="billViewMode">Address: {{this.buyer.adress}}</h2>
+    <h1 *ngIf="billViewMode === true" id="billNumber">Bill number: {{this.productsInBasket[0]?.id}}</h1>
+    <h2 id="dateOfBill" *ngIf="billViewMode === false">Date: {{this.today | date: 'dd/MM/yyyy'}}
+      <span class="material-icons">
+        calendar_today
+      </span>
+      {{userMessage}}
+    </h2>
+    <h2 id="dateOfBill" *ngIf="billViewMode === true">Date: {{this.billHeader.date | date: 'dd/MM/yyyy'}}
       <span class="material-icons">
         calendar_today
       </span>
@@ -31,8 +41,8 @@
         class="searchTerm"
         placeholder="Enter product name"
       /> -->
-    <mat-form-field>
-      <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect>
+    <mat-form-field [hidden]="billViewMode">
+      <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect >
         <mat-option>
           <ngx-mat-select-search [formControl]="productFilterCtrl" placeholderLabel="Find product"
             noEntriesFoundLabel="no matching products">
@@ -43,24 +53,25 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <input id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Qty" type="number" min="1" step="1" />
-    <input id="discountInput" [(ngModel)]="discount" placeholder="Dsct" type="number" min="1" max="100" step="1" />
+    <input *ngIf="billViewMode===false" id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Qty" type="number" min="1" step="1" />
+    <input *ngIf="billViewMode===false" id="discountInput" [(ngModel)]="discount" placeholder="Dsct" type="number" min="1" max="100" step="1" />
     <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)"
-      [disabled]="!this.quantity">Add</button>
+      [disabled]="!this.quantity" *ngIf="billViewMode===false">Add</button>
     <br>
     <br>
     <table id="table" mat-table [dataSource]="productsInBasket" class="mat-elevation-z8 demo-table">
+      <!-- <table *ngIf="billViewMode" id="table2" mat-table [dataSource]="productsInBasket" class="mat-elevation-z8 demo-table"> -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef> Code </th>
-        <td mat-cell *matCellDef="let element"> {{element.cipher}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.cipher }} </td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.name }} </td>
       </ng-container>
       <ng-container matColumnDef="measure">
         <th mat-header-cell *matHeaderCellDef> Measure </th>
-        <td mat-cell *matCellDef="let element"> {{element.measure}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.measure }} </td>
       </ng-container>
       <ng-container matColumnDef="quantity" id="quantityInTable">
 
@@ -70,11 +81,11 @@
         <th mat-header-cell *matHeaderCellDef id="changingColumn"> Quantity </th>
        
         <td mat-cell *matCellDef="let element"> 
-          <button (click)="decreaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus">
+          <button (click)="decreaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus" *ngIf="billViewMode===false">
             -
           </button>
           {{element.quantity}} 
-          <button (click)="increaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus">
+          <button (click)="increaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus" *ngIf="billViewMode===false">
             +
           </button>
         </td>
@@ -86,11 +97,11 @@
       <ng-container matColumnDef="discount">
         <th mat-header-cell *matHeaderCellDef id="changingColumn"> Discount </th>
         <td mat-cell *matCellDef="let element"> 
-          <button (click)="decreaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus">
+          <button (click)="decreaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus" *ngIf="billViewMode===false">
             -
           </button>
           {{element.discount}}% 
-          <button (click)="increaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus">
+          <button (click)="increaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus" *ngIf="billViewMode===false">
             +
           </button>
         </td>
@@ -103,7 +114,7 @@
         <th mat-header-cell *matHeaderCellDef> Total </th>
         <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency: "EUR"}} </td>
       </ng-container>
-      <ng-container matColumnDef="options" mnoziColumns()>
+      <ng-container *ngIf="billViewMode===false" matColumnDef="options" mnoziColumns()>
         <th mat-header-cell *matHeaderCellDef id="optionsHeader"> Options </th>
         <td mat-cell *matCellDef="let element" id="matCell">
 
@@ -123,11 +134,12 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h3>Without discount: {{getWithoutTotalDiscount() | currency: "EUR"}}</h3>
-    <h3>Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
-    <h1 id="totalToPay">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
-    <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" />
-    <button mat-raised-button color="primary" id="checkout"
+    <h3 *ngIf="billViewMode === false">Without discount: {{getWithoutTotalDiscount() | currency: "EUR"}}</h3>
+    <h3 *ngIf="billViewMode === false">Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
+    <h1 id="totalToPay" *ngIf="billViewMode === false">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
+    <h1 id="totalToPayViewMode" *ngIf="billViewMode === true">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
+    <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" *ngIf="billViewMode === false"/>
+    <button mat-raised-button color="primary" id="checkout" *ngIf="billViewMode === false"
       [disabled]="this.productsInBasket.length==0 || !this.city" (click)="onCheckout()">Checkout</button>
   </div>
 </div>

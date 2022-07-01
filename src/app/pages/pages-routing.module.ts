@@ -11,9 +11,14 @@ const routes: Routes = [
     path: '',
     component: PagesComponent
   },
+  {
+    path: 'bill/:id',
+    component: PosComponent
+  },
   { 
     path: 'home', 
-    component: TransactionsComponent },
+    component: TransactionsComponent 
+  },
   { 
     path: 'pos', 
     canDeactivate: [PosGuard],
