@@ -10,10 +10,17 @@ import { AuthModule } from './auth/auth.module';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ProductIdPipe } from './services/product-id.pipe';
+import { ConfirmComponent } from './dialogs/confirm/confirm.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,8 +29,13 @@ import { ProductIdPipe } from './services/product-id.pipe';
     BrowserAnimationsModule,
     PagesModule,
     MatToolbarModule,
-    AuthModule
+    AuthModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
+
   ],
+  entryComponents: [ConfirmComponent],
   providers: [JwtHelperService, 
   { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
   {

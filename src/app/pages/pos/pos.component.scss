@@ -11,10 +11,121 @@
   width: 40rem;
 
 }
-#table {
-  width:10rem;
-}
 
 button {
   margin: 3px;
+}
+
+#grids {
+  height: 100%;
+  position: absolute;
+  margin-left: 330px;
+  margin-top: 10px;
+}
+
+#headerGrid {
+  height: 20%;
+}
+
+#billGrid {
+  height: 60%;
+}
+
+#calculateGrid {
+  height: 20%;
+}
+
+#searchBuyer {
+  margin-top: 10px;
+}
+
+// main {
+//   display: grid;
+//   grid-template-areas: 
+//     "topbar   topbar  topbar"
+//     "ads      content sidebar"
+//     "footer   footer  footer";
+
+//   grid-template-columns: 1fr 3fr 1fr;
+
+//   grid-template-rows: 50px auto 70px;
+// }
+
+.mat-raised-button{
+  height: 48px;
+  width: 120px;
+  font-size: large;
+}
+
+.mat-divider {
+  width: 1000px;
+  color: black;
+}
+
+#dateOfBill {
+  position: absolute;
+  margin-left: 350px;
+  margin-top: -150px;
+}
+
+#productSearch {
+  width: 300px;
+}
+
+#quantitySearch {
+  margin-left: 20px;
+  width: 50px;
+}
+
+#addButton {
+  margin-left: 20px;
+  height: 40px;
+  width: 80px;
+  font-size: large;
+}
+
+#table {
+  width: 1200px;
+  height: 300px;
+  overflow-y: scroll;
+  display: block;
+
+  th, td{
+    width: 190px;
+  }
+}
+
+#deleteButton {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+#totalToPay {
+  position: absolute;
+  margin-left: 300px;
+  margin-top: -70px;
+}
+
+#discount {
+  width: 100px;
+}
+
+#checkout {
+  margin-left: 200px;
+}
+
+// #quantityInTable{    komponente se ne pomijeraju provjerit kasnije!!!!!!!!!!
+//   th, td{
+//     width: 200px;
+//   }
+// }
+
+#discountInput {
+  margin-left: 20px;
+  width: 50px;
+}
+
+#changingColumn {
+  text-align: center;
 }

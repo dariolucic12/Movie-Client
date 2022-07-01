@@ -1,8 +1,7 @@
-export interface IProduct{
+export interface IProductTransaction {
     "id": number,
-    "cipher": string,
     "name": string,
     "measure": string,
     "price": number,
     "amount": number
-  }
+}

@@ -1,4 +1,6 @@
-<h1 mat-dialog-title>Adding new product</h1>
+
+<h1 mat-dialog-title *ngIf="this.data.name===''">Adding new product</h1>
+<h1 mat-dialog-title *ngIf="this.data.name!==''">Editing product</h1>
 <div mat-dialog-content>
     <mat-form-field appearance="fill" #field1>
         <mat-label>Cipher</mat-label>
@@ -17,7 +19,7 @@
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Price</mat-label>
-        <input type="number" min="0.1" step="0.1" matInput [(ngModel)]="data.price" required>
+        <input type="number" min="0.01" step="0.01" matInput [(ngModel)]="data.price" required>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">

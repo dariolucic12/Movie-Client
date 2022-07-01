@@ -1,76 +1,133 @@
 <app-pages></app-pages>
-<div class = "new-class">
-    <h1>Point of sale</h1>
-    {{userMessage}}
-    <div class="container">
-      <form [formGroup]="myForm">
+<div id="grids">
+  <div id="headerGrid">
+    <!-- <p>This is grid for buyer information</p> -->
+    <mat-form-field appearance="fill" id="searchBuyer">
+   
+      <mat-label>Buyer</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
+          {{buyer.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <h2>From: {{this.city}}</h2>
+    <h2>Address: {{this.address}}</h2>
+    <h2 id="dateOfBill">Date: {{this.today | date: 'dd/MM/yyyy'}}
+      <span class="material-icons">
+        calendar_today
+      </span>
+      {{userMessage}}
+    </h2>
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+  </div>
+  <mat-divider></mat-divider>
+  <div id="billGrid">
+    <!-- <p>This is grid for products</p> -->
+    <!-- <input
+        id="productSearch"
+        type="text"
+        [(ngModel)]="searchTerm"
+        class="searchTerm"
+        placeholder="Enter product name"
+      /> -->
+    <mat-form-field>
+      <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="productFilterCtrl" placeholderLabel="Find product"
+            noEntriesFoundLabel="no matching products">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+          {{product.cipher}} - {{product.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <input id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Qty" type="number" min="1" step="1" />
+    <input id="discountInput" [(ngModel)]="discount" placeholder="Dsct" type="number" min="1" max="100" step="1" />
+    <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)"
+      [disabled]="!this.quantity">Add</button>
+    <br>
+    <br>
+    <table id="table" mat-table [dataSource]="productsInBasket" class="mat-elevation-z8 demo-table">
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let element"> {{element.cipher}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="measure">
+        <th mat-header-cell *matHeaderCellDef> Measure </th>
+        <td mat-cell *matCellDef="let element"> {{element.measure}} </td>
+      </ng-container>
+      <ng-container matColumnDef="quantity" id="quantityInTable">
 
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-          
-            <!-- Position Column -->
-            <ng-container matColumnDef="code">
-                <th mat-header-cell *matHeaderCellDef> Code </th>
-                <td mat-cell *matCellDef="let element"> {{element.cipher}} </td>
-            </ng-container>
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-          
-            <!-- Weight Column -->
-            <ng-container matColumnDef="measure">
-                <th mat-header-cell *matHeaderCellDef> Measure </th>
-                <td mat-cell *matCellDef="let element"> {{element.measure}} </td>
-              </ng-container>
-          
-            <ng-container matColumnDef="count">
-                <th mat-header-cell *matHeaderCellDef> Count </th>
-                <td mat-cell *matCellDef="let element"> {{element.count}} </td>
-              </ng-container>
-           
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef> Price </th>
-              <td mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
-            </ng-container>
+        <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+          <mat-icon>plus_one</mat-icon>
+        </button>
+        <th mat-header-cell *matHeaderCellDef id="changingColumn"> Quantity </th>
+       
+        <td mat-cell *matCellDef="let element"> 
+          <button (click)="decreaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus">
+            -
+          </button>
+          {{element.quantity}} 
+          <button (click)="increaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus">
+            +
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price | currency: "EUR"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef id="changingColumn"> Discount </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button (click)="decreaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus">
+            -
+          </button>
+          {{element.discount}}% 
+          <button (click)="increaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus">
+            +
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="discountAmount">
+        <th mat-header-cell *matHeaderCellDef> Discount Amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.discountAmount | currency: "EUR"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency: "EUR"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="options" mnoziColumns()>
+        <th mat-header-cell *matHeaderCellDef id="optionsHeader"> Options </th>
+        <td mat-cell *matCellDef="let element" id="matCell">
 
-            <ng-container id="options" matColumnDef="options">
-              <th class="opt-header" mat-header-cell *matHeaderCellDef> Options </th>
-              <td mat-cell *matCellDef="let element">
-                
-                  <button (click)="addProduct(element)" mat-mini-fab color="primary">+</button>
-  
-              </td>
-            </ng-container>
+          <button (click)="deleteProductFromBasket(element.id)" mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="total">
-              <th mat-header-cell *matHeaderCellDef> total </th>
-              <div ngFor="let product of products">  
-                <td mat-cell *matCellDef=""> {{332 | currency}} </td>
-              </div>
-            </ng-container>
-
-            <div formArrayName="products">
-
-              <div *ngFor="let product of addedProductsForm.controls; let i=index" [formGroupName]="i">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
 
-              </div>
-
-            </div>
-
-           
-            <td mat-footer-cell *matFooterCellDef> Total </td>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-            
-          </table>
-
-        </form>
-    </div> 
+    <!-- <p>Proizvod je: {{productCtrl.value?.name}}, kod {{productCtrl.value?.cipher}}, mjera: {{productCtrl.value?.measure}}, cijena a unesena kvantiteta: {{this.quantity}}.</p> -->
+  </div>
+  <mat-divider></mat-divider>
+  <div id="calculateGrid">
+    <!-- <p>This is grid for calculations</p> -->
+    <h3>Without discount: {{getWithoutTotalDiscount() | currency: "EUR"}}</h3>
+    <h3>Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
+    <h1 id="totalToPay">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
+    <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" />
+    <button mat-raised-button color="primary" id="checkout"
+      [disabled]="this.productsInBasket.length==0 || !this.city" (click)="onCheckout()">Checkout</button>
+  </div>
 </div>
