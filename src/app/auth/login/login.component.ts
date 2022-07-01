@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators'
 import { Token } from '@angular/compiler';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { ToastrService } from 'ngx-toastr';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private jwtHelper : JwtHelperService,
-    private toastr: ToastrService
+
   ) { }
 
   ngOnInit(): void {
