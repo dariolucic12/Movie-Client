@@ -30,4 +30,9 @@ export class PagesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  logout(): void {
+    localStorage.removeItem("token")
+    this.router.navigate(['/auth/login']);
+  }
+
 }
