@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'pages',
     canActivate: [AuthGuard],
-    canDeactivate: [PosGuard],
+    //canDeactivate: [PosGuard],
     loadChildren: () => import('./pages/pages.module') //import routing from PagesRoutingModule
     .then(m => m.PagesModule),
   },

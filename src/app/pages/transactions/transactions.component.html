@@ -28,7 +28,7 @@
         </ng-container>
         <ng-container matColumnDef="billHeaderId">
             <th mat-header-cell *matHeaderCellDef> Bill info (header) </th>
-            <td mat-cell *matCellDef="let element"> {{element.billHeaderId}} </td>
+            <td mat-cell *matCellDef="let element"><a [routerLink]="['/pages/bill', element.id]"> {{element.billHeaderId}} </a></td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
