@@ -351,25 +351,31 @@ export class PosComponent implements OnInit {
 
 
   getBillBody(id: number) {
-    this.billsService.getBillBodyByID(id).subscribe((dataOfBillBody: any) => {
+    this.billsService.getBillBodiesByHeader(id).subscribe((dataOfBillBody: any) => {
       //this.billViewModeBody.push(data);
-      this.productsService.getProductByID(dataOfBillBody.productId).subscribe((dataOfProduct: any) => {
+      for(const bill of dataOfBillBody){
+        this.productsService.getProductByID(bill.productId).subscribe((dataOfProduct: any) => {
           this.productToShowOnView.id = dataOfProduct.id;
           this.productToShowOnView.cipher = dataOfProduct.cipher;
           this.productToShowOnView.name = dataOfProduct.name;
           this.productToShowOnView.measure = dataOfProduct.measure;
-          this.productToShowOnView.price = dataOfBillBody.price;
-          this.productToShowOnView.count = dataOfBillBody.count;
-          this.productToShowOnView.quantity = dataOfBillBody.quantity;
-          this.productToShowOnView.discount = dataOfBillBody.discount;
-          this.productToShowOnView.discountAmount = dataOfBillBody.discountAmount;
-          this.productToShowOnView.totalPrice = dataOfBillBody.totalPrice;
-
+          this.productToShowOnView.count = dataOfProduct.count;
+          this.productToShowOnView.price = bill.price;
+          this.productToShowOnView.count = bill.count;
+          this.productToShowOnView.quantity = bill.quantity;
+          this.productToShowOnView.discount = bill.discount;
+          this.productToShowOnView.discountAmount = bill.discountAmount;
+          this.productToShowOnView.totalPrice = bill.totalPrice;
+          console.log(this.productToShowOnView);
+          
           const newBasket = this.productsInBasket;
           this.productsInBasket.push(this.productToShowOnView);
           this.productsInBasket = [...newBasket];
+          console.log(this.productsInBasket);
+        })
+      }
 
-          this.billsService.getBillHeaderByID(dataOfBillBody.billHeaderId).subscribe((dataOfHeader: any) => {
+          this.billsService.getBillHeaderByID(dataOfBillBody[0].billHeaderId).subscribe((dataOfHeader: any) => {
             this.billHeader.date = dataOfHeader.date;
 
             this.buyersService.getBuyerByID(dataOfHeader.buyerId).subscribe((dataOfBuyer: Buyer) => {
@@ -386,7 +392,7 @@ export class PosComponent implements OnInit {
 
           // console.log("product to show on view: " + JSON.stringify(this.productToShowOnView));
           // console.log("productsInBasket je " + JSON.stringify(this.productsInBasket))
-      })
+      
       //console.log("billviewbody je " + JSON.stringify(this.billViewModeBody))
       //console.log("datainbasket je " + JSON.stringify(this.billViewModeBody[0].id))
     });

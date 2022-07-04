@@ -75,4 +75,10 @@ export class BillsService extends BaseApiService {
       map(response => response as BillBody)
     );
   }
+
+  getBillBodiesByHeader(headerId : number): Observable<BillBody[]> {
+    return this.http.get(this.apiRoute + this.bodyPath + 'bill/' + headerId).pipe(
+      map(response => response as BillBody[])
+    );
+  }
 }
