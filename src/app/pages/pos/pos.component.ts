@@ -14,7 +14,6 @@ import { BillsService } from 'src/app/services/bills.service';
 import { BillBody } from 'src/app/models/bill-body.model';
 import { TileStyler } from '@angular/material/grid-list/tile-styler';
 import { BillHeader } from 'src/app/models/bill-header.model';
-import { ProductSale } from 'src/app/models/productSale.model';
 
 @Component({
   selector: 'app-pos',
@@ -129,7 +128,6 @@ export class PosComponent implements OnInit {
     this.billHeader.buyerId = buyer.id;
   }
 
-  dataSale: ProductSale[] = [];
 
 
   getAllProducts() {
