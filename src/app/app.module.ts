@@ -34,7 +34,7 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
   ],
   entryComponents: [ConfirmComponent],
   providers: [JwtHelperService, 

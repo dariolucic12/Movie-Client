@@ -1,6 +1,7 @@
 <form [formGroup]="form" (submit)="submit()">
     <div id="container" [formGroup]="form">
 
+
         <mat-card>
           
           <mat-toolbar color="primary">
@@ -36,10 +37,11 @@
         
          <mat-card-footer>
            
-            <button (click)="submit()" mat-raised-button color="primary">Login</button>
+            <button id="loginBtn" (click)="submit()" [disabled]="form.invalid" mat-raised-button color="primary">Login</button>
             
           </mat-card-footer>
           <a id="loginNav" routerLink="/register">Are you new user? Go to register...</a>
+          <mat-hint id="loginResponse" *ngIf = "!isValidLogin" >Password or username incorrect</mat-hint>
         </mat-card>
       </div>
     </form>

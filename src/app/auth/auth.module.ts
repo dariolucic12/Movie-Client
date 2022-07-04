@@ -14,6 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
+
+
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -31,6 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
+
   ]
 })
 export class AuthModule { }

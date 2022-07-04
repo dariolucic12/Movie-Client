@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators'
 import { Token } from '@angular/compiler';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -24,12 +25,14 @@ export class LoginComponent implements OnInit {
 
   public user = ""
   form!: FormGroup
+  isValidLogin: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private jwtHelper : JwtHelperService
+    private jwtHelper : JwtHelperService,
+
   ) { }
 
   ngOnInit(): void {
@@ -53,18 +56,17 @@ export class LoginComponent implements OnInit {
 
   
  async submit() {
-    if(this.form.invalid){
-      return;
-    }
+
     console.log(this.form.getRawValue())
     const response = await this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions )
       .subscribe(res  => {
        const token = JSON.stringify(Object.values(res)[0])
-       console.log(token);
-
-        localStorage.setItem("token", token)
-        this.router.navigate(['/pages/home']);
+       localStorage.setItem("token", token);
+       this.router.navigate(['/pages/home']);
+      }, err => {
+        this.isValidLogin = false;
       });
+      console.log(this.isValidLogin)
   }
 
   isAuthenticated(): boolean {

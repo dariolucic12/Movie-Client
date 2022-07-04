@@ -5,28 +5,31 @@
     <mat-form-field appearance="fill" #field1>
         <mat-label>Cipher</mat-label>
         <input type="text" matInput [(ngModel)]="data.cipher" name="cipher" #cipher="ngModel" required minlength="1">
-        <span *ngIf="cipher.invalid && cipher.touched">Cipher is required</span>
+        <mat-hint *ngIf="cipher.invalid && cipher.touched">Cipher is required</mat-hint>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input matInput [(ngModel)]="data.name" name="name" #name="ngModel" required minlength="2">
-        <mat-hint *ngIf="name.invalid && name.touched">Enter a name</mat-hint>
+        <mat-hint *ngIf="name.invalid && name.touched">Name required</mat-hint>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Measure</mat-label>
-        <input matInput [(ngModel)]="data.measure" name="measure" required>
+        <input matInput [(ngModel)]="data.measure" name="measure" #measure="ngModel" required>
+        <mat-hint *ngIf="measure.invalid && measure.touched">Measure required</mat-hint>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Price</mat-label>
-        <input type="number" min="0.01" step="0.01" matInput [(ngModel)]="data.price" name="price" required>
+        <input type="number" min="0.01" step="0.01" matInput [(ngModel)]="data.price" name="price" #price="ngModel" required>
+        <mat-hint *ngIf="price.invalid && price.touched">Price required</mat-hint>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Count</mat-label>
-        <input type="number" min="1" step="1" matInput [(ngModel)]="data.count" name="count" required>
+        <input type="number" min="1" step="1" matInput [(ngModel)]="data.count" name="count" #count="ngModel" required>
+        <mat-hint *ngIf="count.invalid && count.touched">Count required</mat-hint>
     </mat-form-field>
 
 <div mat-dialog-actions>
