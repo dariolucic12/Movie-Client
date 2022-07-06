@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { BuyersService } from 'src/app/services/buyers.service';
 import { Buyer } from 'src/app/models/buyer.model';
 import { Product } from 'src/app/models/product.model';
@@ -26,7 +26,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PosComponent implements OnInit {
   userMessage = "";
   constructor(private buyersService: BuyersService, private productsService: ProductsService, private jwtHelper: JwtHelperService,
-    private billsService: BillsService, private activatedRoute: ActivatedRoute) { }
+    private billsService: BillsService, private activatedRoute: ActivatedRoute, private cd: ChangeDetectorRef) { }
 
   canDeactivate(): boolean {
     if (this.productsInBasket.length > 0) {
@@ -38,19 +38,7 @@ export class PosComponent implements OnInit {
 
   //////////////variables for billViewMode//////////////
   billViewMode: boolean = false;
-  billViewModeBody: BillBody[] = [];
-  productToShowOnView: ProductToBasket = {
-    id: 0,
-    cipher: '',
-    name: '',
-    measure: '',
-    price: 0,
-    count: 0,
-    quantity: 0,
-    discount: 0,
-    discountAmount: 0,
-    totalPrice: 0
-  }
+  billViewModeBody: ProductToBasket[] = [];
 
   buyer: Buyer = {
     id: 0,
@@ -60,11 +48,15 @@ export class PosComponent implements OnInit {
     adress: ''
   }
 
+  productsInBasketView: ProductToBasket[] = [];
+
   //////////////INFORMACIJE ZA HEADER////////////// 
   //trebat ce se hvatat id od kupca kod dodavanja u header
   city!: string;
   address!: string;
   today = new Date();
+  totalDiscount!: number; //isti za cijeli racun - discount/100
+  totalAmount!: number;
 
   buyers: Buyer[] = [];
   products: Product[] = [];
@@ -72,7 +64,9 @@ export class PosComponent implements OnInit {
     number: 22,
     date: this.today.toISOString(),
     buyerId: 0,
-    id: 0
+    id: 0,
+    totalDiscount: 0,
+    totalAmount: 0,
   }
   billBody: BillBody = {
     price: 0,
@@ -92,8 +86,8 @@ export class PosComponent implements OnInit {
   productsInBasket: ProductToBasket[] = [];
   discount!: number; //poseban za svaki product - discount/100
   discountAmount!: number;
-  totalDiscount!: number; //isti za cijeli racun - discount/100
   withoutTotalDiscount: number = 0;
+
 
   quantity!: number;
   displayedColumns: string[] = ['code', 'name', 'measure', 'quantity', 'price', 'discount', 'discountAmount', 'totalPrice', 'options'];
@@ -117,6 +111,7 @@ export class PosComponent implements OnInit {
     this.getAllProducts();
     this.getUserName();
 
+
     this.activatedRoute.paramMap.subscribe(param => {
       console.log("param je: " + param.get('id'))
       var id = param.get('id');
@@ -129,7 +124,7 @@ export class PosComponent implements OnInit {
         console.log('billViewMode');
         this.billViewMode = true;
         console.log("parsan id value je " + parseInt(id!))
-        this.getBillBody(parseInt(id!));
+        this.getBillHeader(parseInt(id!));
         //console.log("billviewbody je " + this.billViewModeBody)
       }
     })
@@ -154,7 +149,7 @@ export class PosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-      this.setInitialValue();
+    this.setInitialValue();
   }
 
   ngOnDestroy() {
@@ -245,6 +240,8 @@ export class PosComponent implements OnInit {
     console.log("datainbasket je " + JSON.stringify(this.billViewModeBody[0]))
     // console.log(product.quantity);
     // console.log(product);
+    this.quantity = 0;
+    this.discount = 0;
   }
 
   // isProductAlreadyInBasket(product: ProductToBasket, newBasket: ProductToBasket[]){}
@@ -302,9 +299,11 @@ export class PosComponent implements OnInit {
 
   getTotalToPay() {
     if (this.totalDiscount) {
-      return this.getWithoutTotalDiscount() - (this.getWithoutTotalDiscount() * (this.totalDiscount / 100));
+      this.totalAmount = this.getWithoutTotalDiscount() - (this.getWithoutTotalDiscount() * (this.totalDiscount / 100));
+      return this.totalAmount;
     }
-    return this.getWithoutTotalDiscount();
+    this.totalAmount = this.getWithoutTotalDiscount();
+    return this.totalAmount;
   }
 
   getUserName() {
@@ -316,11 +315,13 @@ export class PosComponent implements OnInit {
       const decodedToken = this.jwtHelper.decodeToken(token);
       var key = Object.values(decodedToken);
       console.log(key[1]);
-      this.userMessage = `Welcome ${key[1]}`
+      this.userMessage = `Welcome ${key[0]}`
     }
   }
 
   onCheckout() {
+    this.billHeader.totalDiscount = this.totalDiscount;
+    this.billHeader.totalAmount = this.totalAmount;
     //salji billHeader
     this.billsService.addNewHeader(this.billHeader).subscribe((data) => {
       //get billHeader id
@@ -349,45 +350,44 @@ export class PosComponent implements OnInit {
   }
 
 
-  getBillBody(id: number) {
-    this.billsService.getBillBodyByID(id).subscribe((dataOfBillBody: any) => {
-      //this.billViewModeBody.push(data);
-      this.productsService.getProductByID(dataOfBillBody.productId).subscribe((dataOfProduct: any) => {
-          this.productToShowOnView.id = dataOfProduct.id;
-          this.productToShowOnView.cipher = dataOfProduct.cipher;
-          this.productToShowOnView.name = dataOfProduct.name;
-          this.productToShowOnView.measure = dataOfProduct.measure;
-          this.productToShowOnView.price = dataOfBillBody.price;
-          this.productToShowOnView.count = dataOfBillBody.count;
-          this.productToShowOnView.quantity = dataOfBillBody.quantity;
-          this.productToShowOnView.discount = dataOfBillBody.discount;
-          this.productToShowOnView.discountAmount = dataOfBillBody.discountAmount;
-          this.productToShowOnView.totalPrice = dataOfBillBody.totalPrice;
+  getBillHeader(id: number) {
+    this.billsService.getBillHeaderByID(id).subscribe((dataOfBillHeader: any) => {
+      console.log("data of one header is: " + JSON.stringify(dataOfBillHeader));
 
-          const newBasket = this.productsInBasket;
-          this.productsInBasket.push(this.productToShowOnView);
-          this.productsInBasket = [...newBasket];
+      const newBasket = [...this.productsInBasket];
 
-          this.billsService.getBillHeaderByID(dataOfBillBody.billHeaderId).subscribe((dataOfHeader: any) => {
-            this.billHeader.date = dataOfHeader.date;
+      for (let bill of dataOfBillHeader.billBodies) {
+        var productToShowOnView: ProductToBasket = {
+          id: dataOfBillHeader.id,
+          cipher: bill.product.cipher,
+          name: bill.product.name,
+          measure: bill.product.measure,
+          price: bill.product.price,
+          count: bill.product.count,
+          quantity: bill.quantity,
+          discount: bill.discount,
+          discountAmount: bill.discountAmount,
+          totalPrice: bill.totalPrice
+        }
 
-            this.buyersService.getBuyerByID(dataOfHeader.buyerId).subscribe((dataOfBuyer: Buyer) => {
-              // this.buyer.adress = dataOfBuyer.adress;
-              // this.buyer.city = dataOfBuyer.city;
-              // this.buyer.name = dataOfBuyer.name;
+        newBasket.push(productToShowOnView);
+        console.log("to show on view is " + JSON.stringify(productToShowOnView));
+      }
+      
+      this.productsInBasket = newBasket;
+      this.cd.detectChanges();
+      console.log("products in basket su " + JSON.stringify(this.productsInBasket));
 
-              this.buyer = dataOfBuyer;
-            })
-          })
+      //header info
+      this.billHeader.date = dataOfBillHeader.date;
+      this.billHeader.id = dataOfBillHeader.id;
+      this.totalDiscount = dataOfBillHeader.totalDiscount;
+      this.totalAmount = dataOfBillHeader.totalAmount;
 
-          // console.log("data iz bill servisa je " + JSON.stringify(dataOfBillBody));
-          // console.log("data iz product servisa je " + JSON.stringify(dataOfProduct));
-
-          // console.log("product to show on view: " + JSON.stringify(this.productToShowOnView));
-          // console.log("productsInBasket je " + JSON.stringify(this.productsInBasket))
-      })
-      //console.log("billviewbody je " + JSON.stringify(this.billViewModeBody))
-      //console.log("datainbasket je " + JSON.stringify(this.billViewModeBody[0].id))
+      //buyer info
+      this.buyer.adress = dataOfBillHeader.buyer.adress;
+      this.buyer.city = dataOfBillHeader.buyer.city;
+      this.buyer.name = dataOfBillHeader.buyer.name;
     });
   }
 }

@@ -103,16 +103,20 @@ button {
 
 #totalToPay {
   position: absolute;
-  margin-left: 300px;
-  margin-top: -70px;
+  margin-top: 0px;
 }
 
 #discount {
   width: 100px;
+  position: absolute;
+  margin-left: 300px;
+  margin-top: -70px;
 }
 
 #checkout {
-  margin-left: 200px;
+  margin-top: -20px;
+  margin-left: 300px;
+  position: absolute;
 }
 
 // #quantityInTable{    komponente se ne pomijeraju provjerit kasnije!!!!!!!!!!

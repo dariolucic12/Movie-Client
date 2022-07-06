@@ -22,10 +22,8 @@ export class BillsService extends BaseApiService {
     );
   }
 
-  getBillHeaderByID(id: number): Observable<BillHeader> {
-    return this.http.get(this.apiRoute + this.headerPath + id).pipe(
-      map(response => response as BillHeader)
-    );
+  getBillHeaderByID(id: number): Observable<Object> {
+    return this.http.get(this.apiRoute + this.headerPath + id);
   }
 
   addNewHeader(header: BillHeader): Observable<BillHeader> {
@@ -74,5 +72,9 @@ export class BillsService extends BaseApiService {
     return this.http.delete(this.apiRoute + this.bodyPath + id).pipe(
       map(response => response as BillBody)
     );
+  }
+
+  getBillBodiesByHeader(headerId : number): Observable<Object> {
+    return this.http.get(this.apiRoute + this.bodyPath + 'bill/' + headerId);
   }
 }
