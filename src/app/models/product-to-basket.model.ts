@@ -1,5 +1,5 @@
 export interface ProductToBasket {
-    id:            number;
+    id:             number;
     cipher:         string;
     name:           string;
     measure:        string;

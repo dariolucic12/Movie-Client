@@ -19,8 +19,10 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class TransactionsComponent implements OnInit {
 
-  displayedColumns: string[] = ['price', 'quantity', 'discount', 'discountAmount', 'totalPrice', 'productId', 'billHeaderId'];
+  //displayedColumns: string[] = ['price', 'quantity', 'discount', 'discountAmount', 'totalPrice', 'productId', 'billHeaderId'];
+  displayedColumns: string[] = ['date', 'buyerId', 'totalDiscount', 'totalAmount', 'id'];
   billBodies: BillBody[] = [];
+  billHeaders: BillHeader[] = [];
   products: Product[] = [];
 
   // dataSource = this.billBodies.map(body => ({
@@ -42,6 +44,7 @@ export class TransactionsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBillBodies();
     this.getAllProducts();
+    this.getAllHeaders();
   }
 
   getAllBillBodies(){
@@ -51,8 +54,17 @@ export class TransactionsComponent implements OnInit {
       this.changeDetectorRefs.detectChanges();
 
       return data;
-    }
-    );
+    });
+  }
+
+  getAllHeaders(){
+    this.billsService.getAllBillHeaders().subscribe((data: any) => {
+      this.billHeaders = data;
+      console.log(this.billBodies);
+      this.changeDetectorRefs.detectChanges();
+
+      return data;
+    })
   }
 
   getAllProducts(){

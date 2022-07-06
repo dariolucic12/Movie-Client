@@ -74,7 +74,9 @@ export class PosComponent implements OnInit {
     number: 22,
     date: this.today.toISOString(),
     buyerId: 0,
-    id: 0
+    id: 0,
+    totalDiscount: 0,
+    totalAmount: 0,
   }
   billBody: BillBody = {
     price: 0,
@@ -133,7 +135,7 @@ export class PosComponent implements OnInit {
         console.log('billViewMode');
         this.billViewMode = true;
         console.log("parsan id value je " + parseInt(id!))
-        this.getBillBody(parseInt(id!));
+        this.getBillHeader(parseInt(id!));
         //console.log("billviewbody je " + this.billViewModeBody)
       }
     })
@@ -356,9 +358,10 @@ export class PosComponent implements OnInit {
   }
 
 
-  getBillBody(id: number) {
+  getBillHeader(id: number) {
     this.billsService.getBillHeaderByID(id).subscribe((dataOfBillHeader: any) => {
       console.log("data of one header is: " + JSON.stringify(dataOfBillHeader));
+      console.log("billbodyi siuuuu " + JSON.stringify(dataOfBillHeader.billBodies))
 
       for (let bill of dataOfBillHeader.billBodies) {
         this.productToShowOnView.id = dataOfBillHeader.id;
@@ -373,58 +376,23 @@ export class PosComponent implements OnInit {
         this.productToShowOnView.discountAmount = bill.discountAmount;
         this.productToShowOnView.totalPrice = bill.totalPrice;
         console.log("to show on view is " + JSON.stringify(this.productToShowOnView));
+        
         const newBasket = this.productsInBasket;
         this.productsInBasket.push(this.productToShowOnView);
         this.productsInBasket = [...newBasket];
+        this.cd.detectChanges();
       }
       console.log("products in basket su " + JSON.stringify(this.productsInBasket));
-      // for(let bill of dataOfBillBody){
-      //   //console.log("bill je: " + JSON.stringify(bill));
-      //   this.productsService.getProductByID(bill.productId).subscribe((dataOfProduct: any) => {
-      //     this.productToShowOnView.id = dataOfProduct.id;
-      //     this.productToShowOnView.cipher = dataOfProduct.cipher;
-      //     this.productToShowOnView.name = dataOfProduct.name;
-      //     this.productToShowOnView.measure = dataOfProduct.measure;
-      //     this.productToShowOnView.count = dataOfProduct.count;
-      //     this.productToShowOnView.price = bill.price;
-      //     this.productToShowOnView.count = bill.count;
-      //     this.productToShowOnView.quantity = bill.quantity;
-      //     this.productToShowOnView.discount = bill.discount;
-      //     this.productToShowOnView.discountAmount = bill.discountAmount;
-      //     this.productToShowOnView.totalPrice = bill.totalPrice;
-      //     this.productsInBasket.push(this.productToShowOnView);
 
-      //     console.log(this.productToShowOnView, this.productsInBasket); 
-      //   })
-      //   this.cd.detectChanges();
-      //     // const newBasket = this.productsInBasket;
-      //     // this.productsInBasket = [...newBasket];
-      //     // console.log(this.productsInBasket);
-      // }
-
-      //     this.billsService.getBillHeaderByID(dataOfBillBody[0].billHeaderId).subscribe((dataOfHeader: any) => {
+      //header info
       this.billHeader.date = dataOfBillHeader.date;
       this.billHeader.id = dataOfBillHeader.id;
+      this.billHeader.totalDiscount = this.totalDiscount;
 
-      //       this.buyersService.getBuyerByID(dataOfHeader.buyerId).subscribe((dataOfBuyer: Buyer) => {
+      //buyer info
       this.buyer.adress = dataOfBillHeader.buyer.adress;
       this.buyer.city = dataOfBillHeader.buyer.city;
       this.buyer.name = dataOfBillHeader.buyer.name;
-
-      //         this.buyer = dataOfBuyer;
-      //       })
-      //     })
-
-      // console.log("data iz bill servisa je " + JSON.stringify(dataOfBillBody));
-      // console.log("data iz product servisa je " + JSON.stringify(dataOfProduct));
-
-      // console.log("product to show on view: " + JSON.stringify(this.productToShowOnView));
-      // console.log("productsInBasket je " + JSON.stringify(this.productsInBasket))
-
-      //console.log("billviewbody je " + JSON.stringify(this.billViewModeBody))
-      //console.log("datainbasket je " + JSON.stringify(this.billViewModeBody[0].id))
     });
-
-
   }
 }
