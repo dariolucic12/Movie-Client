@@ -39,18 +39,6 @@ export class PosComponent implements OnInit {
   //////////////variables for billViewMode//////////////
   billViewMode: boolean = false;
   billViewModeBody: ProductToBasket[] = [];
-  productToShowOnView: ProductToBasket = {
-    id: 0,
-    cipher: '',
-    name: '',
-    measure: '',
-    price: 0,
-    count: 0,
-    quantity: 0,
-    discount: 0,
-    discountAmount: 0,
-    totalPrice: 0
-  }
 
   buyer: Buyer = {
     id: 0,
@@ -328,7 +316,7 @@ export class PosComponent implements OnInit {
       const decodedToken = this.jwtHelper.decodeToken(token);
       var key = Object.values(decodedToken);
       console.log(key[1]);
-      this.userMessage = `Welcome ${key[1]}`
+      this.userMessage = `Welcome ${key[0]}`
     }
   }
 
@@ -365,43 +353,30 @@ export class PosComponent implements OnInit {
 
   getBillHeader(id: number) {
     this.billsService.getBillHeaderByID(id).subscribe((dataOfBillHeader: any) => {
-     
-
       console.log("data of one header is: " + JSON.stringify(dataOfBillHeader));
-      console.log("billbodyi siuuuu " + JSON.stringify(dataOfBillHeader.billBodies))
+
+      const newBasket = [...this.productsInBasket];
 
       for (let bill of dataOfBillHeader.billBodies) {
         var productToShowOnView: ProductToBasket = {
-          id: 0,
-          cipher: '',
-          name: '',
-          measure: '',
-          price: 0,
-          count: 0,
-          quantity: 0,
-          discount: 0,
-          discountAmount: 0,
-          totalPrice: 0
+          id: dataOfBillHeader.id,
+          cipher: bill.product.cipher,
+          name: bill.product.name,
+          measure: bill.product.measure,
+          price: bill.product.price,
+          count: bill.product.count,
+          quantity: bill.quantity,
+          discount: bill.discount,
+          discountAmount: bill.discountAmount,
+          totalPrice: bill.totalPrice
         }
 
-        productToShowOnView['id'] = dataOfBillHeader.id;
-        productToShowOnView['cipher'] = bill.product.cipher;
-        productToShowOnView['name'] = bill.product.name;
-        productToShowOnView['measure'] = bill.product.measure;
-        productToShowOnView['count'] = bill.product.count;
-        productToShowOnView['price'] = bill.product.price;
-        productToShowOnView['count'] = bill.count;
-        productToShowOnView['quantity'] = bill.quantity;
-        productToShowOnView['discount'] = bill.discount;
-        productToShowOnView['discountAmount'] = bill.discountAmount;
-        productToShowOnView['totalPrice'] = bill.totalPrice;
+        newBasket.push(productToShowOnView);
         console.log("to show on view is " + JSON.stringify(productToShowOnView));
-        
-        const newBasket = this.productsInBasket;
-        this.productsInBasket.push(productToShowOnView);
-        this.productsInBasket = [...newBasket];
-        this.cd.detectChanges();
       }
+      
+      this.productsInBasket = newBasket;
+      this.cd.detectChanges();
       console.log("products in basket su " + JSON.stringify(this.productsInBasket));
 
       //header info
