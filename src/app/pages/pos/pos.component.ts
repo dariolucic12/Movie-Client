@@ -8,7 +8,6 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 import { ProductToBasket } from 'src/app/models/product-to-basket.model';
-import { JwtHelperService } from "@auth0/angular-jwt";
 import { ComponentCanDeactivate } from 'src/app/models/ComponentCanDeactivate';
 import { BillsService } from 'src/app/services/bills.service';
 import { BillBody } from 'src/app/models/bill-body.model';
@@ -24,8 +23,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class PosComponent implements OnInit {
-  userMessage = "";
-  constructor(private buyersService: BuyersService, private productsService: ProductsService, private jwtHelper: JwtHelperService,
+  
+  constructor(private buyersService: BuyersService, private productsService: ProductsService,
     private billsService: BillsService, private activatedRoute: ActivatedRoute) { }
 
   canDeactivate(): boolean {
@@ -115,7 +114,6 @@ export class PosComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBuyers();
     this.getAllProducts();
-    this.getUserName();
 
     this.activatedRoute.paramMap.subscribe(param => {
       console.log("param je: " + param.get('id'))
@@ -307,18 +305,6 @@ export class PosComponent implements OnInit {
     return this.getWithoutTotalDiscount();
   }
 
-  getUserName() {
-    const token = localStorage.getItem("token");
-    if (token == null) {
-      console.log("Token incorrect")
-    } else {
-
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      var key = Object.values(decodedToken);
-      console.log(key[1]);
-      this.userMessage = `Welcome ${key[1]}`
-    }
-  }
 
   onCheckout() {
     //salji billHeader
