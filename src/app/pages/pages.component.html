@@ -1,7 +1,9 @@
 <mat-sidenav-container class="example-container">
     <mat-sidenav id="sidebar" class="mat-elevation-z8" #sidenav mode="side" opened class="example-sidenav"
         [fixedInViewport]="options.value.fixed">
-        <h2>{{welcomeUser}}</h2>
+        <div>
+            <h2>{{welcomeUser}}</h2>
+        </div>
         <button mat-button class="menu-button" [routerLink]="['/pages/home']">
             <mat-icon>assignment</mat-icon>
             <span>Previous transactions</span>
