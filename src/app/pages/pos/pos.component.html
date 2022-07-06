@@ -16,7 +16,7 @@
     <h2 *ngIf="billViewMode === false">Address: {{this.address}}</h2>
     <h2 *ngIf="billViewMode">From: {{this.buyer.city}}</h2>
     <h2 *ngIf="billViewMode">Address: {{this.buyer.adress}}</h2>
-    <h1 *ngIf="billViewMode === true" id="billNumber">Bill number: {{this.productsInBasket[0]?.id}}</h1>
+    <h1 *ngIf="billViewMode === true" id="billNumber">Bill number: {{this.billHeader.id}}</h1>
     <h2 id="dateOfBill" *ngIf="billViewMode === false">Date: {{this.today | date: 'dd/MM/yyyy'}}
       <span class="material-icons">
         calendar_today
@@ -59,7 +59,7 @@
       [disabled]="!this.quantity" *ngIf="billViewMode===false">Add</button>
     <br>
     <br>
-    <table id="table" mat-table [dataSource]="productsInBasket" class="mat-elevation-z8 demo-table">
+    <table id="table" mat-table [dataSource]="this.productsInBasket" class="mat-elevation-z8 demo-table">
       <!-- <table *ngIf="billViewMode" id="table2" mat-table [dataSource]="productsInBasket" class="mat-elevation-z8 demo-table"> -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef> Code </th>
@@ -134,8 +134,8 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h3 *ngIf="billViewMode === false">Without discount: {{getWithoutTotalDiscount() | currency: "EUR"}}</h3>
-    <h3 *ngIf="billViewMode === false">Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
+    <h3>Without discount: {{getWithoutTotalDiscount() | currency: "EUR"}}</h3>
+    <h3>Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
     <h1 id="totalToPay" *ngIf="billViewMode === false">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
     <h1 id="totalToPayViewMode" *ngIf="billViewMode === true">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
     <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" *ngIf="billViewMode === false"/>
