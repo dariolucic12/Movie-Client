@@ -67,6 +67,8 @@ export class PosComponent implements OnInit {
   city!: string;
   address!: string;
   today = new Date();
+  totalDiscount!: number; //isti za cijeli racun - discount/100
+  totalAmount!: number;
 
   buyers: Buyer[] = [];
   products: Product[] = [];
@@ -96,7 +98,6 @@ export class PosComponent implements OnInit {
   productsInBasket: ProductToBasket[] = [];
   discount!: number; //poseban za svaki product - discount/100
   discountAmount!: number;
-  totalDiscount!: number; //isti za cijeli racun - discount/100
   withoutTotalDiscount: number = 0;
 
 
@@ -311,9 +312,11 @@ export class PosComponent implements OnInit {
 
   getTotalToPay() {
     if (this.totalDiscount) {
-      return this.getWithoutTotalDiscount() - (this.getWithoutTotalDiscount() * (this.totalDiscount / 100));
+      this.totalAmount = this.getWithoutTotalDiscount() - (this.getWithoutTotalDiscount() * (this.totalDiscount / 100));
+      return this.totalAmount;
     }
-    return this.getWithoutTotalDiscount();
+    this.totalAmount = this.getWithoutTotalDiscount();
+    return this.totalAmount;
   }
 
   getUserName() {
@@ -330,6 +333,8 @@ export class PosComponent implements OnInit {
   }
 
   onCheckout() {
+    this.billHeader.totalDiscount = this.totalDiscount;
+    this.billHeader.totalAmount = this.totalAmount;
     //salji billHeader
     this.billsService.addNewHeader(this.billHeader).subscribe((data) => {
       //get billHeader id
@@ -387,7 +392,8 @@ export class PosComponent implements OnInit {
       //header info
       this.billHeader.date = dataOfBillHeader.date;
       this.billHeader.id = dataOfBillHeader.id;
-      this.billHeader.totalDiscount = this.totalDiscount;
+      this.totalDiscount = dataOfBillHeader.totalDiscount;
+      this.totalAmount = dataOfBillHeader.totalAmount;
 
       //buyer info
       this.buyer.adress = dataOfBillHeader.buyer.adress;
