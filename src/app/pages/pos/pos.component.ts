@@ -291,6 +291,7 @@ export class PosComponent implements OnInit {
 
   deleteProductFromBasket(id: number) {
     this.productsInBasket = this.productsInBasket.filter(item => item.id != id);
+    this.toast.success("Product removed")
   }
 
   getWithoutTotalDiscount() {
