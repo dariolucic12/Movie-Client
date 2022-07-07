@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 
 
@@ -58,7 +59,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatGridListModule,
     MatSelectModule,
     NgxMatSelectSearchModule,
-    MatGridListModule
+    MatGridListModule,
+    HotToastModule.forRoot(),
   ]
 })
 export class PagesModule { }

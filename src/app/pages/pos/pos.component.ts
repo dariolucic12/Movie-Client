@@ -15,6 +15,7 @@ import { TileStyler } from '@angular/material/grid-list/tile-styler';
 import { BillHeader } from 'src/app/models/bill-header.model';
 import { ProductSale } from 'src/app/models/productSale.model';
 import { ActivatedRoute } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-pos',
@@ -24,8 +25,14 @@ import { ActivatedRoute } from '@angular/router';
 
 export class PosComponent implements OnInit {
   userMessage = "";
-  constructor(private buyersService: BuyersService, private productsService: ProductsService,
-    private billsService: BillsService, private activatedRoute: ActivatedRoute, private cd: ChangeDetectorRef) { }
+  constructor(
+    private buyersService: BuyersService, 
+    private productsService: ProductsService,
+    private billsService: BillsService, 
+    private activatedRoute: ActivatedRoute, 
+    private cd: ChangeDetectorRef, 
+    private toast: HotToastService
+  ) { }
 
   canDeactivate(): boolean {
     if (this.productsInBasket.length > 0) {
@@ -173,7 +180,7 @@ export class PosComponent implements OnInit {
   getAllProducts() {
     this.productsService.getAllProducts().subscribe((data: any) => {
       this.products = data;
-      //console.log(this.products);
+      console.log(this.products);
     })
   }
 
@@ -218,10 +225,24 @@ export class PosComponent implements OnInit {
     if (isAdded) {
       console.log("product already added");
       return;
-    } else {
+    }
+    if(this.quantity > product.count){
+      this.toast.error("Sorry we only have " + product.count + " " + product.name + " in supply")
+      return;
+    }
+    if(this.quantity === product.count){
+      this.toast.warning("This is the maximal amount of " + product.name)
       this.productsInBasket.push(product);
       this.productsInBasket = [...newBasket];
+
     }
+    if(this.quantity < product.count){
+      this.toast.success(product.name + " added successfully")
+      this.productsInBasket.push(product);
+      this.productsInBasket = [...newBasket];
+   
+    }
+    
 
     product['quantity'] = this.quantity;
     product['discount'] = this.discount;
@@ -234,7 +255,6 @@ export class PosComponent implements OnInit {
       product['discountAmount'] = 0;
     }
 
-
     console.log("datainbasket je " + JSON.stringify(this.billViewModeBody[0]))
     // console.log(product.quantity);
     // console.log(product);
@@ -246,6 +266,10 @@ export class PosComponent implements OnInit {
 
   increaseAmount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
+    if(product.quantity >= product.count){
+      this.toast.error("Sorry we only have " + product.count + " " + product.name + " in supply")
+      return;
+    }
     product.quantity++;
     product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100);
     product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product['discount'] / 100));
@@ -304,12 +328,26 @@ export class PosComponent implements OnInit {
     return this.totalAmount;
   }
 
+  subtractProductCount(productForSale: ProductToBasket) {
+    const productToUpdate = this.products.find(product => product.name === productForSale.name)
+    if(productToUpdate){
+      const finalProduct: Product = {...productToUpdate}
+      const updatedCount = productToUpdate?.count - productForSale.quantity
+      finalProduct.count = updatedCount
+     
+      this.productsService.updateProduct(finalProduct).subscribe();
+    }
+    else{
+      console.log("bleeee")
+    }
 
+  }
 
   onCheckout() {
     this.billHeader.totalDiscount = this.totalDiscount;
     this.billHeader.totalAmount = this.totalAmount;
     //salji billHeader
+    console.log("Header added")
     this.billsService.addNewHeader(this.billHeader).subscribe((data) => {
       //get billHeader id
       //this.billBody.billHeaderId = data.id;
@@ -321,10 +359,13 @@ export class PosComponent implements OnInit {
         this.billBody.totalPrice = product.totalPrice;
         this.billBody.productId = product.id;
         this.billBody.billHeaderId = data.id;
-
+        console.log(this.billBody);
+        this.subtractProductCount(product)
         this.billsService.addNewBody(this.billBody).subscribe();
         console.log("Racun dodan u prethodne transakcije!");
         console.log(this.billBody);
+
+        
       }
       //console.log(data.id);
     });
@@ -332,7 +373,7 @@ export class PosComponent implements OnInit {
 
     //salji billbody s product id-em i header id-em
     console.log(this.billHeader);
-
+    console.log(this.billBody);
     //console.log(this.productsInBasket);
   }
 
@@ -342,6 +383,8 @@ export class PosComponent implements OnInit {
       console.log("data of one header is: " + JSON.stringify(dataOfBillHeader));
 
       const newBasket = [...this.productsInBasket];
+
+
 
       for (let bill of dataOfBillHeader.billBodies) {
         var productToShowOnView: ProductToBasket = {
@@ -355,11 +398,22 @@ export class PosComponent implements OnInit {
           discount: bill.discount,
           discountAmount: bill.discountAmount,
           totalPrice: bill.totalPrice
-        }
 
-        newBasket.push(productToShowOnView);
+        }
+        
+        
+        //if(productToShowOnView.name ===)
+        //this.products.forEach(product => {
+          //if(product.count )
+        //})
+      
+
+          newBasket.push(productToShowOnView);
+       
+        console.log("Invalid input we dont have that much products")
         console.log("to show on view is " + JSON.stringify(productToShowOnView));
       }
+    
       
       this.productsInBasket = newBasket;
       this.cd.detectChanges();

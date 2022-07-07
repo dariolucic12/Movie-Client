@@ -12,6 +12,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
   styleUrls: ['./pages.component.scss']
 })
 export class PagesComponent implements OnInit {
+  
   welcomeUser = "";
 
   public productsInBasket: ProductToBasket [] = [];
@@ -31,7 +32,7 @@ export class PagesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getUserName()
+    this.getUserName();
   }
 
   logout(): void {

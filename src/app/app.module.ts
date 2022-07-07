@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 
 
@@ -35,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     FormsModule,
+    HotToastModule.forRoot(),
   ],
   entryComponents: [ConfirmComponent],
   providers: [JwtHelperService, 
