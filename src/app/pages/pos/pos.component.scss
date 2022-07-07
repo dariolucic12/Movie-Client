@@ -94,9 +94,12 @@ button {
     width: 190px;
   }
 
-  .mat-button.mat-primary .mat-button-focus-overlay {
-    background-color: transparent;
-  }
+  .mat-icon{
+    height:20px !important;
+    width:20px !important;
+    font-size:20px !important;
+    margin-bottom: 5px;
+}
  
 }
 
