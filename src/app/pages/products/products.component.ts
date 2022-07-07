@@ -10,6 +10,7 @@ import { NgModel } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { DialogService } from 'src/app/services/dialog.service';
 import { Title } from '@angular/platform-browser';
+import { HotToastService } from '@ngneat/hot-toast';
 
 const PRODUCT_DATA: Product[] = [
   { cipher: 'dfasdfdsafds', name: 'Chair', measure: 'komad', price: 22.00, count: 80 },
@@ -39,7 +40,8 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService,
     private dialog: MatDialog,
     private changeDetectorRefs: ChangeDetectorRef,
-    private dialogService: DialogService  
+    private dialogService: DialogService,
+    private toast: HotToastService  
   ) { }
 
   ngOnInit(): void {
@@ -87,6 +89,7 @@ export class ProductsComponent implements OnInit {
 
   addProduct(product: Product) {
     this.productsService.addNewProduct(product).subscribe(res => {
+      this.toast.success(product.name + " added")
       this.getAllProducts(); //obavezno stavit u subscribe!
     });
     //this.changeDetectorRefs.detectChanges();
@@ -97,6 +100,7 @@ export class ProductsComponent implements OnInit {
 
   updateProduct(product: Product) {
     this.productsService.updateProduct(product).subscribe(res => {
+      this.toast.success(product.name + " successfully updated")
       this.getAllProducts();
     });
   }
