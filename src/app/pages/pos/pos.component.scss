@@ -93,6 +93,12 @@ button {
   th, td{
     width: 190px;
   }
+
+  a{
+    width: 13px;
+    text-decoration: none;
+  }
+ 
 }
 
 #deleteButton {
@@ -141,4 +147,9 @@ button {
 
 #totalToPayViewMode{
   margin-top: 10px;
+}
+
+#buttons{
+  height: 10px;
+  width: 10px;
 }
