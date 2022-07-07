@@ -369,6 +369,8 @@ export class PosComponent implements OnInit {
       }
       //console.log(data.id);
     });
+    this.toast.success("Purchase was succesfull")
+
     //this.billsService.getAllBillHeaders().subscribe();
 
     //salji billbody s product id-em i header id-em
