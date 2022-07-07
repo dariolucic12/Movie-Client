@@ -42,8 +42,8 @@ export class TransactionsComponent implements OnInit {
     private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.getAllBillBodies();
-    this.getAllProducts();
+    //this.getAllBillBodies();
+    //this.getAllProducts();
     this.getAllHeaders();
   }
 
