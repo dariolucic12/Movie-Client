@@ -346,7 +346,7 @@ export class PosComponent implements OnInit {
   onCheckout() {
     this.billHeader.totalDiscount = this.totalDiscount;
     this.billHeader.totalAmount = this.totalAmount;
-    let newBasket = this.productsInBasket;
+    let emptyBasket = this.productsInBasket;
     //salji billHeader
     console.log("Header added")
     this.billsService.addNewHeader(this.billHeader).subscribe((data) => {
@@ -369,8 +369,8 @@ export class PosComponent implements OnInit {
         
       }
       //console.log(data.id);
-      newBasket = []
-      this.productsInBasket = [...newBasket];
+      emptyBasket = []
+      this.productsInBasket = [...emptyBasket];
     });
     this.toast.success("Purchase was succesfull")
     //this.billsService.getAllBillHeaders().subscribe();
