@@ -18,7 +18,6 @@ import { FormsModule } from '@angular/forms';
 import { HotToastModule } from '@ngneat/hot-toast';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +36,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     MatIconModule,
     FormsModule,
     HotToastModule.forRoot(),
+
   ],
   entryComponents: [ConfirmComponent],
   providers: [JwtHelperService, 

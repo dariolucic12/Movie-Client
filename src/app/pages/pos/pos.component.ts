@@ -14,6 +14,7 @@ import { BillHeader } from 'src/app/models/bill-header.model';
 import { ActivatedRoute } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 
+
 @Component({
   selector: 'app-pos',
   templateUrl: './pos.component.html',
@@ -22,6 +23,8 @@ import { HotToastService } from '@ngneat/hot-toast';
 
 export class PosComponent implements OnInit {
   userMessage = "";
+  maxDate = new Date();
+  date : any;
   constructor(
     private buyersService: BuyersService, 
     private productsService: ProductsService,
