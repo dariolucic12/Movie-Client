@@ -22,8 +22,10 @@ export class BillsService extends BaseApiService {
     );
   }
 
-  getBillHeaderByID(id: number): Observable<Object> {
-    return this.http.get(this.apiRoute + this.headerPath + id);
+  getBillHeaderByID(id: number): Observable<BillHeader> {             //promijenjen povratni tip u BillHeader
+    return this.http.get(this.apiRoute + this.headerPath + id).pipe(
+      map(response => response as BillHeader)
+    );
   }
 
   addNewHeader(header: BillHeader): Observable<BillHeader> {

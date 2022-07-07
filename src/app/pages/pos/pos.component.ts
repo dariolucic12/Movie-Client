@@ -8,12 +8,9 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 import { ProductToBasket } from 'src/app/models/product-to-basket.model';
-import { ComponentCanDeactivate } from 'src/app/models/ComponentCanDeactivate';
 import { BillsService } from 'src/app/services/bills.service';
 import { BillBody } from 'src/app/models/bill-body.model';
-import { TileStyler } from '@angular/material/grid-list/tile-styler';
 import { BillHeader } from 'src/app/models/bill-header.model';
-import { ProductSale } from 'src/app/models/productSale.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -47,8 +44,6 @@ export class PosComponent implements OnInit {
     adress: ''
   }
 
-  productsInBasketView: ProductToBasket[] = [];
-
   //////////////INFORMACIJE ZA HEADER////////////// 
   //trebat ce se hvatat id od kupca kod dodavanja u header
   city!: string;
@@ -66,6 +61,7 @@ export class PosComponent implements OnInit {
     id: 0,
     totalDiscount: 0,
     totalAmount: 0,
+    billBodies: []
   }
   billBody: BillBody = {
     price: 0,
@@ -74,19 +70,15 @@ export class PosComponent implements OnInit {
     discountAmount: 0,
     totalPrice: 0,
     productId: 0,
-    billHeaderId: 0
   };
 
-
   //////////////INFORMACIJE ZA BODY//////////////
-  //id ce se automatski dodjelit u bazi
   //productsInBasket varijabla sadrzi info o dodanim productima u kasu, cijena svakog, kolicina, ukupna cijena svakog, proizvod id svakog
   //te naknadno zaglavlje id kojeg cemo dobiti odmah nakon spremanja headera u bazu
   productsInBasket: ProductToBasket[] = [];
   discount!: number; //poseban za svaki product - discount/100
   discountAmount!: number;
   withoutTotalDiscount: number = 0;
-
 
   quantity!: number;
   displayedColumns: string[] = ['code', 'name', 'measure', 'quantity', 'price', 'discount', 'discountAmount', 'totalPrice', 'options'];
@@ -106,9 +98,6 @@ export class PosComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
 
   ngOnInit(): void {
-    this.getAllBuyers();
-    this.getAllProducts();
-
 
     this.activatedRoute.paramMap.subscribe(param => {
       console.log("param je: " + param.get('id'))
@@ -117,6 +106,8 @@ export class PosComponent implements OnInit {
       if (param.get('id') === null) {
         console.log('POS Mode');
         this.billViewMode = false;
+        this.getAllBuyers();
+        this.getAllProducts();
       }
       else {
         console.log('billViewMode');
@@ -127,13 +118,9 @@ export class PosComponent implements OnInit {
       }
     })
 
-
     if (this.billViewMode === true) {
       this.displayedColumns = ['code', 'name', 'measure', 'quantity', 'price', 'discount', 'discountAmount', 'totalPrice'];
     }
-
-    // set initial selection
-    //this.productCtrl.setValue(this.products[1]);
 
     // load the product list
     this.filteredProducts.next(this.products.slice());
@@ -167,8 +154,6 @@ export class PosComponent implements OnInit {
     this.address = buyer.adress;
     this.billHeader.buyerId = buyer.id;
   }
-
-
 
   getAllProducts() {
     this.productsService.getAllProducts().subscribe((data: any) => {
@@ -234,15 +219,12 @@ export class PosComponent implements OnInit {
       product['discountAmount'] = 0;
     }
 
-
     console.log("datainbasket je " + JSON.stringify(this.billViewModeBody[0]))
     // console.log(product.quantity);
     // console.log(product);
     this.quantity = 0;
     this.discount = 0;
   }
-
-  // isProductAlreadyInBasket(product: ProductToBasket, newBasket: ProductToBasket[]){}
 
   increaseAmount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
@@ -304,41 +286,35 @@ export class PosComponent implements OnInit {
     return this.totalAmount;
   }
 
-
-
   onCheckout() {
     this.billHeader.totalDiscount = this.totalDiscount;
     this.billHeader.totalAmount = this.totalAmount;
-    //salji billHeader
-    this.billsService.addNewHeader(this.billHeader).subscribe((data) => {
-      //get billHeader id
-      //this.billBody.billHeaderId = data.id;
-      for (const product of this.productsInBasket) {
-        this.billBody.price = product.price;
-        this.billBody.quantity = product.quantity;
-        this.billBody.discount = product.discount;
-        this.billBody.discountAmount = product.discountAmount;
-        this.billBody.totalPrice = product.totalPrice;
-        this.billBody.productId = product.id;
-        this.billBody.billHeaderId = data.id;
 
-        this.billsService.addNewBody(this.billBody).subscribe();
-        console.log("Racun dodan u prethodne transakcije!");
-        console.log(this.billBody);
+    const newBasket = [...this.billHeader.billBodies];
+    for (const product of this.productsInBasket) {
+      var billBody: BillBody = {
+        price: product.price,
+        quantity: product.quantity,
+        discount: product.discount,
+        discountAmount: product.discountAmount,
+        totalPrice: product.totalPrice,
+        productId: product.id
       }
-      //console.log(data.id);
-    });
-    //this.billsService.getAllBillHeaders().subscribe();
 
-    //salji billbody s product id-em i header id-em
-    console.log(this.billHeader);
+      newBasket.push(billBody);
 
-    //console.log(this.productsInBasket);
+      console.log("Racun dodan u prethodne transakcije!");
+      console.log("billbody: " + JSON.stringify(billBody));
+    }
+    this.billHeader.billBodies = newBasket;
+    //salji billHeader
+    this.billsService.addNewHeader(this.billHeader).subscribe();
+
+    console.log("billheader: " + JSON.stringify(this.billHeader));
   }
 
-
   getBillHeader(id: number) {
-    this.billsService.getBillHeaderByID(id).subscribe((dataOfBillHeader: any) => {
+    this.billsService.getBillHeaderByID(id).subscribe((dataOfBillHeader: BillHeader) => {
       console.log("data of one header is: " + JSON.stringify(dataOfBillHeader));
 
       const newBasket = [...this.productsInBasket];
@@ -346,11 +322,11 @@ export class PosComponent implements OnInit {
       for (let bill of dataOfBillHeader.billBodies) {
         var productToShowOnView: ProductToBasket = {
           id: dataOfBillHeader.id,
-          cipher: bill.product.cipher,
-          name: bill.product.name,
-          measure: bill.product.measure,
-          price: bill.product.price,
-          count: bill.product.count,
+          cipher: bill.product!.cipher,
+          name: bill.product!.name,
+          measure: bill.product!.measure,
+          price: bill.product!.price,
+          count: bill.product!.count,
           quantity: bill.quantity,
           discount: bill.discount,
           discountAmount: bill.discountAmount,
@@ -358,12 +334,12 @@ export class PosComponent implements OnInit {
         }
 
         newBasket.push(productToShowOnView);
-        console.log("to show on view is " + JSON.stringify(productToShowOnView));
+        //console.log("to show on view is " + JSON.stringify(productToShowOnView));
       }
       
       this.productsInBasket = newBasket;
       this.cd.detectChanges();
-      console.log("products in basket su " + JSON.stringify(this.productsInBasket));
+      //console.log("products in basket su " + JSON.stringify(this.productsInBasket));
 
       //header info
       this.billHeader.date = dataOfBillHeader.date;
@@ -372,9 +348,9 @@ export class PosComponent implements OnInit {
       this.totalAmount = dataOfBillHeader.totalAmount;
 
       //buyer info
-      this.buyer.adress = dataOfBillHeader.buyer.adress;
-      this.buyer.city = dataOfBillHeader.buyer.city;
-      this.buyer.name = dataOfBillHeader.buyer.name;
+      this.buyer.adress = dataOfBillHeader.buyer!.adress;
+      this.buyer.city = dataOfBillHeader.buyer!.city;
+      this.buyer.name = dataOfBillHeader.buyer!.name;
     });
   }
 }

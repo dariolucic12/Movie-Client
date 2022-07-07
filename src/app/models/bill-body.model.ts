@@ -1,3 +1,5 @@
+import { Product } from "./product.model";
+
 export interface BillBody {
     id?:            number;
     price:          number;
@@ -6,5 +8,6 @@ export interface BillBody {
     discountAmount: number;
     totalPrice:     number;
     productId:      number;
-    billHeaderId:   number;
+    billHeaderId?:   number;
+    product?:       Product;
 }

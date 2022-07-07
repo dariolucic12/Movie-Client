@@ -1,3 +1,4 @@
+import { BillBody } from "./bill-body.model";
 import { Buyer } from "./buyer.model";
 
 export interface BillHeader {
@@ -8,4 +9,5 @@ export interface BillHeader {
     buyer?:          Buyer;
     totalDiscount:  number;
     totalAmount:    number;
+    billBodies: BillBody[]; //pa u njega ubacivat stavke s POS view na checkout?
 }
