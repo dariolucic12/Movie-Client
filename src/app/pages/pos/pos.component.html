@@ -73,7 +73,7 @@
         <th mat-header-cell *matHeaderCellDef> Measure </th>
         <td mat-cell *matCellDef="let element"> {{element.measure }} </td>
       </ng-container>
-      <ng-container matColumnDef="quantity" id="quantityInTable">
+      <ng-container  matColumnDef="quantity" id="quantityInTable">
 
         <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
           <mat-icon>plus_one</mat-icon>
@@ -82,11 +82,15 @@
        
         <td mat-cell *matCellDef="let element"> 
           <button (click)="decreaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus" *ngIf="billViewMode===false">
-            -
+            <mat-icon>
+              remove
+            </mat-icon>
           </button>
           {{element.quantity}} 
           <button (click)="increaseAmount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus" *ngIf="billViewMode===false">
-            +
+            <mat-icon>
+              add
+            </mat-icon>
           </button>
         </td>
       </ng-container>
@@ -98,11 +102,15 @@
         <th mat-header-cell *matHeaderCellDef id="changingColumn"> Discount </th>
         <td mat-cell *matCellDef="let element"> 
           <button (click)="decreaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a minus" *ngIf="billViewMode===false">
-            -
+            <mat-icon>
+              remove
+            </mat-icon>
           </button>
           {{element.discount}}% 
           <button (click)="increaseDiscount(element)" mat-mini-fab color="primary" aria-label="Example icon button with a plus" *ngIf="billViewMode===false">
-            +
+            <mat-icon>
+              add
+            </mat-icon>
           </button>
         </td>
       </ng-container>
