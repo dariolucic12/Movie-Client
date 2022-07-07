@@ -272,7 +272,7 @@ export class PosComponent implements OnInit {
 
   decreaseDiscount(product: ProductToBasket) {
     const newBasket = this.productsInBasket;
-    if (product.discount !== 1) {
+    if (product.discount !== 0) {
       product.discount--;
       product['discountAmount'] = (product.price * product.quantity) * (product['discount'] / 100);
       product['totalPrice'] = (product.price * product.quantity) - ((product.price * product.quantity) * (product['discount'] / 100));
