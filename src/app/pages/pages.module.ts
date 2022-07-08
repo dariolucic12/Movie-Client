@@ -25,6 +25,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { HotToastModule } from '@ngneat/hot-toast';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 
 
@@ -61,6 +64,11 @@ import { HotToastModule } from '@ngneat/hot-toast';
     NgxMatSelectSearchModule,
     MatGridListModule,
     HotToastModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ]
 })
 export class PagesModule { }

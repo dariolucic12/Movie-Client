@@ -14,6 +14,7 @@ import { BillHeader } from 'src/app/models/bill-header.model';
 import { ActivatedRoute } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 
+
 @Component({
   selector: 'app-pos',
   templateUrl: './pos.component.html',
@@ -22,14 +23,20 @@ import { HotToastService } from '@ngneat/hot-toast';
 
 export class PosComponent implements OnInit {
   userMessage = "";
+  maxDate = new Date();
+  date : any;
+  selectedDate: string = "";
   constructor(
     private buyersService: BuyersService, 
     private productsService: ProductsService,
     private billsService: BillsService, 
     private activatedRoute: ActivatedRoute, 
     private cd: ChangeDetectorRef, 
-    private toast: HotToastService
-  ) { }
+    private toast: HotToastService,
+
+  ) { 
+  
+  }
 
   canDeactivate(): boolean {
     if (this.productsInBasket.length > 0) {
@@ -185,6 +192,11 @@ export class PosComponent implements OnInit {
       });
   }
 
+  dateChange(event: any){
+    this.today = event.target.value
+    console.log(this.today)
+  }
+
   protected filterProducts() {
     if (!this.products) {
       return;
@@ -322,7 +334,7 @@ export class PosComponent implements OnInit {
       this.productsService.updateProduct(finalProduct).subscribe();
     }
     else{
-      console.log("no product to update")
+      console.log("Subtract does not work")
     }
 
   }
