@@ -24,9 +24,9 @@
     </h2>
 
     <mat-form-field>
-      <input matInput [max]="maxDate" [(ngModel)]="date" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date">
+      <input matInput [max]="maxDate" [(ngModel)]="date" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly>
       <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker #datepicker></mat-datepicker>
+      <mat-datepicker disabled="false" #datepicker color="primary"></mat-datepicker>
       <mat-error *ngIf="datePickerModel.hasError('matDatepickerMax')">
         Maximum date should be {{maxDate | date }}
       </mat-error>   

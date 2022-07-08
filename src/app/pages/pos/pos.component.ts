@@ -31,8 +31,11 @@ export class PosComponent implements OnInit {
     private billsService: BillsService, 
     private activatedRoute: ActivatedRoute, 
     private cd: ChangeDetectorRef, 
-    private toast: HotToastService
-  ) { }
+    private toast: HotToastService,
+
+  ) { 
+  
+  }
 
   canDeactivate(): boolean {
     if (this.productsInBasket.length > 0) {
