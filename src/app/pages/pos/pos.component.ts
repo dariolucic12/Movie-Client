@@ -150,7 +150,7 @@ export class PosComponent implements OnInit {
   }
 
   getAllBuyers() {
-    this.buyersService.getAllBuyers().subscribe((data: any) => {
+    this.buyersService.getAllBuyers().subscribe((data: Buyer[]) => {
       this.buyers = data;
       //console.log(this.buyers);
     })
@@ -163,7 +163,7 @@ export class PosComponent implements OnInit {
   }
 
   getAllProducts() {
-    this.productsService.getAllProducts().subscribe((data: any) => {
+    this.productsService.getAllProducts().subscribe((data: Product[]) => {
       this.products = data;
       console.log(this.products);
     })
@@ -322,7 +322,7 @@ export class PosComponent implements OnInit {
       this.productsService.updateProduct(finalProduct).subscribe();
     }
     else{
-      console.log("bleeee")
+      console.log("no product to update")
     }
 
   }
@@ -345,9 +345,9 @@ export class PosComponent implements OnInit {
       }
 
       newBasket.push(billBody);
-      this.subtractProductCount(product);
+      //this.subtractProductCount(product);
 
-      console.log("Racun dodan u prethodne transakcije!");
+      console.log("Racun dodan u prethodne transakcije i proizvod updatean!");
       console.log("billbody: " + JSON.stringify(billBody));
     }
     this.billHeader.billBodies = newBasket;
