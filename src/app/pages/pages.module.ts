@@ -68,7 +68,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
     MatNativeDateModule
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }
   ]
 })
 export class PagesModule { }

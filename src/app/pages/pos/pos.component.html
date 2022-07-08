@@ -15,7 +15,7 @@
       </div>
       <div>
         <mat-form-field *ngIf="billViewMode === false" >
-          <input matInput [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="this.today" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
+          <input matInput  [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="this.today" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
           <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
           <mat-datepicker [startAt]="today" disabled="false" #datepicker color="primary"></mat-datepicker>
           <mat-error *ngIf="datePickerModel.hasError('matDatepickerMax')">
