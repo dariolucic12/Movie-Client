@@ -13,6 +13,7 @@ import { BillBody } from 'src/app/models/bill-body.model';
 import { BillHeader } from 'src/app/models/bill-header.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { DialogService } from 'src/app/services/dialog.service';
 
 
 @Component({
@@ -33,8 +34,8 @@ export class PosComponent implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private cd: ChangeDetectorRef, 
     private toast: HotToastService,
-    private router: Router
-
+    private router: Router,
+    private dialogService: DialogService,
   ) { 
   
   }
@@ -343,37 +344,50 @@ export class PosComponent implements OnInit {
 
  
   onCheckout() {
-    this.billHeader.totalDiscount = this.totalDiscount;
-    this.billHeader.totalAmount = this.totalAmount;
-    this.billHeader.date = this.today.toISOString();
-    let emptyBasket = this.productsInBasket;
 
-    const newBasket = [...this.billHeader.billBodies];
-    for (const product of this.productsInBasket) {
-      var billBody: BillBody = {
-        price: product.price,
-        quantity: product.quantity,
-        discount: product.discount,
-        discountAmount: product.discountAmount,
-        totalPrice: product.totalPrice,
-        productId: product.id
+    const confirmCheckout = this.dialogService.confirmDialog({
+      title: "Checkout confirm",
+      message: "Can you confirm this purchase",
+      confirmText: "Yes",
+      cancelText: "No"
+    }).subscribe(data => {
+      if(data){
+        console.log("selling")
+
+      this.billHeader.totalDiscount = this.totalDiscount;
+      this.billHeader.totalAmount = this.totalAmount;
+      this.billHeader.date = this.today.toISOString();
+      let emptyBasket = this.productsInBasket;
+
+      const newBasket = [...this.billHeader.billBodies];
+      for (const product of this.productsInBasket) {
+        var billBody: BillBody = {
+          price: product.price,
+          quantity: product.quantity,
+          discount: product.discount,
+          discountAmount: product.discountAmount,
+          totalPrice: product.totalPrice,
+          productId: product.id
+        }
+
+        newBasket.push(billBody);
+        //this.subtractProductCount(product);
+
+        console.log("Racun dodan u prethodne transakcije i proizvod updatean!");
+        console.log("billbody: " + JSON.stringify(billBody));
       }
+      this.billHeader.billBodies = newBasket;
+      //salji billHeader
+      this.billsService.addNewHeader(this.billHeader).subscribe();
+      emptyBasket = []
+      this.productsInBasket = [...emptyBasket];
+      this.toast.success("Purchase was succesfull")
 
-      newBasket.push(billBody);
-      //this.subtractProductCount(product);
-
-      console.log("Racun dodan u prethodne transakcije i proizvod updatean!");
-      console.log("billbody: " + JSON.stringify(billBody));
-    }
-    this.billHeader.billBodies = newBasket;
-    //salji billHeader
-    this.billsService.addNewHeader(this.billHeader).subscribe();
-    emptyBasket = []
-    this.productsInBasket = [...emptyBasket];
-    this.toast.success("Purchase was succesfull")
-
-    console.log("billheader: " + JSON.stringify(this.billHeader));
-    this.router.navigate(['/pages/home'])
+      console.log("billheader: " + JSON.stringify(this.billHeader));
+      this.router.navigate(['/pages/home'])
+      }
+    })
+    return;
   }
 
   getBillHeader(id: number) {
