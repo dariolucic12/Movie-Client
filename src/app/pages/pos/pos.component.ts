@@ -195,6 +195,7 @@ export class PosComponent implements OnInit {
   dateChange(event: any){
     this.today = event.target.value
     console.log(this.today)
+    console.log( event.target.value)
   }
 
   protected filterProducts() {
@@ -358,7 +359,7 @@ export class PosComponent implements OnInit {
 
       newBasket.push(billBody);
       this.subtractProductCount(product);
-      console.log(this.billHeader)
+      console.log(this.billHeader.date)
       console.log("Racun dodan u prethodne transakcije!");
       console.log("billbody: " + JSON.stringify(billBody));
     }

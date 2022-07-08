@@ -32,7 +32,7 @@
     <mat-form-field>
       <input matInput [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="date" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
       <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker disabled="false" #datepicker color="primary"></mat-datepicker>
+      <mat-datepicker [startAt]="today" disabled="false" #datepicker color="primary"></mat-datepicker>
       <mat-error *ngIf="datePickerModel.hasError('matDatepickerMax')">
         Maximum date should be {{maxDate | date }}
       </mat-error>   
