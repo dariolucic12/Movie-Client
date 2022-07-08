@@ -343,6 +343,7 @@ export class PosComponent implements OnInit {
   onCheckout() {
     this.billHeader.totalDiscount = this.totalDiscount;
     this.billHeader.totalAmount = this.totalAmount;
+    this.billHeader.date = this.today.toISOString();
     let emptyBasket = this.productsInBasket;
 
     const newBasket = [...this.billHeader.billBodies];
