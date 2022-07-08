@@ -25,15 +25,20 @@ button {
 
 #headerGrid {
   height: 20%;
+  padding: 1em;
 
   .headerSelectors{
-    width: 30%;
-    float: rightt;
+    width: 35%;
+    float: right;
   }
 
   .headerDispaly{
     width: 60%;
     float:left;
+    
+    h1, h2 {
+      margin-right: 2em;
+    }
   }
 }
 
@@ -186,11 +191,6 @@ button {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#datePickerForm {
-  position: absolute;
-  margin-left: 300px;
-  margin-top: -155px;
-}
 
 h2 {
   color:black;
