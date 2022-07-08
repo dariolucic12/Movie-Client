@@ -25,6 +25,16 @@ button {
 
 #headerGrid {
   height: 20%;
+
+  .headerSelectors{
+    width: 30%;
+    float: rightt;
+  }
+
+  .headerDispaly{
+    width: 60%;
+    float:left;
+  }
 }
 
 #billGrid {
