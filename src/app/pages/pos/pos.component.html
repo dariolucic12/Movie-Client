@@ -30,7 +30,7 @@
     </h2>
 
     <mat-form-field>
-      <input matInput [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="date" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
+      <input matInput [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="this.today" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
       <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
       <mat-datepicker [startAt]="today" disabled="false" #datepicker color="primary"></mat-datepicker>
       <mat-error *ngIf="datePickerModel.hasError('matDatepickerMax')">
@@ -38,12 +38,6 @@
       </mat-error>   
     </mat-form-field>
 
-    <h2 id="dateOfBill" *ngIf="billViewMode === true">Date: {{this.billHeader.date | date: 'dd/MM/yyyy'}}
-      <span class="material-icons">
-        calendar_today
-      </span>
-   
-    </h2>
 
   </div>
   <mat-divider></mat-divider>
