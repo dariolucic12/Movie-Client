@@ -4,7 +4,7 @@
   <table mat-table [dataSource]="billHeaders" class="mat-elevation-z8 demo-table">
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date  | date: 'dd/MM/yyyy'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.date  | date: 'dd.MM.yyyy'}} </td>
     </ng-container>
     <ng-container matColumnDef="buyerId">
       <th mat-header-cell *matHeaderCellDef> Buyer </th>
@@ -16,7 +16,7 @@
     </ng-container>
     <ng-container matColumnDef="totalAmount">
       <th mat-header-cell *matHeaderCellDef> Total price </th>
-      <td mat-cell *matCellDef="let element"> {{element.totalAmount | currency: "EUR"}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.totalAmount | currency:' KM ' }} </td>
     </ng-container>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> Bill info </th>
