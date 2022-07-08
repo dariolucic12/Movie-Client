@@ -50,7 +50,7 @@ export class PagesComponent implements OnInit {
       const decodedToken = this.jwtHelper.decodeToken(token);
       var key = Object.values(decodedToken);
       console.log(key[1]);
-      this.welcomeUser = `Welcome ${key[1]}`
+      this.welcomeUser = `${key[0]}`
     }
   }
 
