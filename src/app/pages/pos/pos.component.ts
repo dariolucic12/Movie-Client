@@ -359,15 +359,9 @@ export class PosComponent implements OnInit {
       }
 
       newBasket.push(billBody);
-<<<<<<< HEAD
-      this.subtractProductCount(product);
-      console.log(this.billHeader.date)
-      console.log("Racun dodan u prethodne transakcije!");
-=======
       //this.subtractProductCount(product);
 
       console.log("Racun dodan u prethodne transakcije i proizvod updatean!");
->>>>>>> master
       console.log("billbody: " + JSON.stringify(billBody));
     }
     this.billHeader.billBodies = newBasket;

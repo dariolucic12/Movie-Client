@@ -29,10 +29,45 @@ button {
 
 #billGrid {
   height: 60%;
+ 
 }
 
 #calculateGrid {
   height: 20%;
+
+  .billData{
+    width: 65%;
+    float: left;
+
+    .billValues {
+      margin-left: 5em;
+    }
+  }
+
+  .billCheckout{
+    width: 35%;
+    float: right;
+    
+
+      .checkout{
+        margin: 1.5em;
+        
+        #checkout {
+          width: 7.6em;
+        }
+      }
+    
+      .discount {
+        margin: 1.5em;
+        
+        #discount {
+          width: 10em;
+        }
+      }
+  }
+
+
+
 }
 
 #searchBuyer {
@@ -112,19 +147,6 @@ button {
 #totalToPay {
   position: absolute;
   margin-top: 0px;
-}
-
-#discount {
-  width: 100px;
-  position: absolute;
-  margin-left: 300px;
-  margin-top: -70px;
-}
-
-#checkout {
-  margin-top: -20px;
-  margin-left: 300px;
-  position: absolute;
 }
 
 // #quantityInTable{    komponente se ne pomijeraju provjerit kasnije!!!!!!!!!!
