@@ -29,10 +29,45 @@ button {
 
 #billGrid {
   height: 60%;
+ 
 }
 
 #calculateGrid {
   height: 20%;
+
+  .billData{
+    width: 65%;
+    float: left;
+
+    .billValues {
+      margin-left: 5em;
+    }
+  }
+
+  .billCheckout{
+    width: 35%;
+    float: right;
+    
+
+      .checkout{
+        margin: 1.5em;
+        
+        #checkout {
+          width: 7.6em;
+        }
+      }
+    
+      .discount {
+        margin: 1.5em;
+        
+        #discount {
+          width: 10em;
+        }
+      }
+  }
+
+
+
 }
 
 #searchBuyer {
