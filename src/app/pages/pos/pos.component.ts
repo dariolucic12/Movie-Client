@@ -25,6 +25,7 @@ export class PosComponent implements OnInit {
   userMessage = "";
   maxDate = new Date();
   date : any;
+  selectedDate: string = "";
   constructor(
     private buyersService: BuyersService, 
     private productsService: ProductsService,
@@ -191,6 +192,11 @@ export class PosComponent implements OnInit {
       });
   }
 
+  dateChange(event: any){
+    this.today = event.target.value
+    console.log(this.today)
+  }
+
   protected filterProducts() {
     if (!this.products) {
       return;
@@ -328,7 +334,7 @@ export class PosComponent implements OnInit {
       this.productsService.updateProduct(finalProduct).subscribe();
     }
     else{
-      console.log("bleeee")
+      console.log("Subtract does not work")
     }
 
   }
@@ -352,7 +358,7 @@ export class PosComponent implements OnInit {
 
       newBasket.push(billBody);
       this.subtractProductCount(product);
-
+      console.log(this.billHeader)
       console.log("Racun dodan u prethodne transakcije!");
       console.log("billbody: " + JSON.stringify(billBody));
     }
