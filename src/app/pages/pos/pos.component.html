@@ -26,17 +26,19 @@
     </div>
 
     <div class="headerDisplay">
-      <h2 *ngIf="billViewMode">Buyer: {{this.buyer.name}} </h2>
-      <h2 *ngIf="billViewMode === false">From: {{this.city}}</h2>
-      <h2 *ngIf="billViewMode === false">Address: {{this.address}}</h2>
-      <h2 *ngIf="billViewMode">From: {{this.buyer.city}}</h2>
-      <h2 *ngIf="billViewMode">Address: {{this.buyer.adress}}</h2>
-      <h1 *ngIf="billViewMode === true" id="billNumber">Bill number: {{this.billHeader.id}}</h1>
-      <h2 id="dateOfBill" *ngIf="billViewMode === true">Date: {{this.billHeader.date | date: 'dd.MM.yyyy'}}
-        <span class="material-icons">
-          calendar_today
-        </span>
-      </h2>
+      <div class="userInfoHeader">
+        <h2 *ngIf="billViewMode">Buyer: {{this.buyer.name}} </h2>
+        <h2 *ngIf="billViewMode === false">From: {{this.city}}</h2>
+        <h2 *ngIf="billViewMode === false">Address: {{this.address}}</h2>
+        <h2 *ngIf="billViewMode">From: {{this.buyer.city}}</h2>
+        <h2 *ngIf="billViewMode">Address: {{this.buyer.adress}}</h2>
+        <h1 *ngIf="billViewMode === true" id="billNumber">Bill number: {{this.billHeader.id}}</h1>
+        <h2 id="dateOfBill" *ngIf="billViewMode === true">Date: {{this.billHeader.date | date: 'dd.MM.yyyy'}}
+          <span class="material-icons">
+            calendar_today
+          </span>
+        </h2>
+      </div>
     </div>
   </div>
   <mat-divider></mat-divider>

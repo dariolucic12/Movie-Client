@@ -20,24 +20,25 @@ button {
   height: 100%;
   position: absolute;
   margin-left: 330px;
-  margin-top: 10px;
+  
 }
 
 #headerGrid {
   height: 20%;
   padding: 1em;
 
+
   .headerSelectors{
     width: 35%;
     float: right;
   }
 
-  .headerDispaly{
+  .headerDisplay{
     width: 60%;
     float:left;
     
-    h1, h2 {
-      margin-right: 2em;
+    .userInfoHeader{
+      margin-left: 5em;
     }
   }
 }
