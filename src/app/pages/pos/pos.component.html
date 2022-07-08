@@ -26,6 +26,7 @@
     </div>
 
     <div class="headerDisplay">
+      <div class="userInfoHeader">
       <h2 *ngIf="billViewMode">BUYER: {{this.buyer.name}} </h2>
       <h2 *ngIf="billViewMode === false">FROM: {{this.city}}</h2>
       <h2 *ngIf="billViewMode === false">ADDRESS: {{this.address}}</h2>
@@ -37,6 +38,7 @@
           calendar_today
         </span>
       </h2>
+      </div>
     </div>
   </div>
   <mat-divider></mat-divider>
