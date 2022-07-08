@@ -3,23 +3,26 @@
   <div id="headerGrid">
     <!-- <p>This is grid for buyer information</p> -->
     <div class="headerSelectors">
-      <mat-form-field *ngIf="billViewMode === false" appearance="fill" id="searchBuyer">
-        <mat-label>Buyer</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
-            {{buyer.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field *ngIf="billViewMode === false" id="datePickerForm">
-        <input matInput [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="this.today" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
-        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker [startAt]="today" disabled="false" #datepicker color="primary"></mat-datepicker>
-        <mat-error *ngIf="datePickerModel.hasError('matDatepickerMax')">
-          Maximum date should be {{maxDate | date }}
-        </mat-error>   
-      </mat-form-field>
+      <div>
+        <mat-form-field *ngIf="billViewMode === false" appearance="fill" id="searchBuyer">
+          <mat-label>Buyer</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let buyer of this.buyers" [value]="buyer.name" (click)="selectedBuyer(buyer)">
+              {{buyer.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field *ngIf="billViewMode === false" >
+          <input matInput [max]="maxDate" (dateChange)="dateChange($event)" [(ngModel)]="this.today" #datePickerModel="ngModel" [matDatepicker]="datepicker" placeholder="Select Date" readonly />
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker [startAt]="today" disabled="false" #datepicker color="primary"></mat-datepicker>
+          <mat-error *ngIf="datePickerModel.hasError('matDatepickerMax')">
+            Maximum date should be {{maxDate | date }}
+          </mat-error>   
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="headerDisplay">
