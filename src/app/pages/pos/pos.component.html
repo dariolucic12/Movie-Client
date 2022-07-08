@@ -146,8 +146,8 @@
     <!-- <p>This is grid for calculations</p> -->
     <h3>Without discount: {{getWithoutTotalDiscount() | currency:' KM ' }}</h3>
     <h3>Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency:' KM '  }}</h3>
-    <h1 id="totalToPay" *ngIf="billViewMode === false">Total for pay: {{getTotalToPay() | currency:' KM ' }}</h1>
-    <h1 id="totalToPayViewMode" *ngIf="billViewMode === true">Total for pay: {{getTotalToPay() | currency:' KM ' }}</h1>
+    <h1 id="totalToPay" *ngIf="billViewMode === false">TOTAL TO PAY: {{getTotalToPay() | currency:' KM ' }}</h1>
+    <h1 id="totalToPayViewMode" *ngIf="billViewMode === true">TOTAL TO PAY: {{getTotalToPay() | currency:' KM ' }}</h1>
     <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" *ngIf="billViewMode === false"/>
     <button mat-raised-button color="primary" id="checkout" *ngIf="billViewMode === false"
       [disabled]="this.productsInBasket.length==0 || !this.city" (click)="onCheckout()">Checkout</button>

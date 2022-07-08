@@ -112,6 +112,7 @@ button {
 #totalToPay {
   position: absolute;
   margin-top: 0px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #discount {
@@ -119,6 +120,7 @@ button {
   position: absolute;
   margin-left: 300px;
   margin-top: -70px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #checkout {
@@ -138,21 +140,27 @@ button {
   width: 50px;
 }
 
-#changingColumn {
-}
-
 #billNumber {
   position: absolute;
   margin-left: 350px;
-  margin-top: -80px;
+  margin-top: -55px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+  font-size: 35px;
 }
 
 #totalToPayViewMode{
   margin-top: 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #datePickerForm {
   position: absolute;
   margin-left: 300px;
   margin-top: -155px;
+}
+
+h2 {
+  color:black;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
