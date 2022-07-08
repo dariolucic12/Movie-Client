@@ -11,7 +11,7 @@ import { ProductToBasket } from 'src/app/models/product-to-basket.model';
 import { BillsService } from 'src/app/services/bills.service';
 import { BillBody } from 'src/app/models/bill-body.model';
 import { BillHeader } from 'src/app/models/bill-header.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 
 
@@ -33,6 +33,7 @@ export class PosComponent implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private cd: ChangeDetectorRef, 
     private toast: HotToastService,
+    private router: Router
 
   ) { 
   
@@ -371,6 +372,7 @@ export class PosComponent implements OnInit {
     this.toast.success("Purchase was succesfull")
 
     console.log("billheader: " + JSON.stringify(this.billHeader));
+    this.router.navigate(['/pages/home'])
   }
 
   getBillHeader(id: number) {
