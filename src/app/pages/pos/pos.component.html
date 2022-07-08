@@ -97,8 +97,8 @@
       </ng-container>
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef> Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.price | currency: "EUR"}} </td>
-      </ng-container>
+        <td mat-cell *matCellDef="let element"> {{ element.price | currency:' KM ' }} </td>
+      </ng-container> 
       <ng-container matColumnDef="discount">
         <th mat-header-cell *matHeaderCellDef id="changingColumn"> Discount </th>
         <td mat-cell *matCellDef="let element"> 
@@ -118,11 +118,11 @@
     </div>
       <ng-container matColumnDef="discountAmount">
         <th mat-header-cell *matHeaderCellDef> Discount Amount </th>
-        <td mat-cell *matCellDef="let element"> {{element.discountAmount | currency: "EUR"}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.discountAmount | currency:' KM ' }} </td>
       </ng-container>
       <ng-container matColumnDef="totalPrice">
         <th mat-header-cell *matHeaderCellDef> Total </th>
-        <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency: "EUR"}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency:' KM ' }} </td>
       </ng-container>
       <ng-container *ngIf="billViewMode===false" matColumnDef="options" mnoziColumns()>
         <th mat-header-cell *matHeaderCellDef id="optionsHeader"> Options </th>
@@ -144,10 +144,10 @@
   <mat-divider></mat-divider>
   <div id="calculateGrid">
     <!-- <p>This is grid for calculations</p> -->
-    <h3>Without discount: {{getWithoutTotalDiscount() | currency: "EUR"}}</h3>
-    <h3>Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency: "EUR" }}</h3>
-    <h1 id="totalToPay" *ngIf="billViewMode === false">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
-    <h1 id="totalToPayViewMode" *ngIf="billViewMode === true">Total for pay: {{getTotalToPay() | currency: "EUR"}}</h1>
+    <h3>Without discount: {{getWithoutTotalDiscount() | currency:' KM ' }}</h3>
+    <h3>Discount ({{this.totalDiscount}}%): {{getDiscountInPrice() | currency:' KM '  }}</h3>
+    <h1 id="totalToPay" *ngIf="billViewMode === false">Total for pay: {{getTotalToPay() | currency:' KM ' }}</h1>
+    <h1 id="totalToPayViewMode" *ngIf="billViewMode === true">Total for pay: {{getTotalToPay() | currency:' KM ' }}</h1>
     <input id="discount" [(ngModel)]="totalDiscount" placeholder="Discount %" type="number" min="1" max="100" step="1" *ngIf="billViewMode === false"/>
     <button mat-raised-button color="primary" id="checkout" *ngIf="billViewMode === false"
       [disabled]="this.productsInBasket.length==0 || !this.city" (click)="onCheckout()">Checkout</button>
