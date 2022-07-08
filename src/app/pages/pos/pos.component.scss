@@ -120,24 +120,43 @@ button {
   margin-top: -130px;
 }
 
-#productSearch {
-  width: 300px;
+.posAddForm{
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 1.5em;
+
+  #discountInput {
+    margin-left: 20px;
+    width: 50px;
+    height: 2.6em;
+  }
+
+  #singleSelect{
+    height: 2.6em;
+  }
+
+  #productSearch {
+    width: 300px;
+    height: 2.6em;
+  }
+  
+  #quantitySearch {
+    margin-left: 20px;
+    width: 50px;
+    height: 2.6em;
+  }
+  
+  #addButton {
+    margin-left: 20px;
+    height: 40px;
+    width: 80px;
+    font-size: large;
+  }
 }
 
-#quantitySearch {
-  margin-left: 20px;
-  width: 50px;
-}
-
-#addButton {
-  margin-left: 20px;
-  height: 40px;
-  width: 80px;
-  font-size: large;
-}
 
 #table {
-  width: 1200px;
+  width: 1120px;
   height: 300px;
   overflow-y: scroll;
   display: block;
@@ -187,10 +206,7 @@ button {
 //   }
 // }
 
-#discountInput {
-  margin-left: 20px;
-  width: 50px;
-}
+
 
 #billNumber {
   position: absolute;

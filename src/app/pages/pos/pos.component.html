@@ -51,22 +51,24 @@
         class="searchTerm"
         placeholder="Enter product name"
       /> -->
-    <mat-form-field [hidden]="billViewMode">
-      <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect >
-        <mat-option>
-          <ngx-mat-select-search [formControl]="productFilterCtrl" placeholderLabel="Find product"
-            noEntriesFoundLabel="no matching products">
-          </ngx-mat-select-search>
-        </mat-option>
-        <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
-          {{product.cipher}} - {{product.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <input *ngIf="billViewMode===false" id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Qty" type="number" min="1" step="1" />
-    <input *ngIf="billViewMode===false" id="discountInput" [(ngModel)]="discount" placeholder="Dsct" type="number" min="1" max="100" step="1" />
-    <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)"
+    <div class="posAddForm">
+      <mat-form-field [hidden]="billViewMode">
+        <mat-select [formControl]="productCtrl" placeholder="Product" #singleSelect >
+          <mat-option>
+            <ngx-mat-select-search [formControl]="productFilterCtrl" placeholderLabel="Find product"
+              noEntriesFoundLabel="no matching products">
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+            {{product.cipher}} - {{product.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <input *ngIf="billViewMode===false" id="quantitySearch" [(ngModel)]="quantity" class="searchTerm" placeholder="Qty" type="number" min="1" step="1" />
+      <input *ngIf="billViewMode===false" id="discountInput" [(ngModel)]="discount" placeholder="Dsct" type="number" min="1" max="100" step="1" />
+      <button mat-raised-button color="primary" id="addButton" (click)="addProductToBasket(productCtrl.value)"
       [disabled]="!this.quantity" *ngIf="billViewMode===false">Add</button>
+    </div>
     <br>
     <br>
     <table id="table" mat-table [dataSource]="this.productsInBasket" class="mat-elevation-z8 demo-table">
