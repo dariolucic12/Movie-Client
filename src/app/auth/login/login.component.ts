@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
  async submit() {
 
     console.log(this.form.getRawValue())
-    const response = await this.http.post("https://localhost:7288/api/Account/login", this.form.getRawValue(), httpOptions )
+    const response = await this.http.post("https://localhost:7182/api/Account/login", this.form.getRawValue(), httpOptions )
       .subscribe(res  => {
        const token = JSON.stringify(Object.values(res)[0])
        localStorage.setItem("token", token);

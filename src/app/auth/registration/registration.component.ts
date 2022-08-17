@@ -35,7 +35,7 @@ export class RegistrationComponent implements OnInit {
   submit(): void {
     let RegisterData = this.form.getRawValue();
     console.log(RegisterData);
-    this.http.post("https://localhost:7288/api/Account/register", RegisterData, httpOptions)
+    this.http.post("https://localhost:7182/api/Account/register", RegisterData, httpOptions)
       .subscribe(res => {
         console.log(res);
         console.log(RegisterData)
