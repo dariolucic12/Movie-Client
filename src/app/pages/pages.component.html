@@ -4,22 +4,8 @@
         <div>
             <h2>{{welcomeUser}}</h2>
         </div>
-        <button mat-button class="menu-button" [routerLink]="['/pages/home']">
-            <mat-icon>assignment</mat-icon>
-            <span>Previous transactions</span>
-        </button>
         <mat-divider></mat-divider>
-        <button mat-button class="menu-button" [routerLink]="['/pages/pos']">
-            <mat-icon>credit_card</mat-icon>
-            <span>POS</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-button class="menu-button" [routerLink]="['/pages/products']">
-            <mat-icon>info</mat-icon>
-            <span>Products</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-button class="menu-button"  (click)="logout()">
+        <button mat-button class="menu-button" (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Logout</span>
         </button>
@@ -28,3 +14,11 @@
         <div class="content mat-elevation-z8"><router-outlet></router-outlet></div>
     </mat-sidenav-content> -->
 </mat-sidenav-container>
+<nav mat-tab-nav-bar mat-align-tabs="end">
+    <a mat-tab-link [routerLink]="['/pages/home']">Home</a>
+    <a mat-tab-link [routerLink]="['/pages/pos']">Watchlist</a>
+    <a mat-tab-link [routerLink]="['/pages/products']">My movies</a>
+    <!-- <mat-tab label="Home">Home</mat-tab>
+    <mat-tab label="Watchlist" [routerLink]="['/pages/products']"><app-products></app-products></mat-tab>
+    <mat-tab label="My movies">My movies</mat-tab> -->
+</nav>
