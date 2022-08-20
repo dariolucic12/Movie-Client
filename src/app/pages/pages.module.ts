@@ -28,6 +28,8 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
+import {MatTabsModule} from '@angular/material/tabs';
+
 
 
 
@@ -65,7 +67,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
     MatGridListModule,
     HotToastModule.forRoot(),
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTabsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }
