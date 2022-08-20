@@ -5,12 +5,21 @@
   }
 
   .demo-table {
-    width: 1200px;
+    width: 1000px;
     height: 700px;
     overflow-y: scroll;
     display: block;
 
-    th, td{
-      width: 300px;
-    }
+      #rank {
+        width: 100px
+      }
+      #title {
+        width: 400px
+      }
+      #rating {
+        width: 100px
+      }
+      #imDbRatingCount {
+        width: 100px
+      }
 }
