@@ -6,6 +6,7 @@ import { ProductToBasket } from '../models/product-to-basket.model';
 import { DialogService } from '../services/dialog.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
+
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
@@ -48,9 +49,9 @@ export class PagesComponent implements OnInit {
     } else {
 
       const decodedToken = this.jwtHelper.decodeToken(token);
-      var key = Object.values(decodedToken);
-      console.log(key[1]);
-      this.welcomeUser = `${key[0]}`
+      var key: string[] = Object.values(decodedToken);
+      console.log(key);
+      this.welcomeUser = `${key[0][1]}`
     }
   }
 
