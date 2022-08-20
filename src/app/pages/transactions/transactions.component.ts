@@ -2,7 +2,9 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BillBody } from 'src/app/models/bill-body.model';
 import { BillHeader } from 'src/app/models/bill-header.model';
 import { Product } from 'src/app/models/product.model';
+import { Top250Movie } from 'src/app/models/top250Movie.model';
 import { BillsService } from 'src/app/services/bills.service';
+import { ImdbApiService } from 'src/app/services/imdb-api.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 // const BILL_DATA: BillBody[] = [
@@ -20,10 +22,11 @@ import { ProductsService } from 'src/app/services/products.service';
 export class TransactionsComponent implements OnInit {
 
   //displayedColumns: string[] = ['price', 'quantity', 'discount', 'discountAmount', 'totalPrice', 'productId', 'billHeaderId'];
-  displayedColumns: string[] = ['date', 'buyerId', 'totalDiscount', 'totalAmount', 'id'];
+  displayedColumns: string[] = ['rank', 'title', 'imDbRating', 'imDbRatingCount'];
   billBodies: BillBody[] = [];
   billHeaders: BillHeader[] = [];
   products: Product[] = [];
+  top250Movies: Top250Movie[] = [];
 
   // dataSource = this.billBodies.map(body => ({
   //   id: body.id,
@@ -39,18 +42,30 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private billsService: BillsService, 
     private productsService: ProductsService,
-    private changeDetectorRefs: ChangeDetectorRef) { }
+    private changeDetectorRefs: ChangeDetectorRef,
+    private top250moviesService: ImdbApiService) { }
 
   ngOnInit(): void {
     //this.getAllBillBodies();
     //this.getAllProducts();
-    this.getAllHeaders();
+    this.getAllTop250Movies();
+    
   }
 
   getAllBillBodies(){
     this.billsService.getAllBillBodies().subscribe((data: any) => {
       this.billBodies = data;
       console.log(this.billBodies);
+      this.changeDetectorRefs.detectChanges();
+
+      return data;
+    });
+  }
+
+  getAllTop250Movies(){
+    this.top250moviesService.getTopMovies().subscribe((data: any) => {
+      this.top250Movies = data.items;
+      console.log(this.top250Movies);
       this.changeDetectorRefs.detectChanges();
 
       return data;
