@@ -29,6 +29,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
 import {MatTabsModule} from '@angular/material/tabs';
+import { MovieByIdComponent } from './movie-by-id/movie-by-id.component';
 
 
 
@@ -42,7 +43,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     PagesComponent,
     AddEditProductComponent,
     ProductIdPipe,
-    AddEditProductComponent
+    AddEditProductComponent,
+    MovieByIdComponent,
   ],
   imports: [
     CommonModule,
