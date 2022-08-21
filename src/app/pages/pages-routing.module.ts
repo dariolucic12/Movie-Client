@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PosGuard } from '../guards/pos.guard';
+import { MovieByIdComponent } from './movie-by-id/movie-by-id.component';
 import { PagesComponent } from './pages.component';
 import { PosComponent } from './pos/pos.component';
 import { ProductsComponent } from './products/products.component';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'bill/:id',
     component: PosComponent
+  },
+  {
+    path: 'movie/:id',
+    component: MovieByIdComponent
   },
   { 
     path: 'home', 
