@@ -30,8 +30,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
 import {MatTabsModule} from '@angular/material/tabs';
 import { MovieByIdComponent } from './movie-by-id/movie-by-id.component';
-
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxStarRatingModule } from 'ngx-star-rating';
 
 
 @NgModule({
@@ -71,6 +71,7 @@ import { MovieByIdComponent } from './movie-by-id/movie-by-id.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTabsModule,
+    NgxStarRatingModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }
