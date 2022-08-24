@@ -11,7 +11,9 @@
     <h4><strong>Runtime</strong> {{this.movieRuntime}} mins</h4>
     <h4><strong>No. of votes</strong> {{this.numberOfVotes}}</h4>
     <h4><strong>Awards</strong> {{this.movieAwards}}</h4>
-    <ngx-star-rating [(ngModel)]="this.rating" [id]="'rating'" [maxlength]="10" ></ngx-star-rating>
+    <button mat-raised-button color="primary" *ngIf="!this.isOnWatchlist">Add to watchlist</button>
+    <button mat-raised-button color="warn" *ngIf="this.isOnWatchlist">Remove from watchlist</button>
+    <ngx-star-rating [(ngModel)]="this.rating" [id]="'rating'" ></ngx-star-rating>
     <form [formGroup]="commentForm!" (ngSubmit)="onSubmitComment()">
         <div class="form-group"><textarea class="form-control" placeholder="Comment a movie" formControlName="comment"
                 [ngClass]="{ 'is-invalid': submitted && commentForm!.controls['comment'].errors }"></textarea>

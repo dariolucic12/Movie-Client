@@ -69,6 +69,8 @@ export class MovieByIdComponent implements OnInit {
 
     rating: number = 3;
 
+    isOnWatchlist: boolean = true;
+
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(param => {
