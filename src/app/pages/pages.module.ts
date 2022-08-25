@@ -32,6 +32,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MovieByIdComponent } from './movie-by-id/movie-by-id.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxStarRatingModule } from 'ngx-star-rating';
+import { WatchlistComponent } from './watchlist/watchlist.component';
+import { ReviewComponent } from './review/review.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     ProductIdPipe,
     AddEditProductComponent,
     MovieByIdComponent,
+    WatchlistComponent,
+    ReviewComponent,
   ],
   imports: [
     CommonModule,
