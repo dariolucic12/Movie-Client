@@ -215,5 +215,20 @@ export class MovieByIdComponent implements OnInit {
     })
   }
 
+  addUpdateRating(){
+    var review = {
+      userId: this.getUserId(),
+      movieId: this.movieId,
+      rating: this.rating,
+      comment: undefined,
+      fullTitle: this.movieTitle,
+      image: this.movieImage,
+      imDbRating: this.imdbRating.toString(),
+      imDbRatingCount: this.numberOfVotes
+    }
+
+    if(review.rating == 0) return;
+    this.reviewService.addReview(review).subscribe();
+  }
 
 }
