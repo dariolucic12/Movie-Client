@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { ImdbApiService } from '../../services/imdb-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { WatchlistService } from 'src/app/services/watchlist.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Watchlist } from 'src/app/models/watchlist.model';
+import { ReviewService } from 'src/app/services/review.service';
 
 
 @Component({
@@ -13,7 +17,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class MovieByIdComponent implements OnInit {
 
   constructor(private movieService: ImdbApiService,
-    private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder) { }
+    private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, 
+    private watchlistService: WatchlistService,
+    private reviewService: ReviewService,
+    private jwtHelper: JwtHelperService) { }
 
     movieData: Movie = {
       id: '',
@@ -54,6 +61,7 @@ export class MovieByIdComponent implements OnInit {
       keywordList: [],
       similars: []
     };
+    movieId: string = "";
     movieTitle: string = "";
     movieImage: string = "";
     moviePlot: string= "";
@@ -67,10 +75,9 @@ export class MovieByIdComponent implements OnInit {
     commentForm?: FormGroup;
     submitted: Boolean = false;
 
-    rating: number = 3;
+    rating: number = 0;
 
-    isOnWatchlist: boolean = true;
-
+    isOnWatchlist: boolean = false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(param => {
@@ -80,15 +87,18 @@ export class MovieByIdComponent implements OnInit {
       this.getMovieById(id!);
       console.log("muvi dejta je: " + this.movieData)
     });
+    
+    this.checkIfMovieIsOnWatchlist();
 
     this.createForm();
 
-
+    console.log("id filma je: " + this.movieId)
   }
 
   getMovieById(id: string){
     this.movieService.getMovieById(id).subscribe((data) => {
       this.movieData = data;
+      this.movieId = data.id;
       this.movieTitle = data.fullTitle;
       this.movieImage = data.image;
       this.moviePlot = data.plot;
@@ -98,6 +108,9 @@ export class MovieByIdComponent implements OnInit {
       this.genre = data.genres;
       this.director = data.directors;
       this.movieAwards = data.awards;
+
+      this.checkIfMovieIsOnWatchlist();
+      this.checkIfMovieIsRated();
     })
   }
 
@@ -117,6 +130,89 @@ export class MovieByIdComponent implements OnInit {
       return true;
       //salji komentar
     }
+  }
+
+  getUserId(): string {
+    var userId;
+    const token = localStorage.getItem("token");
+    if (token == null) {
+      console.log("Token incorrect")
+      return '';
+    } else {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      var key: string[] = Object.values(decodedToken);
+      console.log(key);
+      userId = `${key[0][0]}`
+
+      return userId;
+    }
+  }
+
+  addToWatchlist(){
+    var watchlist = {
+      userID: this.getUserId(),
+      movieId: this.movieId,
+      fullTitle: this.movieTitle,
+      image: this.movieImage,
+      imDbRating: this.imdbRating.toString(),
+      imDbRatingCount: this.numberOfVotes
+    }
+
+    this.watchlistService.addToWatchlist(watchlist).subscribe();
+    this.isOnWatchlist = true;
+  }
+
+  deleteFromWatchlist(){
+    var userId = this.getUserId();
+
+    this.watchlistService.getWatchlistOfUser(userId).subscribe((data) => {
+      for(var lista in data){
+        if(data[lista].movieId === this.movieId){
+          this.watchlistService.deleteFromWatchlist(data[lista].id!).subscribe();
+        } 
+      }    
+    })
+    // var watchlist = {
+    //   userID: this.getUserId(),
+    //   movieId: this.movieId,
+    //   fullTitle: this.movieTitle,
+    //   image: this.movieImage,
+    //   imDbRating: this.imdbRating.toString(),
+    //   imDbRatingCount: this.numberOfVotes
+    // }
+
+    // this.watchlistService.addToWatchlist(watchlist).subscribe();
+    this.isOnWatchlist = false;
+  }
+
+  checkIfMovieIsOnWatchlist(){
+    var userId = this.getUserId();
+
+    this.watchlistService.getWatchlistOfUser(userId).subscribe((data) => {
+      for(var lista in data){
+        if(data[lista].movieId === this.movieId){
+          this.isOnWatchlist = true;
+          return;
+        } else {
+          this.isOnWatchlist = false;
+        }
+      }    
+    })
+  }
+
+  checkIfMovieIsRated(){
+    var userId = this.getUserId();
+
+    this.reviewService.getReviewOfUser(userId).subscribe((data) => {
+      for(var lista in data){
+        if(data[lista].movieId === this.movieId){
+          if(this.rating != null){
+            this.rating = data[lista].rating ?? 0;
+          }
+          return;
+        } 
+      }    
+    })
   }
 
 
