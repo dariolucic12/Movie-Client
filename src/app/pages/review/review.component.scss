@@ -1,0 +1,25 @@
+.new-class {
+    position: absolute;
+    margin-left: 350px;
+    margin-top: 20px;
+  }
+
+  .demo-table {
+    width: 1000px;
+    height: 700px;
+    overflow-y: scroll;
+    display: block;
+
+      #rank {
+        width: 100px
+      }
+      #title {
+        width: 400px
+      }
+      #rating {
+        width: 100px
+      }
+      #imDbRatingCount {
+        width: 100px
+      }
+}
