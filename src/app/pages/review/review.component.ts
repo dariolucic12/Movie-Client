@@ -10,7 +10,7 @@ import { ReviewService } from 'src/app/services/review.service';
 })
 export class ReviewComponent implements OnInit {
 
-  displayedColumns: string[] = ['rank', 'title', 'imDbRating', 'imDbRatingCount', 'rating'];
+  displayedColumns: string[] = ['title', 'imDbRating', 'imDbRatingCount', 'rating', 'isCommented'];
   reviews: Review[] = [];
 
   constructor(

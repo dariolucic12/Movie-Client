@@ -2,10 +2,6 @@
 <div class="new-class">
   <h1>MY MOVIES</h1>
   <table mat-table [dataSource]="reviews" class="mat-elevation-z8 demo-table">
-    <ng-container matColumnDef="rank">
-      <th mat-header-cell *matHeaderCellDef id="rank"> Rank </th>
-      <td mat-cell *matCellDef="let element" id="rank"> {{element.rank}}. </td>
-    </ng-container>
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef id="title"> Title </th>
       <td mat-cell *matCellDef="let element" id="title"><img src="{{element.image}}" width="100" /> <a [routerLink]="['/pages/movie', element.movieId]"> {{element.fullTitle}} </a> </td>
@@ -24,6 +20,12 @@
       <th mat-header-cell *matHeaderCellDef id="myrating"> My Rating </th>
       <td mat-cell *matCellDef="let element" id="myrating">
         <mat-icon class="material-icons-outlined" [ngStyle]="{'color':'yellow'}">star</mat-icon> {{element.rating}}/5
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="isCommented">
+      <th mat-header-cell *matHeaderCellDef id="isCommented"> Comment </th>
+      <td mat-cell *matCellDef="let element" id="isCommented">
+        <mat-icon *ngIf="element.comment" class="material-icons-outlined">comment</mat-icon>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
