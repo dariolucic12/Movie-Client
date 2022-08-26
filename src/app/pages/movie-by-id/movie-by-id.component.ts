@@ -17,67 +17,69 @@ import { ReviewService } from 'src/app/services/review.service';
 export class MovieByIdComponent implements OnInit {
 
   constructor(private movieService: ImdbApiService,
-    private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, 
+    private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder,
     private watchlistService: WatchlistService,
     private reviewService: ReviewService,
     private jwtHelper: JwtHelperService) { }
 
-    movieData: Movie = {
-      id: '',
-      title: '',
-      originalTitle: '',
-      fullTitle: '',
-      type: '',
-      year: '',
-      image: '',
-      releaseDate: '',
-      runtimeMins: '',
-      runtimeStr: '',
-      plot: '',
-      plotLocal: '',
-      plotLocalIsRtl: false,
-      awards: '',
-      directors: '',
-      directorList: [],
-      writers: '',
-      writerList: [],
-      stars: '',
-      starList: [],
-      actorList: [],
-      genres: '',
-      genreList: [],
-      companies: '',
-      companyList: [],
-      countries: '',
-      countryList: [],
-      languages: '',
-      languageList: [],
-      contentRating: '',
-      imDbRating: '',
-      imDbRatingVotes: '',
-      metacriticRating: '',
-      boxOffice: undefined,
-      keywords: '',
-      keywordList: [],
-      similars: []
-    };
-    movieId: string = "";
-    movieTitle: string = "";
-    movieImage: string = "";
-    moviePlot: string= "";
-    imdbRating: number = 0;
-    movieRuntime: string = "";
-    numberOfVotes: string = "";
-    genre: string = "";
-    director: string = "";
-    movieAwards: string = "";
+  movieData: Movie = {
+    id: '',
+    title: '',
+    originalTitle: '',
+    fullTitle: '',
+    type: '',
+    year: '',
+    image: '',
+    releaseDate: '',
+    runtimeMins: '',
+    runtimeStr: '',
+    plot: '',
+    plotLocal: '',
+    plotLocalIsRtl: false,
+    awards: '',
+    directors: '',
+    directorList: [],
+    writers: '',
+    writerList: [],
+    stars: '',
+    starList: [],
+    actorList: [],
+    genres: '',
+    genreList: [],
+    companies: '',
+    companyList: [],
+    countries: '',
+    countryList: [],
+    languages: '',
+    languageList: [],
+    contentRating: '',
+    imDbRating: '',
+    imDbRatingVotes: '',
+    metacriticRating: '',
+    boxOffice: undefined,
+    keywords: '',
+    keywordList: [],
+    similars: []
+  };
+  movieId: string = "";
+  movieTitle: string = "";
+  movieImage: string = "";
+  moviePlot: string = "";
+  imdbRating: number = 0;
+  movieRuntime: string = "";
+  numberOfVotes: string = "";
+  genre: string = "";
+  director: string = "";
+  movieAwards: string = "";
 
-    commentForm?: FormGroup;
-    submitted: Boolean = false;
+  commentForm?: FormGroup;
+  submitted: Boolean = false;
 
-    rating: number = 0;
+  rating: number = 0;
 
-    isOnWatchlist: boolean = false;
+  isOnWatchlist: boolean = false;
+
+  idOfReview?: number;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(param => {
@@ -87,7 +89,7 @@ export class MovieByIdComponent implements OnInit {
       this.getMovieById(id!);
       console.log("muvi dejta je: " + this.movieData)
     });
-    
+
     this.checkIfMovieIsOnWatchlist();
 
     this.createForm();
@@ -95,7 +97,7 @@ export class MovieByIdComponent implements OnInit {
     console.log("id filma je: " + this.movieId)
   }
 
-  getMovieById(id: string){
+  getMovieById(id: string) {
     this.movieService.getMovieById(id).subscribe((data) => {
       this.movieData = data;
       this.movieId = data.id;
@@ -122,7 +124,7 @@ export class MovieByIdComponent implements OnInit {
 
   onSubmitComment() {
     this.submitted = true;
-    if(this.commentForm!.invalid) {
+    if (this.commentForm!.invalid) {
       return false;
     } else {
       //commentTxt: this.commentForm.controls['comment'].value,
@@ -148,7 +150,7 @@ export class MovieByIdComponent implements OnInit {
     }
   }
 
-  addToWatchlist(){
+  addToWatchlist() {
     var watchlist = {
       userID: this.getUserId(),
       movieId: this.movieId,
@@ -162,15 +164,15 @@ export class MovieByIdComponent implements OnInit {
     this.isOnWatchlist = true;
   }
 
-  deleteFromWatchlist(){
+  deleteFromWatchlist() {
     var userId = this.getUserId();
 
     this.watchlistService.getWatchlistOfUser(userId).subscribe((data) => {
-      for(var lista in data){
-        if(data[lista].movieId === this.movieId){
+      for (var lista in data) {
+        if (data[lista].movieId === this.movieId) {
           this.watchlistService.deleteFromWatchlist(data[lista].id!).subscribe();
-        } 
-      }    
+        }
+      }
     })
     // var watchlist = {
     //   userID: this.getUserId(),
@@ -185,50 +187,80 @@ export class MovieByIdComponent implements OnInit {
     this.isOnWatchlist = false;
   }
 
-  checkIfMovieIsOnWatchlist(){
+  checkIfMovieIsOnWatchlist() {
     var userId = this.getUserId();
 
     this.watchlistService.getWatchlistOfUser(userId).subscribe((data) => {
-      for(var lista in data){
-        if(data[lista].movieId === this.movieId){
+      for (var lista in data) {
+        if (data[lista].movieId === this.movieId) {
           this.isOnWatchlist = true;
           return;
         } else {
           this.isOnWatchlist = false;
         }
-      }    
+      }
     })
   }
 
-  checkIfMovieIsRated(){
+  checkIfMovieIsRated() {
     var userId = this.getUserId();
 
     this.reviewService.getReviewOfUser(userId).subscribe((data) => {
-      for(var lista in data){
-        if(data[lista].movieId === this.movieId){
-          if(this.rating != null){
+      for (var lista in data) {
+        if (data[lista].movieId === this.movieId) {
+          if (this.rating != null) {
             this.rating = data[lista].rating ?? 0;
           }
           return;
-        } 
-      }    
+        }
+      }
     })
   }
 
-  addUpdateRating(){
-    var review = {
-      userId: this.getUserId(),
-      movieId: this.movieId,
-      rating: this.rating,
-      comment: undefined,
-      fullTitle: this.movieTitle,
-      image: this.movieImage,
-      imDbRating: this.imdbRating.toString(),
-      imDbRatingCount: this.numberOfVotes
-    }
+  addUpdateRating() {
+    var userId = this.getUserId();
+    var idOfReview: number | undefined;
 
-    if(review.rating == 0) return;
-    this.reviewService.addReview(review).subscribe();
+    this.reviewService.getReviewOfUser(userId).subscribe((data) => {
+      for (var review in data) {
+        if (data[review].movieId === this.movieId) {
+          idOfReview = data[review].id;
+        }
+      }
+
+      var reviewToSend = {
+        id: idOfReview,
+        userId: this.getUserId(),
+        movieId: this.movieId,
+        rating: this.rating,
+        comment: undefined,
+        fullTitle: this.movieTitle,
+        image: this.movieImage,
+        imDbRating: this.imdbRating.toString(),
+        imDbRatingCount: this.numberOfVotes
+      }
+
+      if (idOfReview == undefined) {
+        this.reviewService.addReview(reviewToSend).subscribe();
+      } else {
+        this.reviewService.updateReview(reviewToSend).subscribe();
+      }
+
+      // var reviewToSend2 = {
+      //   userId: this.getUserId(),
+      //   movieId: this.movieId,
+      //   rating: this.rating,
+      //   comment: undefined,
+      //   fullTitle: this.movieTitle,
+      //   image: this.movieImage,
+      //   imDbRating: this.imdbRating.toString(),
+      //   imDbRatingCount: this.numberOfVotes
+      // }
+
+      //if(reviewToSend2.rating == 0) return;
+    });
+
+
   }
 
 }
