@@ -75,7 +75,10 @@ export class MovieByIdComponent implements OnInit {
   commentForm?: FormGroup;
   submitted: Boolean = false;
 
-  rating: number = 0;
+  rating?: number;
+  movieComment? : string;
+  hasComment: boolean = false;
+  commentOpened: boolean = true;
 
   isOnWatchlist: boolean = false;
 
@@ -128,7 +131,10 @@ export class MovieByIdComponent implements OnInit {
       return false;
     } else {
       //commentTxt: this.commentForm.controls['comment'].value,
-
+      this.addUpdateRating();
+      this.movieComment = this.commentForm!.controls['comment'].value;
+      this.hasComment = true;
+      this.commentOpened = false;
       return true;
       //salji komentar
     }
@@ -208,9 +214,17 @@ export class MovieByIdComponent implements OnInit {
     this.reviewService.getReviewOfUser(userId).subscribe((data) => {
       for (var lista in data) {
         if (data[lista].movieId === this.movieId) {
-          if (this.rating != null) {
-            this.rating = data[lista].rating ?? 0;
+          if (data[lista].rating != null) {
+          //if (this.rating != null) {
+            this.rating = data[lista].rating;
           }
+          if (data[lista].comment != null) {
+            //if (this.rating != null) {
+              this.movieComment = data[lista].comment;
+              this.hasComment = true;
+              this.commentOpened = false;
+              this.commentForm!.controls['comment'].setValue(data[lista].comment); 
+            }
           return;
         }
       }
@@ -233,7 +247,7 @@ export class MovieByIdComponent implements OnInit {
         userId: this.getUserId(),
         movieId: this.movieId,
         rating: this.rating,
-        comment: undefined,
+        comment: this.commentForm!.controls['comment'].value ?? null,
         fullTitle: this.movieTitle,
         image: this.movieImage,
         imDbRating: this.imdbRating.toString(),
@@ -261,6 +275,10 @@ export class MovieByIdComponent implements OnInit {
     });
 
 
+  }
+
+  openUpdateComment(){
+    this.commentOpened = !this.commentOpened;
   }
 
 }
