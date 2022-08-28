@@ -6,20 +6,23 @@
 
   .demo-table {
     width: 1000px;
-    height: 700px;
-    overflow-y: scroll;
+    //height: 700px;
+    //overflow-y: scroll;
     display: block;
+    //overflow: hidden;
 
-      #rank {
-        width: 100px
-      }
       #title {
-        width: 400px
+        width: 600px
       }
       #rating {
-        width: 100px
+        width: 200px
       }
       #imDbRatingCount {
-        width: 100px
+        width: 200px
       }
+}
+
+#watchlistTitle {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 30px;
 }

@@ -10,7 +10,7 @@ import { WatchlistService } from 'src/app/services/watchlist.service';
 })
 export class WatchlistComponent implements OnInit {
 
-  displayedColumns: string[] = ['rank', 'title', 'imDbRating', 'imDbRatingCount'];
+  displayedColumns: string[] = ['title', 'imDbRating', 'imDbRatingCount'];
   watchlist: Watchlist[] = [];
 
   constructor(
