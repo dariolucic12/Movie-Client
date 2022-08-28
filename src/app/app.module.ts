@@ -9,7 +9,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { AuthModule } from './auth/auth.module';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { ProductIdPipe } from './services/product-id.pipe';
 import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
