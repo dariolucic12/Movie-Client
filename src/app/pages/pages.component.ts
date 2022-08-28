@@ -16,6 +16,11 @@ export class PagesComponent implements OnInit {
   
   welcomeUser = "";
 
+  links = ['/pages/home', '/pages/watchlist', '/pages/myMovies'];
+  titles = ['Home', 'Watchlist', 'My movies'];
+  //activeLink = this.links[1];
+
+
   public productsInBasket: ProductToBasket [] = [];
 
   constructor(
