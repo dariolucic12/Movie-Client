@@ -71,6 +71,7 @@ export class MovieByIdComponent implements OnInit {
   genre: string = "";
   director: string = "";
   movieAwards: string = "";
+  movieStars: string = "";
 
   commentForm?: FormGroup;
   submitted: Boolean = false;
@@ -113,6 +114,7 @@ export class MovieByIdComponent implements OnInit {
       this.genre = data.genres;
       this.director = data.directors;
       this.movieAwards = data.awards;
+      this.movieStars = data.stars;
 
       this.checkIfMovieIsOnWatchlist();
       this.checkIfMovieIsRated();
