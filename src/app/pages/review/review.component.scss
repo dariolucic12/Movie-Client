@@ -6,13 +6,8 @@
 
   .demo-table {
     width: 1000px;
-    height: 700px;
-    overflow-y: scroll;
     display: block;
 
-      #rank {
-        width: 100px
-      }
       #title {
         width: 500px
       }
@@ -20,7 +15,7 @@
         width: 100px
       }
       #imDbRatingCount {
-        width: 100px
+        width: 200px
       }
       #myrating {
         width: 100px
@@ -28,4 +23,19 @@
       #isCommented {
         width: 100px
       }
+}
+
+#myMoviesTitle {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 30px;
+}
+
+#matTable {
+  .mat-row:nth-child(even){
+    background-color: lightgray;
+}
+        
+  .mat-row:nth-child(odd){
+    background-color: white;
+}
 }
