@@ -1,4 +1,4 @@
-import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
+import { Component, ModuleWithComponentFactories, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { ImdbApiService } from '../../services/imdb-api.service';
@@ -108,7 +108,7 @@ export class MovieByIdComponent implements OnInit {
       this.movieImage = data.image;
       this.moviePlot = data.plot;
       this.imdbRating = parseFloat(data.imDbRating);
-      this.movieRuntime = data.runtimeMins;
+      this.movieRuntime = data.runtimeStr;
       this.numberOfVotes = data.imDbRatingVotes;
       this.genre = data.genres;
       this.director = data.directors;
@@ -240,6 +240,10 @@ export class MovieByIdComponent implements OnInit {
         if (data[review].movieId === this.movieId) {
           idOfReview = data[review].id;
         }
+      }
+      
+      if(this.commentForm!.controls['comment'].value == ""){
+        this.commentForm!.controls['comment'].setValue(null); 
       }
 
       var reviewToSend = {
