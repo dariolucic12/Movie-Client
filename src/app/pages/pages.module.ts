@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
-import { TransactionsComponent } from './transactions/transactions.component';
+import { HomeComponent } from './home/home.component';
 import { PosComponent } from './pos/pos.component';
 import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -38,7 +38,7 @@ import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
-    TransactionsComponent,
+    HomeComponent,
     PosComponent,
     ProductsComponent,
     PageNotFoundComponent,
