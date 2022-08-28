@@ -1,16 +1,19 @@
 <app-pages></app-pages>
 <div class="movieInfo">
     <h1><strong>{{this.movieTitle}}</strong></h1>
+    <mat-divider></mat-divider>
     <img src="{{this.movieImage}}" width="200" />
     <div id="movieProperties">
         <h3><strong>Genre</strong> {{this.genre}}</h3>
         <p>{{this.moviePlot}}</p>
         <h3><strong>Director</strong> {{this.director}}</h3>
+        <h3><strong>Stars</strong> {{this.movieStars}}</h3>
         <h3><strong>IMDb rating</strong> {{this.imdbRating}} <mat-icon class="material-icons-outlined"
                 [ngStyle]="{'color':'#FFEB3B'}">star</mat-icon>
         </h3>
         <h4><strong>Runtime</strong> {{this.movieRuntime}}</h4>
-        <h4 *ngIf="this.movieComment != null"> <strong>My Comment</strong> {{this.movieComment}}</h4>
+        <mat-divider></mat-divider>
+        <h4 id="movieComment" *ngIf="this.movieComment != null"> <strong>My Comment</strong> {{this.movieComment}}</h4>
         <div id="moviePropertiesRest">
             <h4><strong>No. of votes</strong> {{this.numberOfVotes | number}}</h4>
             <h4><strong>Awards</strong> {{this.movieAwards}}</h4>
