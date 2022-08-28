@@ -1,4 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0px;
+    background-color: darkgrey;
+}
+
+#matTable {
+    .mat-row:nth-child(even) {
+        background-color: darkgray;
+    }
+
+    .mat-row:nth-child(odd) {
+        background-color: white;
+    }
+
+    opacity: 0.95;
+}
+
+#movieTitleLink {
+    text-decoration: none;
+    color: black;
+}
+
+#movieTitleLink:hover {
+    color: blue;
+}
+
